@@ -53,7 +53,7 @@ export function LoginForm({
             toast.success("Welcome back!", {
                 description: "You have successfully logged in.",
             })
-            if (response) {
+            if (response.accessToken && response.refreshToken) {
                 localStorage.setItem('accessToken', response.accessToken)
                 localStorage.setItem('refreshToken', response.refreshToken)
                 window.location.href = '/'
@@ -61,6 +61,7 @@ export function LoginForm({
         } catch (error) {
             console.log(error)
             toast.error('failed to authenticate')
+
         }
     }
 

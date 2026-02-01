@@ -5,7 +5,6 @@ import {
     BookOpen,
     Heart,
     ReceiptText,
-    Sparkles
 } from "lucide-react"
 
 
