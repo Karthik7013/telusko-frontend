@@ -11,6 +11,7 @@ const CourseDetailPage = lazy(() => import("@/components/course-detail"))
 const SearchCoursesPage = lazy(() => import("@/pages/search-courses"))
 const Login = lazy(() => import("@/pages/Login"))
 const Signup = lazy(() => import("@/pages/Signup"))
+const ForgotPassword = lazy(() => import("@/pages/forgot-password"))
 const NotFound = lazy(() => import("@/pages/not-found"))
 
 // Dashboard pages
@@ -60,6 +61,7 @@ const AppRouter = () => {
                     <Route element={<GuestRoute />}>
                         <Route path="/login" Component={Login} />
                         <Route path="/signup" Component={Signup} />
+                        <Route path="/forgot-password" Component={ForgotPassword} />
                     </Route>
                 </Routes>
             </Suspense>

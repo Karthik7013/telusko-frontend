@@ -1,4 +1,5 @@
 import * as React from "react"
+import { Link } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -96,12 +97,12 @@ export function LoginForm({
                             <Field>
                                 <div className="flex items-center justify-between">
                                     <FieldLabel htmlFor="password">Password</FieldLabel>
-                                    <a
-                                        href="#"
+                                    <Link
+                                        to="/forgot-password"
                                         className="text-xs text-primary underline-offset-4 hover:underline"
                                     >
                                         Forgot your password?
-                                    </a>
+                                    </Link>
                                 </div>
                                 <Input
                                     id="password"

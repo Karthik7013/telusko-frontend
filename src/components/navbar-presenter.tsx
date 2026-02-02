@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { BookOpen, GraduationCap, Menu, MoveUpRight, ArrowRight } from "lucide-react";
+import { BookOpen, GraduationCap, Menu, ArrowRight } from "lucide-react";
 
 import {
     NavigationMenu,
@@ -192,9 +192,6 @@ export function NavbarPresenter({
                                         <div className="text-sm font-medium">Theme</div>
                                         <SwitchTheme />
                                     </div>
-                                    <Link to="/enterprise" className="text-sm font-medium py-4">For Business <MoveUpRight className="inline w-4 h-4" /></Link>
-
-
                                     <div className="flex flex-col gap-3 mt-4">
                                         <Button variant="outline" className="w-full" asChild>
                                             <Link to="/login">Log in</Link>
