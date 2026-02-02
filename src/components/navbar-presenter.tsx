@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { BookOpen, GraduationCap, Menu, ArrowRight } from "lucide-react";
+import { BookOpen, GraduationCap } from "lucide-react";
 
 import {
     NavigationMenu,
@@ -11,22 +11,13 @@ import {
     NavigationMenuTrigger
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
-import {
-    Sheet,
 
-    SheetContent,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
-} from "@/components/ui/sheet";
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from "@/components/ui/accordion";
-import { SwitchTheme } from "./common/toggle-theme";
 import { NAV_CATEGORIES as courseCategories } from "@/data/courses-data";
+import { type User } from "@/features/auth/authApi";
+import { AnnouncementBanner } from "./announcement-banner";
+import UserProfile from "./common/user-profile";
+import { MobileMenu } from "@/components/layout/navbar/mobile-menu";
+import { NavbarItem } from "@/components/layout/navbar/navbar-item";
 
 
 export function NavbarPresenter({
@@ -41,7 +32,7 @@ export function NavbarPresenter({
             <AnnouncementBanner />
             <div className="container flex h-16 items-center mx-auto justify-between px-4">
 
-                {/* --- LEFT SECTION: LOGO --- */}
+                {/* --- LEFT SECTION: LOGO & BRAND --- */}
                 <div className="flex items-center gap-8">
                     <Link to="/" className="flex items-center space-x-2">
                         <GraduationCap className="h-8 w-8 text-primary" />
@@ -64,9 +55,9 @@ export function NavbarPresenter({
                                                 </Link>
                                             </NavigationMenuLink>
                                         </li>
-                                        <ListItem to="/courses/live" icon="https://www.svgrepo.com/show/520494/video-course.svg" title="Recorded Classes">Life time access full purchase</ListItem>
-                                        <ListItem to="/courses/free" icon="https://www.svgrepo.com/show/418658/free-price-tag.svg" title="Free Tutorials">1000+ hours of coding content.</ListItem>
-                                        <ListItem to="/certificates" icon="https://www.svgrepo.com/show/210227/certificate-medal.svg" title="Certifications">Industry-recognized certificates.</ListItem>
+                                        <NavbarItem to="/courses/live" icon="https://www.svgrepo.com/show/520494/video-course.svg" title="Recorded Classes">Life time access full purchase</NavbarItem>
+                                        <NavbarItem to="/courses/free" icon="https://www.svgrepo.com/show/418658/free-price-tag.svg" title="Free Tutorials">1000+ hours of coding content.</NavbarItem>
+                                        <NavbarItem to="/certificates" icon="https://www.svgrepo.com/show/210227/certificate-medal.svg" title="Certifications">Industry-recognized certificates.</NavbarItem>
                                     </ul>
                                 </NavigationMenuContent>
                             </NavigationMenuItem>
@@ -76,11 +67,9 @@ export function NavbarPresenter({
 
                 {/* --- CENTER SECTION: DESKTOP SEARCH & NAVIGATION --- */}
                 <div className="hidden lg:flex items-center gap-4 flex-1 max-w-lg mx-8">
-
-
+                    {/* Placeholder for Search Bar if needed later */}
                     {!isLogin && <div className="hidden lg:block">
                         <NavigationMenu viewport={false}>
-                            {/* ... existing Learning Paths and Specializations ... */}
                             <NavigationMenuList>
                                 <NavigationMenuItem>
                                     <NavigationMenuTrigger className="hover:bg-transparent data-[active]:bg-transparent data-[state=open]:bg-transparent !bg-transparent">Learning Paths</NavigationMenuTrigger>
@@ -98,15 +87,15 @@ export function NavbarPresenter({
                                                     </Link>
                                                 </NavigationMenuLink>
                                             </li>
-                                            <ListItem to="/paths/backend" title="Backend Architect">
+                                            <NavbarItem to="/paths/backend" title="Backend Architect">
                                                 Master System Design, Scalability, and Server logic.
-                                            </ListItem>
-                                            <ListItem to="/paths/frontend" title="Frontend Specialist">
+                                            </NavbarItem>
+                                            <NavbarItem to="/paths/frontend" title="Frontend Specialist">
                                                 Design stunning user interfaces with modern frameworks.
-                                            </ListItem>
-                                            <ListItem to="/paths/mobile" title="Mobile Dev">
+                                            </NavbarItem>
+                                            <NavbarItem to="/paths/mobile" title="Mobile Dev">
                                                 Build cross-platform apps with Flutter and React Native.
-                                            </ListItem>
+                                            </NavbarItem>
                                         </ul>
                                     </NavigationMenuContent>
                                 </NavigationMenuItem>
@@ -115,9 +104,9 @@ export function NavbarPresenter({
                                     <NavigationMenuContent>
                                         <ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                                             {courseCategories.map((course) => (
-                                                <ListItem key={course.title} title={course.title} icon={course.icon} to={course.to}>
+                                                <NavbarItem key={course.title} title={course.title} icon={course.icon} to={course.to}>
                                                     {course.description}
-                                                </ListItem>
+                                                </NavbarItem>
                                             ))}
                                         </ul>
                                     </NavigationMenuContent>
@@ -127,10 +116,8 @@ export function NavbarPresenter({
                     </div>}
                 </div>
 
-
                 {/* --- RIGHT SECTION: AUTH & MOBILE MENU --- */}
                 <div className="flex items-center gap-2">
-                    {/* <ToggleTheme /> */}
                     {!isLogin && <div className="items-center gap-2 hidden lg:flex">
                         <Button variant="ghost" asChild>
                             <Link to="/login">Log in</Link>
@@ -140,130 +127,15 @@ export function NavbarPresenter({
                         </Button>
                     </div>}
 
-                    {/* MOBILE TRIGGER */}
                     {!isLogin && <div className="lg:hidden">
-                        <Sheet>
-                            <SheetTrigger asChild>
-                                <Button variant="ghost" size="icon" className="h-10 w-10">
-                                    <Menu className="h-6 w-6" />
-                                </Button>
-                            </SheetTrigger>
-                            <SheetContent side="top" className="w-full overflow-y-auto px-6 pb-10 hide-close-button">
-                                <SheetHeader className="text-left px-0">
-                                    <SheetTitle className="flex items-center gap-2">
-                                        <GraduationCap className="h-6 w-6 text-primary" />
-                                    </SheetTitle>
-                                </SheetHeader>
-
-                                <div className="flex flex-col gap-4">
-
-                                    <Accordion type="single" collapsible className="w-full">
-
-                                        <AccordionItem value="courses">
-                                            <AccordionTrigger>Explore Courses</AccordionTrigger>
-                                            <AccordionContent className="flex flex-col gap-2">
-                                                <Link to="/bootcamps" className="p-2 text-primary font-medium">Job Ready Bootcamps</Link>
-                                                <Link to="/courses/live" className="p-2">Live Classes</Link>
-                                                <Link to="/courses/free" className="p-2">Free Tutorials</Link>
-                                            </AccordionContent>
-                                        </AccordionItem>
-
-                                        <AccordionItem value="paths">
-                                            <AccordionTrigger>Learning Paths</AccordionTrigger>
-                                            <AccordionContent className="flex flex-col gap-2">
-                                                <Link to="/paths/backend" className="p-2">Backend Architect</Link>
-                                                <Link to="/paths/frontend" className="p-2">Frontend Specialist</Link>
-                                                <Link to="/paths/frontend" className="p-2">Mobile Dev</Link>
-                                            </AccordionContent>
-                                        </AccordionItem>
-
-                                        <AccordionItem value="specs">
-                                            <AccordionTrigger>Specializations</AccordionTrigger>
-                                            <AccordionContent className="grid grid-cols-1 gap-1">
-                                                {courseCategories.map((course) => (
-                                                    <Link key={course.title} to={course.to} className="p-2 hover:bg-muted rounded-md">
-                                                        {course.title}
-                                                    </Link>
-                                                ))}
-                                            </AccordionContent>
-                                        </AccordionItem>
-                                    </Accordion>
-                                    <div className="flex items-center justify-between">
-                                        <div className="text-sm font-medium">Theme</div>
-                                        <SwitchTheme />
-                                    </div>
-                                    <div className="flex flex-col gap-3 mt-4">
-                                        <Button variant="outline" className="w-full" asChild>
-                                            <Link to="/login">Log in</Link>
-                                        </Button>
-                                        <Button className="w-full bg-primary" asChild>
-                                            <Link to="/signup">Join for Free <ArrowRight /></Link>
-                                        </Button>
-                                    </div>
-                                </div>
-                            </SheetContent>
-                        </Sheet>
+                        <MobileMenu />
                     </div>}
 
-                    {
-                        isLogin && <UserProfile />
-                    }
+                    {isLogin && <UserProfile />}
                 </div>
             </div>
         </header>
     );
 }
 
-const ListItem = React.forwardRef<
-    HTMLAnchorElement,
-    React.ComponentPropsWithoutRef<typeof Link> & { title: string, icon?: string }
->(({ className, title, icon, children, to, ...props }, ref) => (
-    <li>
-        <NavigationMenuLink asChild>
-            <Link
-                ref={ref}
-                to={to}
-                className={cn(
-                    "block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent",
-                    className
-                )}
-                {...props}
-            >
-                {/* Container for the SVG icon */}
-                <div className="mb-2 mr-2 flex h-12 w-12 items-center justify-center">
-                    <img
-                        src={icon}
-                        alt={title}
-                        className="h-full w-full object-contain"
-                    />
-                </div>
-
-                {/* Title and Description */}
-
-                <div>
-                    <div className="text-sm font-medium leading-none mb-1">{title}</div>
-                    <p className="line-clamp-2 text-xs leading-snug text-muted-foreground">
-                        {children}
-                    </p>
-                </div>
-
-            </Link>
-        </NavigationMenuLink>
-    </li>
-));
-ListItem.displayName = "ListItem";
 export default NavbarPresenter;
-
-
-
-
-
-
-
-
-
-import { cn } from "@/lib/utils";
-import { type User } from "@/features/auth/authApi";
-import UserProfile from "./common/user-profile";
-import { AnnouncementBanner } from "./announcement-banner";
-
