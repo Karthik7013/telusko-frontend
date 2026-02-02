@@ -7,11 +7,15 @@ import LearningPathPresenter, { TrustBar } from "@/components/learning-path-pres
 import { ScrollReveal } from "@/components/common/scroll-review"
 import TestimonialsPresenter from "@/components/testimonial"
 import RecommendedCourse from "./recommended-course"
+import { BubbleBackground } from "@/components/background-bubble"
 
 const Home = () => {
     return (
         <div>
-            <HeroContainer />
+
+            <BubbleBackground interactive>
+                <HeroContainer />
+            </BubbleBackground>
             <ScrollReveal>
                 <LatestCourseContainer />
             </ScrollReveal>

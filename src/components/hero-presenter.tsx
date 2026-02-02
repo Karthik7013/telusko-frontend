@@ -16,7 +16,7 @@ export default function HeroPresenter() {
                             Trusted by 2M+ Developers Worldwide
                         </Badge>
 
-                        <h1 className="my-6 text-4xl font-extrabold tracking-tight text-pretty lg:text-6xl">
+                        <h1 className="my-6 text-4xl text-primary font-extrabold tracking-tight text-pretty lg:text-6xl ">
                             Master Coding. <br />
                             <span className="text-primary">Build Your Future.</span>
                         </h1>
@@ -58,10 +58,7 @@ export default function HeroPresenter() {
                         </div>
                     </div>
 
-                    <div className="relative">
-                        {/* Decorative background element */}
-                        <div className="absolute -left-4 -top-4 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
-
+                    <div className="hidden relative lg:block">
                         <div className="relative rounded-xl border bg-card shadow-2xl overflow-hidden">
                             <img
                                 src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?q=80&w=1000&auto=format&fit=crop"
