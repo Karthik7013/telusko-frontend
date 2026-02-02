@@ -66,7 +66,7 @@ export function LoginForm({
     }
 
     return (
-        <div className={cn("w-full flex flex-col gap-6 max-w-sm mx-auto", className)} {...props}>
+        <div className={cn("w-full flex flex-col gap-6 max-w-xs lg:max-w-sm mx-auto", className)} {...props}>
             <Card className="shadow-lg">
                 <CardHeader>
                     <CardTitle className="text-2xl">Login to your account</CardTitle>
