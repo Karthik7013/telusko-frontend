@@ -1,6 +1,8 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { BookOpen, GraduationCap, Menu, MoveUpRight, ArrowRight } from "lucide-react";
+import { BookOpen, GraduationCap, Menu, MoveUpRight, ArrowRight, Search } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -10,8 +12,10 @@ import {
     NavigationMenuTrigger
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
     Sheet,
+
     SheetContent,
     SheetHeader,
     SheetTitle,
@@ -23,16 +27,8 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion";
-import { ToggleTheme } from "./common/toggle-theme";
-
-const courseCategories = [
-    { title: "Master Java", to: "/courses/java", description: "From Core Java to Advanced Spring Boot.", icon: "https://www.svgrepo.com/show/452234/java.svg" },
-    { title: "Python for AI", to: "/courses/python", description: "Focus on Data Science and AI.", icon: "https://www.svgrepo.com/show/452091/python.svg" },
-
-    { title: "Cloud & DevOps", to: "/courses/devops", description: "AWS, Docker, and Kubernetes.", icon: "https://www.svgrepo.com/show/448266/aws.svg" },
-
-    { title: "BlockChain", to: "/courses/blockchain", description: "Ethereum and Solidity.", icon: "https://www.svgrepo.com/show/353715/ethereum.svg" }
-];
+import { ToggleTheme, SwitchTheme } from "./common/toggle-theme";
+import { NAV_CATEGORIES as courseCategories } from "@/data/courses-data";
 
 
 export function NavbarPresenter({
@@ -41,6 +37,17 @@ export function NavbarPresenter({
     isLogin: boolean,
     data: User | undefined
 }) {
+    const navigate = useNavigate();
+    const [searchQuery, setSearchQuery] = React.useState("");
+
+    const handleSearch = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (searchQuery.trim()) {
+            navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+            setSearchQuery("");
+        }
+    };
+
 
     return (
         <header className="fixed top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -80,10 +87,13 @@ export function NavbarPresenter({
                     </NavigationMenu>}
                 </div>
 
-                {/* --- CENTER SECTION: DESKTOP CATEGORIES --- */}
-                <div className="hidden lg:block flex-1 max-w-md">
-                    {!isLogin && <div className="flex-1 max-w-md hidden md:block">
+                {/* --- CENTER SECTION: DESKTOP SEARCH & NAVIGATION --- */}
+                <div className="hidden lg:flex items-center gap-4 flex-1 max-w-lg mx-8">
+
+
+                    {!isLogin && <div className="hidden lg:block">
                         <NavigationMenu viewport={false}>
+                            {/* ... existing Learning Paths and Specializations ... */}
                             <NavigationMenuList>
                                 <NavigationMenuItem>
                                     <NavigationMenuTrigger className="hover:bg-transparent data-[active]:bg-transparent data-[state=open]:bg-transparent !bg-transparent">Learning Paths</NavigationMenuTrigger>
@@ -125,19 +135,15 @@ export function NavbarPresenter({
                                         </ul>
                                     </NavigationMenuContent>
                                 </NavigationMenuItem>
-                                <NavigationMenuItem>
-                                    <NavigationMenuLink asChild>
-                                        <Link to="/enterprise">For Business</Link>
-                                    </NavigationMenuLink>
-                                </NavigationMenuItem>
                             </NavigationMenuList>
                         </NavigationMenu>
                     </div>}
                 </div>
 
+
                 {/* --- RIGHT SECTION: AUTH & MOBILE MENU --- */}
                 <div className="flex items-center gap-2">
-                    <ToggleTheme />
+                    {/* <ToggleTheme /> */}
                     {!isLogin && <div className="items-center gap-2 hidden lg:flex">
                         <Button variant="ghost" asChild>
                             <Link to="/login">Log in</Link>
@@ -163,7 +169,9 @@ export function NavbarPresenter({
                                 </SheetHeader>
 
                                 <div className="flex flex-col gap-4">
+
                                     <Accordion type="single" collapsible className="w-full">
+
                                         <AccordionItem value="courses">
                                             <AccordionTrigger>Explore Courses</AccordionTrigger>
                                             <AccordionContent className="flex flex-col gap-2">
@@ -193,9 +201,9 @@ export function NavbarPresenter({
                                             </AccordionContent>
                                         </AccordionItem>
                                     </Accordion>
-                                    <div className="flex justify-between">
-                                        <div>Theme</div>
-                                        <ToggleTheme />
+                                    <div className="flex items-center justify-between">
+                                        <div className="text-sm font-medium">Theme</div>
+                                        <SwitchTheme />
                                     </div>
                                     <Link to="/enterprise" className="text-sm font-medium py-4">For Business <MoveUpRight className="inline w-4 h-4" /></Link>
 
@@ -208,9 +216,7 @@ export function NavbarPresenter({
                                             <Link to="/signup">Join for Free <ArrowRight /></Link>
                                         </Button>
                                     </div>
-
                                 </div>
-
                             </SheetContent>
                         </Sheet>
                     </div>}

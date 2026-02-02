@@ -28,7 +28,7 @@ export default function HeroPresenter() {
 
                         <div className="flex w-full flex-col justify-center gap-3 sm:flex-row lg:justify-start">
                             <Button asChild size="lg" className="w-full sm:w-auto px-8">
-                                <Link to="/courses">
+                                <Link to="/search">
                                     Explore Courses
                                     <ArrowRight className="ml-2 size-4" />
                                 </Link>

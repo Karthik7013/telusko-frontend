@@ -45,23 +45,24 @@ export default function UserProfile() {
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                     <DropdownMenuItem asChild>
-                        <Link to="/profile" className="cursor-pointer w-full flex items-center">
+                        <Link to="/dashboard" className="cursor-pointer w-full flex items-center">
                             <User className="mr-2 h-4 w-4" />
-                            <span>Profile</span>
+                            <span>Dashboard</span>
                         </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                        <Link to="/settings" className="cursor-pointer w-full flex items-center">
+                        <Link to="/dashboard/settings" className="cursor-pointer w-full flex items-center">
                             <Settings className="mr-2 h-4 w-4" />
                             <span>Settings</span>
                         </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                        <Link to="/billing" className="cursor-pointer w-full flex items-center">
+                        <Link to="/dashboard/transactions" className="cursor-pointer w-full flex items-center">
                             <CreditCard className="mr-2 h-4 w-4" />
                             <span>Billing</span>
                         </Link>
                     </DropdownMenuItem>
+
                 </DropdownMenuGroup>
 
                 <DropdownMenuSeparator />

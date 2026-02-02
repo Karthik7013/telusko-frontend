@@ -1,41 +1,13 @@
-
 import { Badge } from "@/components/ui/badge";
-import CourseCard from "./common/course-card";
-import type { CourseCardProps } from "@/types";
+import CourseCard, { CourseCardSkeleton } from "./common/course-card";
+import { useGetCoursesQuery } from "@/features/courses/coursesApi";
 
-
-
-
-const courses: CourseCardProps[] = [
-    {
-        title: "Java Masterclass: Zero to Hero",
-        instructor: "Navin Reddy",
-        description: "Master Java programming with Spring Boot, Hibernate, and Microservices.",
-        rating: "4.9",
-        duration: "45 Hours",
-        to: "/course/java-masterclass",
-        imageSrc: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800&auto=format&fit=crop"
-    },
-    {
-        title: "Ultimate Python for Data Science",
-        instructor: "Telusko Team",
-        description: "Learn Python from scratch and dive into NumPy, Pandas, and Matplotlib.",
-        rating: "4.8",
-        duration: "32 Hours",
-        to: "/course/python-ds",
-        imageSrc: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=800&auto=format&fit=crop"
-    },
-    {
-        title: "Modern Full-Stack Web Dev",
-        instructor: "Navin Reddy",
-        description: "Build scalable applications using React, Node.js, and MongoDB.",
-        rating: "4.9",
-        duration: "50 Hours",
-        to: "/course/fullstack",
-        imageSrc: "https://images.unsplash.com/photo-1627398242454-45a1465c2479?q=80&w=800&auto=format&fit=crop"
-    }
-];
 function LatestCoursePresenter() {
+    const { data: courses = [], isLoading } = useGetCoursesQuery();
+
+    // Show 3 newest courses
+    const latestCourses = courses.slice(0, 3);
+
     return (
         <section id="latest-course" className="bg-muted/30 py-16">
             <div className="container mx-auto px-4">
@@ -52,9 +24,21 @@ function LatestCoursePresenter() {
                 </div>
 
                 <div className="mx-auto grid gap-8 lg:grid-cols-3">
-                    {courses.map((course, index) => (
-                        <CourseCard key={index} course={course} />
-                    ))}
+                    {isLoading ? (
+                        [1, 2, 3].map((i) => <CourseCardSkeleton key={i} />)
+                    ) : (
+                        latestCourses.map((course) => (
+                            <CourseCard
+                                key={course.id}
+                                course={{
+                                    ...course,
+                                    to: `/course/${course.id}`,
+                                    rating: course.rating.average.toString(),
+                                    duration: `${course.features.video_hours} Hours`
+                                }}
+                            />
+                        ))
+                    )}
                 </div>
             </div>
         </section>

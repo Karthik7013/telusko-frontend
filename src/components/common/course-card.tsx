@@ -3,6 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 import { Badge } from "../ui/badge"
 import { Clock, Star } from "lucide-react"
 import type { CourseCardProps } from "@/types"
+import { Skeleton } from "../ui/skeleton"
+
 
 
 
@@ -51,6 +53,30 @@ export default function CourseCard({
                     </span>
                 </CardContent>
             </Link>
+        </Card>
+    )
+}
+
+export function CourseCardSkeleton() {
+    return (
+        <Card className="overflow-hidden border-none shadow-lg">
+            <div className="relative aspect-video overflow-hidden">
+                <Skeleton className="h-full w-full" />
+            </div>
+            <CardHeader className="p-5">
+                <div className="flex items-center gap-2 mb-2">
+                    <Skeleton className="h-4 w-4 rounded-full" />
+                    <Skeleton className="h-4 w-12" />
+                    <Skeleton className="h-4 w-24 ml-auto" />
+                </div>
+                <Skeleton className="h-6 w-3/4 mb-2" />
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-full mt-1" />
+            </CardHeader>
+            <CardContent className="p-5 pt-0 flex items-center justify-between">
+                <Skeleton className="h-4 w-16" />
+                <Skeleton className="h-4 w-24" />
+            </CardContent>
         </Card>
     )
 }
