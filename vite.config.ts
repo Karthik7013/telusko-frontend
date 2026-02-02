@@ -14,9 +14,27 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ["react", "react-dom", "react-router-dom"],
-          ui: ["lucide-react", "framer-motion", "@base-ui/react", "radix-ui"],
+        manualChunks: (id) => {
+          if (id.includes("node_modules")) {
+            if (id.includes("lucide-react")) {
+              return "ui-icons"
+            }
+            if (
+              id.includes("framer-motion") ||
+              id.includes("@radix-ui") ||
+              id.includes("@base-ui")
+            ) {
+              return "ui-framework"
+            }
+            if (
+              id.includes("react-router-dom") ||
+              id.includes("react-router") ||
+              id.includes("@remix-run")
+            ) {
+              return "vendor-router"
+            }
+            return "vendor"
+          }
         },
       },
     },
