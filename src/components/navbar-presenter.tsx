@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { BookOpen, GraduationCap, Menu, MoveUpRight, ArrowRight, Search } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { BookOpen, GraduationCap, Menu, MoveUpRight, ArrowRight } from "lucide-react";
 
 import {
     NavigationMenu,
@@ -12,7 +11,6 @@ import {
     NavigationMenuTrigger
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
     Sheet,
 
@@ -27,7 +25,7 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion";
-import { ToggleTheme, SwitchTheme } from "./common/toggle-theme";
+import { SwitchTheme } from "./common/toggle-theme";
 import { NAV_CATEGORIES as courseCategories } from "@/data/courses-data";
 
 
@@ -37,17 +35,6 @@ export function NavbarPresenter({
     isLogin: boolean,
     data: User | undefined
 }) {
-    const navigate = useNavigate();
-    const [searchQuery, setSearchQuery] = React.useState("");
-
-    const handleSearch = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (searchQuery.trim()) {
-            navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
-            setSearchQuery("");
-        }
-    };
-
 
     return (
         <header className="fixed top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
