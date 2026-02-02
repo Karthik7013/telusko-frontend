@@ -34,7 +34,7 @@ export default function HeroPresenter() {
                                 </Link>
                             </Button>
 
-                            <Button asChild variant="outline" size="lg" className="w-full sm:w-auto px-8">
+                            <Button asChild variant="secondary" size="lg" className="w-full sm:w-auto px-8">
                                 <Link to="/bootcamps" className="flex items-center">
                                     <PlayCircle className="mr-2 size-4" />
                                     Watch Free Demo
