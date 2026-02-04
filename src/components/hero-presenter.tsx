@@ -7,12 +7,12 @@ import { Button } from "@/components/ui/button";
 
 export default function HeroPresenter() {
     return (
-        <section className="py-30 lg:py-38 overflow-hidden">
+        <section className="py-30 lg:py-38 overflow-hidden h-svh">
             <div className="container mx-auto px-4">
                 <div className="grid items-center gap-12 lg:grid-cols-2">
                     <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
-                        <Badge variant="outline" className="px-3 py-1 border-primary/30 text-primary">
-                            <Users className="mr-2 size-3.5" />
+                        <Badge variant="outline" className="px-3 py-2 border-primary/30 text-primary">
+                            <Users className="size-3.5" />
                             Trusted by 2M+ Developers Worldwide
                         </Badge>
 
@@ -58,7 +58,7 @@ export default function HeroPresenter() {
                         </div>
                     </div>
 
-                    <div className="hidden relative lg:block">
+                    <div className="hidden relative">
                         <div className="relative rounded-xl border bg-card shadow-2xl overflow-hidden">
                             <img
                                 src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?q=80&w=1000&auto=format&fit=crop"

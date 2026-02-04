@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import {
     Sheet,
     SheetContent,
+    SheetDescription,
     SheetHeader,
     SheetTitle,
     SheetTrigger,
@@ -29,7 +30,11 @@ export function MobileMenu() {
                 <SheetHeader className="text-left px-0">
                     <SheetTitle className="flex items-center gap-2">
                         <GraduationCap className="h-6 w-6 text-primary" />
+                        <span className="font-bold">Telusko</span>
                     </SheetTitle>
+                    <SheetDescription className="sr-only">
+                        Mobile navigation menu for exploring courses and accessing account settings.
+                    </SheetDescription>
                 </SheetHeader>
 
                 <div className="flex flex-col gap-4">
