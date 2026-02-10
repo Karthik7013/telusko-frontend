@@ -5,7 +5,6 @@ export const DASHBOARD_NAV = [
         title: "Dashboard",
         url: "/dashboard",
         icon: LayoutDashboard,
-        isActive: true,
     },
     {
         title: "My Courses",

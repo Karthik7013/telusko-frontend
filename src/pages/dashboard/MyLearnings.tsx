@@ -1,5 +1,4 @@
 import CourseCard from "@/components/common/CourseCard";
-import { Progress } from "@/components/ui/progress";
 
 const enrolledCourses = [
     {
@@ -41,7 +40,7 @@ export default function MyLearningsPage() {
                                 <span className="text-muted-foreground font-medium">Progress</span>
                                 <span className="font-bold">{course.progress}%</span>
                             </div>
-                            <Progress value={course.progress} className="h-2" />
+                           
                         </div>
                     </div>
                 ))}
