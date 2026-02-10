@@ -1,6 +1,6 @@
 
 import { Badge } from "@/components/ui/badge";
-import CourseCard from "./common/course-card";
+import CourseCard from "../common/CourseCard";
 import type { CourseCardProps } from "@/types";
 import { useGetUserQuery } from "@/features/auth/authApi";
 

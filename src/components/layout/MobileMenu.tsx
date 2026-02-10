@@ -15,7 +15,7 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion";
-import { SwitchTheme } from "@/components/common/toggle-theme";
+import { SwitchTheme } from "@/components/common/ToggleTheme";
 import { NAV_CATEGORIES as courseCategories } from "@/data/courses-data";
 
 export function MobileMenu() {

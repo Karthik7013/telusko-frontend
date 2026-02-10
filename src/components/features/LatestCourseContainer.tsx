@@ -1,5 +1,5 @@
 import { useGetUserQuery } from "@/features/auth/authApi";
-import LatestCoursePresenter from "./latest-course-presenter"
+import LatestCoursePresenter from "@/components/features/LatestCoursePresenter"
 
 const LatestCourseContainer = () => {
     const { data } = useGetUserQuery();

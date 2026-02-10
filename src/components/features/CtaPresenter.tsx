@@ -1,7 +1,7 @@
 
 import { Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { useGetUserQuery } from "@/features/auth/authApi";
 
 export function FinalCTAPresenter() {

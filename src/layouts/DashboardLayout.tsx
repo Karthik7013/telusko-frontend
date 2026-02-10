@@ -1,11 +1,11 @@
-import { AppSidebar } from "@/components/dashboard/app-sidebar"
+import { AppSidebar } from "@/components/dashboard/AppSidebar"
 import {
     SidebarInset,
     SidebarProvider,
     SidebarTrigger,
 } from "@/components/ui/sidebar"
 
-import { ToggleTheme } from "@/components/common/toggle-theme";
+import { ToggleTheme } from "@/components/common/ToggleTheme";
 import { Outlet } from "react-router-dom";
 
 export default function Dashboard() {

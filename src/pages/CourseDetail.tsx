@@ -12,7 +12,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import CourseContent from './course-content';
+import CourseContent from '@/components/features/CourseContent';
 import { useGetCourseByIdQuery } from "@/features/courses/coursesApi";
 
 export default function CourseDetailPage() {

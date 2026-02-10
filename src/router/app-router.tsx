@@ -6,23 +6,23 @@ const MainLayout = lazy(() => import("@/layouts/MainLayout"))
 const DashboardLayout = lazy(() => import("@/layouts/DashboardLayout"))
 
 // Lazy load pages
-const Home = lazy(() => import("@/pages/home"))
-const CourseDetailPage = lazy(() => import("@/components/course-detail"))
-const SearchCoursesPage = lazy(() => import("@/pages/search-courses"))
+const Home = lazy(() => import("@/pages/Home"))
+const CourseDetailPage = lazy(() => import("@/pages/CourseDetail"))
+const SearchCoursesPage = lazy(() => import("@/pages/SearchCourses"))
 const Login = lazy(() => import("@/pages/Login"))
 const Signup = lazy(() => import("@/pages/Signup"))
-const ForgotPassword = lazy(() => import("@/pages/forgot-password"))
-const NotFound = lazy(() => import("@/pages/not-found"))
+const ForgotPassword = lazy(() => import("@/pages/ForgotPassword"))
+const NotFound = lazy(() => import("@/pages/NotFound"))
 
 // Dashboard pages
-const AnalyticsPage = lazy(() => import("@/pages/dashboard/analytics"))
-const MyLearningsPage = lazy(() => import("@/pages/dashboard/my-learnings"))
-const WishlistPage = lazy(() => import("@/pages/dashboard/wishlist"))
-const TransactionsPage = lazy(() => import("@/pages/dashboard/transactions"))
-const SettingsPage = lazy(() => import("@/pages/dashboard/settings"))
+const AnalyticsPage = lazy(() => import("@/pages/dashboard/Analytics"))
+const MyLearningsPage = lazy(() => import("@/pages/dashboard/MyLearnings"))
+const WishlistPage = lazy(() => import("@/pages/dashboard/Wishlist"))
+const TransactionsPage = lazy(() => import("@/pages/dashboard/Transactions"))
+const SettingsPage = lazy(() => import("@/pages/dashboard/Settings"))
 
-import { ProtectedRoute } from "@/components/auth/protected-route"
-import { GuestRoute } from "@/components/auth/guest-route"
+import { ProtectedRoute } from "@/features/auth/ProtectedRoute"
+import { GuestRoute } from "@/features/auth/GuestRoute"
 
 // Loading fallback component
 const PageLoader = () => (

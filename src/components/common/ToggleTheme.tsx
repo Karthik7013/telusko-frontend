@@ -1,6 +1,6 @@
 import { LaptopMinimal, Moon, Sun } from "lucide-react"
 import { useEffect, useState } from "react"
-import { useTheme } from "../../provider/theme-provider"
+import { useTheme } from "../../providers/ThemeProvider"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 export function SwitchTheme() {

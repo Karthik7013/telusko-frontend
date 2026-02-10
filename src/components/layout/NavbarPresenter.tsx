@@ -14,10 +14,10 @@ import { Button } from "@/components/ui/button";
 
 import { NAV_CATEGORIES as courseCategories } from "@/data/courses-data";
 import { type User } from "@/features/auth/authApi";
-import { AnnouncementBanner } from "./announcement-banner";
-import UserProfile from "./common/user-profile";
-import { MobileMenu } from "@/components/layout/navbar/mobile-menu";
-import { NavbarItem } from "@/components/layout/navbar/navbar-item";
+import { AnnouncementBanner } from "@/components/common/AnnouncementBanner";
+import UserProfile from "@/components/common/UserProfile";
+import { MobileMenu } from "@/components/layout/MobileMenu";
+import { NavbarItem } from "@/components/layout/NavbarItem";
 
 
 export function NavbarPresenter({

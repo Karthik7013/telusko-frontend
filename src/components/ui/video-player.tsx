@@ -102,11 +102,15 @@ export function Demo() {
     <div className="fixed inset-0 flex items-center justify-center p-8">
       <div className="w-full max-w-2xl">
         <VideoPlayer className="rounded-lg overflow-hidden border">
-          <video
+                    <video
             slot="media"
             src="https://stream.mux.com/VZtzUzGRv02OhRnZCxcNg49OilvolTqdnFLEqBsTwaxU/high.mp4"
             poster="https://image.mux.com/VZtzUzGRv02OhRnZCxcNg49OilvolTqdnFLEqBsTwaxU/thumbnail.webp?time=0"
             suppressHydrationWarning
+            preload="none"
+            width="100%"
+            height="auto"
+            controlsList="nodownload"
           />
           <VideoPlayerControlBar>
             <VideoPlayerPlayButton />

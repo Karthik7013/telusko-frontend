@@ -1,4 +1,4 @@
-import { ThemeProvider } from "./provider/theme-provider";
+import { ThemeProvider } from "./providers/ThemeProvider";
 import { Toaster } from "./components/ui/sonner";
 import {
     CheckCircle2,
@@ -10,8 +10,8 @@ import {
 } from "lucide-react";
 
 import AppRouter from "./router/app-router";
-import ContextProvider from "./provider/ContextProvider";
-import AuthProvider from "./provider/AuthProvider";
+import ContextProvider from "./providers/ContextProvider";
+import AuthProvider from "./providers/AuthProvider";
 export function App() {
     return (
         <ContextProvider>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AccordionContent, AccordionItem, AccordionTrigger, Accordion } from "./ui/accordion";
+import { AccordionContent, AccordionItem, AccordionTrigger, Accordion } from "@/components/ui/accordion";
 import { PlayCircle } from "lucide-react";
 
 export type CourseContentProp = {

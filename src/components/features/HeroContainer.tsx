@@ -1,6 +1,6 @@
 
 import { useGetUserQuery } from '@/features/auth/authApi'
-import HeroPresenter from './hero-presenter'
+import HeroPresenter from '@/components/features/HeroPresenter'
 
 const HeroContainer = () => {
     const { data } = useGetUserQuery();

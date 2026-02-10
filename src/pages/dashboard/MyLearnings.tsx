@@ -1,4 +1,4 @@
-import CourseCard from "@/components/common/course-card";
+import CourseCard from "@/components/common/CourseCard";
 import { Progress } from "@/components/ui/progress";
 
 const enrolledCourses = [

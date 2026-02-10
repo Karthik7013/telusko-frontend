@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import Cookies from "js-cookie";
 import { AnimatePresence } from "framer-motion";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { ArrowRight,X } from "lucide-react";
 
 import { motion } from "framer-motion"

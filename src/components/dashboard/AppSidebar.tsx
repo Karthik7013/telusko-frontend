@@ -5,9 +5,9 @@ import * as React from "react"
 
 
 
-import NavMain from "./nav-main"
-import { NavUser } from "./nav-user"
-import RoleSwitcher from "./team-switcher"
+import NavMain from "@/components/dashboard/NavMain"
+import { NavUser } from "@/components/dashboard/NavUser"
+import RoleSwitcher from "@/components/dashboard/TeamSwitcher"
 import {
     Sidebar,
     SidebarContent,

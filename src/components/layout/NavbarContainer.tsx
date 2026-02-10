@@ -1,5 +1,5 @@
 import { useGetUserQuery } from "@/features/auth/authApi";
-import NavbarPresenter from "./navbar-presenter";
+import NavbarPresenter from "@/components/layout/NavbarPresenter";
 
 const NavbarContainer = () => {
     const { data } = useGetUserQuery()

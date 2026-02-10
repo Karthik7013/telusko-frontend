@@ -58,7 +58,7 @@ export default function HeroPresenter() {
                         </div>
                     </div>
 
-                    <div className="hidden relative">
+                    <div className="relative">
                         <div className="relative rounded-xl border bg-card shadow-2xl overflow-hidden">
                             <img
                                 src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?q=80&w=1000&auto=format&fit=crop"

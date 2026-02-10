@@ -19,7 +19,7 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet";
-import CourseCard, { CourseCardSkeleton } from "@/components/common/course-card";
+import CourseCard, { CourseCardSkeleton } from "@/components/common/CourseCard";
 import { useGetCoursesQuery } from "@/features/courses/coursesApi";
 import { CATEGORIES, LEVELS } from "@/data/courses-data";
 

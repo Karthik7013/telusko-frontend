@@ -1,4 +1,4 @@
-import RecommendedCoursePresenter from "@/components/recommended-course-presenter"
+import RecommendedCoursePresenter from "@/components/features/RecommendedCoursePresenter"
 
 export default function RecommendedCourse() {
     return (

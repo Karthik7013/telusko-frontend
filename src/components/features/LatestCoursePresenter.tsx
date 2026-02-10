@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import CourseCard, { CourseCardSkeleton } from "./common/course-card";
+import CourseCard, { CourseCardSkeleton } from "../common/CourseCard";
 import { useGetCoursesQuery } from "@/features/courses/coursesApi";
 
 function LatestCoursePresenter() {

@@ -1,4 +1,4 @@
-import CourseCard from "@/components/common/course-card";
+import CourseCard from "@/components/common/CourseCard";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 

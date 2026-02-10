@@ -1,19 +1,19 @@
-import { FinalCTAPresenter } from "@/components/cta-presenter"
-import FAQPresenter from "@/components/faq-resenter"
-import HeroContainer from "@/components/hero-container"
-import LatestCourseContainer from "@/components/latest-course-container"
-import LearningPathPresenter, { TrustBar } from "@/components/learning-path-presenter"
+import { FinalCTAPresenter } from "@/components/features/CtaPresenter"
+import FaqPresenter from "@/components/features/FaqPresenter"
+import HeroContainer from "@/components/features/HeroContainer"
+import LatestCourseContainer from "@/components/features/LatestCourseContainer"
+import LearningPathPresenter, { TrustBar } from "@/components/features/LearningPathPresenter"
 
-import { ScrollReveal } from "@/components/common/scroll-review"
-import TestimonialsPresenter from "@/components/testimonial"
-import RecommendedCourse from "./recommended-course"
-import { BubbleBackground } from "@/components/background-bubble"
+import { ScrollReveal } from "@/components/common/ScrollReview"
+import TestimonialsPresenter from "@/components/features/Testimonial"
+import RecommendedCourse from "./RecommendedCourse"
+import { BubbleBackground } from "@/components/common/BackgroundBubble"
 
 const Home = () => {
     return (
         <div>
 
-            <BubbleBackground interactive>
+            <BubbleBackground>
                 <HeroContainer />
             </BubbleBackground>
             <ScrollReveal>
@@ -32,7 +32,7 @@ const Home = () => {
                 <TestimonialsPresenter />
             </ScrollReveal>
             <ScrollReveal>
-                <FAQPresenter />
+                <FaqPresenter />
             </ScrollReveal>
             <ScrollReveal>
                 <FinalCTAPresenter />
