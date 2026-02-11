@@ -15,7 +15,7 @@ import AuthProvider from "./providers/AuthProvider";
 export function App() {
     return (
         <ContextProvider>
-            <ThemeProvider defaultTheme="dark" storageKey="app-theme">
+            <ThemeProvider defaultTheme="light" storageKey="app-theme">
                 <AuthProvider>
                     <Toaster
                         icons={{

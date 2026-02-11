@@ -35,13 +35,6 @@ export default function MyLearningsPage() {
                 {enrolledCourses.map((course, index) => (
                     <div key={index} className="space-y-3">
                         <CourseCard course={course} />
-                        <div className="px-2 space-y-1.5">
-                            <div className="flex justify-between text-sm">
-                                <span className="text-muted-foreground font-medium">Progress</span>
-                                <span className="font-bold">{course.progress}%</span>
-                            </div>
-                           
-                        </div>
                     </div>
                 ))}
             </div>

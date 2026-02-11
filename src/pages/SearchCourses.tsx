@@ -6,13 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
-import {
     Sheet,
     SheetContent,
     SheetHeader,
@@ -31,7 +24,6 @@ export default function SearchCoursesPage() {
 
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
     const [selectedLevels, setSelectedLevels] = useState<string[]>([]);
-    const [sortBy, setSortBy] = useState("relevance");
 
     const filteredCourses = useMemo(() => {
         return allCourses.filter(course => {
@@ -148,17 +140,7 @@ export default function SearchCoursesPage() {
                             </Sheet>
                         </div>
 
-                        <Select value={sortBy} onValueChange={setSortBy}>
-                            <SelectTrigger className="w-[180px] h-11">
-                                <SelectValue placeholder="Sort by" />
-                            </SelectTrigger>
-                            <SelectContent position="popper" align="end">
-                                <SelectItem value="relevance">Relevance</SelectItem>
-                                <SelectItem value="newest">Newest</SelectItem>
-                                <SelectItem value="rating">Highest Rated</SelectItem>
-                                <SelectItem value="price-low">Price: Low to High</SelectItem>
-                            </SelectContent>
-                        </Select>
+                        
                     </div>
                 </div>
 
