@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ApiError } from "@/components/common/ApiError";
+// import { ApiError } from "@/components/common/ApiError";
 import { EmptyState } from "@/components/common/EmptyState";
 import { useGetTransactionsQuery } from "@/features/transactions/transactionsApi";
 
