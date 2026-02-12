@@ -1,11 +1,13 @@
 import { Badge } from "@/components/ui/badge";
 import CourseCard, { CourseCardSkeleton } from "../common/CourseCard";
 import { useGetCoursesQuery } from "@/features/courses/coursesApi";
+import { ApiError } from "@/components/common/ApiError";
+import { EmptyState } from "@/components/common/EmptyState";
 
 function LatestCoursePresenter() {
-    const { data: courses = [], isLoading } = useGetCoursesQuery();
+    const { data: courses = [], isLoading, error, refetch } = useGetCoursesQuery();
 
-    // Show 3 newest courses
+    // Show 3 newest courses (could be sorted by last_update or created_at)
     const latestCourses = courses.slice(0, 3);
 
     return (
@@ -23,11 +25,31 @@ function LatestCoursePresenter() {
                     </div>
                 </div>
 
-                <div className="mx-auto grid gap-8 lg:grid-cols-3">
-                    {isLoading ? (
-                        [1, 2, 3].map((i) => <CourseCardSkeleton key={i} />)
-                    ) : (
-                        latestCourses.map((course) => (
+                {isLoading ? (
+                    <div className="mx-auto grid gap-8 lg:grid-cols-3">
+                        {[1, 2, 3].map((i) => (
+                            <CourseCardSkeleton key={i} />
+                        ))}
+                    </div>
+                ) : error ? (
+                    <div className="mx-auto max-w-2xl">
+                        <ApiError
+                            error="Failed to load latest courses. Please try again."
+                            onRetry={() => refetch()}
+                        />
+                    </div>
+                ) : latestCourses.length === 0 ? (
+                    <EmptyState
+                        title="No Latest Courses"
+                        description="There are no courses available at the moment. Check back later for new releases."
+                        action={{
+                            label: "Browse All Courses",
+                            onClick: () => window.location.href = "/search"
+                        }}
+                    />
+                ) : (
+                    <div className="mx-auto grid gap-8 lg:grid-cols-3">
+                        {latestCourses.map((course) => (
                             <CourseCard
                                 key={course.id}
                                 course={{
@@ -37,9 +59,9 @@ function LatestCoursePresenter() {
                                     duration: `${course.features.video_hours} Hours`
                                 }}
                             />
-                        ))
-                    )}
-                </div>
+                        ))}
+                    </div>
+                )}
             </div>
         </section>
     );

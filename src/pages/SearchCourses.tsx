@@ -14,13 +14,14 @@ import {
 } from "@/components/ui/sheet";
 import CourseCard, { CourseCardSkeleton } from "@/components/common/CourseCard";
 import { useGetCoursesQuery } from "@/features/courses/coursesApi";
+import { ApiError } from "@/components/common/ApiError";
 import { CATEGORIES, LEVELS } from "@/data/courses-data";
 
 export default function SearchCoursesPage() {
     const [searchParams, setSearchParams] = useSearchParams();
     const query = searchParams.get("q") || "";
 
-    const { data: allCourses = [], isLoading } = useGetCoursesQuery();
+    const { data: allCourses = [], isLoading, error, refetch } = useGetCoursesQuery();
 
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
     const [selectedLevels, setSelectedLevels] = useState<string[]>([]);
@@ -163,6 +164,13 @@ export default function SearchCoursesPage() {
                                 {[1, 2, 3, 4, 5, 6].map((i) => (
                                     <CourseCardSkeleton key={i} />
                                 ))}
+                            </div>
+                        ) : error ? (
+                            <div className="max-w-2xl mx-auto">
+                                <ApiError
+                                    error="Failed to load courses. Please try again."
+                                    onRetry={() => refetch()}
+                                />
                             </div>
                         ) : filteredCourses.length > 0 ? (
                             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
