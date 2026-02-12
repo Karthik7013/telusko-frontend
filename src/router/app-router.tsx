@@ -23,6 +23,7 @@ const SettingsPage = lazy(() => import("@/pages/dashboard/Settings"))
 
 import { ProtectedRoute } from "@/features/auth/ProtectedRoute"
 import { GuestRoute } from "@/features/auth/GuestRoute"
+import CoursePlayer from "@/pages/dashboard/course-player"
 
 // Loading fallback component
 const PageLoader = () => (
@@ -52,6 +53,7 @@ const AppRouter = () => {
                             <Route path="whishlist" Component={WishlistPage} />
                             <Route path="transactions" Component={TransactionsPage} />
                             <Route path="settings" Component={SettingsPage} />
+                            <Route path="course-player" Component={CoursePlayer} />
                             <Route path="*" Component={NotFound} />
                         </Route>
 

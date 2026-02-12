@@ -99,28 +99,28 @@ export const VideoPlayerContent = ({ className, ...props }: VideoPlayerContentPr
 // Demo
 export function Demo() {
   return (
-    <div className="fixed inset-0 flex items-center justify-center p-8">
-      <div className="w-full max-w-2xl">
-        <VideoPlayer className="rounded-lg overflow-hidden border">
-                    <video
-            slot="media"
-            src="https://stream.mux.com/VZtzUzGRv02OhRnZCxcNg49OilvolTqdnFLEqBsTwaxU/high.mp4"
-            poster="https://image.mux.com/VZtzUzGRv02OhRnZCxcNg49OilvolTqdnFLEqBsTwaxU/thumbnail.webp?time=0"
-            suppressHydrationWarning
-            preload="none"
-            width="100%"
-            height="auto"
-            controlsList="nodownload"
-          />
-          <VideoPlayerControlBar>
-            <VideoPlayerPlayButton />
-            <VideoPlayerTimeRange />
-            <VideoPlayerTimeDisplay showDuration />
-            <VideoPlayerMuteButton />
-            <VideoPlayerVolumeRange />
-          </VideoPlayerControlBar>
-        </VideoPlayer>
-      </div>
+    <div className="flex w-full items-center justify-center p-8">
+      <VideoPlayer>
+        <video
+          slot="media"
+          src="https://res.cloudinary.com/dy0qvjkff/video/upload/v1770664244/ueke5mact6ac60hgeoii.mp4"
+          poster="https://image.mux.com/VZtzUzGRv02OhRnZCxcNg49OilvolTqdnFLEqBsTwaxU/thumbnail.webp?time=0"
+          suppressHydrationWarning
+          preload="none"
+          width="100%"
+          height="auto"
+          controlsList="nodownload"
+        />
+        <VideoPlayerControlBar>
+          <VideoPlayerPlayButton />
+          <VideoPlayerSeekBackwardButton />
+          <VideoPlayerSeekForwardButton />
+          <VideoPlayerTimeRange />
+          <VideoPlayerTimeDisplay showDuration />
+          <VideoPlayerMuteButton />
+          <VideoPlayerVolumeRange />
+        </VideoPlayerControlBar>
+      </VideoPlayer>
     </div>
   )
 }

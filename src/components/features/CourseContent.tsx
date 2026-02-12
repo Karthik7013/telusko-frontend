@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { AccordionContent, AccordionItem, AccordionTrigger, Accordion } from "@/components/ui/accordion";
-import { PlayCircle } from "lucide-react";
+import { FileVideo, PlayCircle } from "lucide-react";
+import { Empty, EmptyDescription, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
 
 export type CourseContentProp = {
     sections: {
@@ -47,8 +48,23 @@ export default function CourseContent({
     //     </section>
     // }
 
+    if (content.sections.length === 0) {
+        return (
+            <section>
+                <h2 className="text-lg font-bold mb-4">Course content</h2>
+                <Empty className="border rounded-lg bg-muted/10 py-8">
+                    <EmptyMedia>
+                        <FileVideo className="size-8 text-muted-foreground/50" />
+                    </EmptyMedia>
+                    <EmptyTitle className="text-base">No sections available</EmptyTitle>
+                    <EmptyDescription>Course content will appear here once added.</EmptyDescription>
+                </Empty>
+            </section>
+        );
+    }
+
     return <section>
-        <h2 className="text-2xl font-bold mb-4">Course content</h2>
+        <h2 className="text-lg font-bold mb-4">Course content</h2>
         <div className="flex flex-col sm:flex-row justify-end text-sm mb-4 gap-2">
 
             <button
