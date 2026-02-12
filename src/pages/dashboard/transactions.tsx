@@ -16,8 +16,8 @@ export default function TransactionsPage() {
     const {
         data: transactions,
         isLoading,
-        error,
-        refetch,
+        // error,
+        // refetch,
     } = useGetTransactionsQuery();
 
     if (isLoading) {
