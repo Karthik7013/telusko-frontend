@@ -146,7 +146,6 @@ export class FakeApiService {
 
     const { ALL_COURSES } = await import('@/data/courses-data');
     const course = ALL_COURSES.find(c => c.id === id);
-
     if (!course) {
       return {
         data: null,

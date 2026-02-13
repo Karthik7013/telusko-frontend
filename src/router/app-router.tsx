@@ -23,25 +23,19 @@ const SettingsPage = lazy(() => import("@/pages/dashboard/Settings"))
 
 import { ProtectedRoute } from "@/features/auth/ProtectedRoute"
 import { GuestRoute } from "@/features/auth/GuestRoute"
-import CoursePlayer from "@/pages/dashboard/course-player"
-
-// Loading fallback component
-const PageLoader = () => (
-    <div className="flex h-screen w-full items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
-    </div>
-)
+import CoursePlayer from "@/pages/dashboard/CoursePlayer"
+import PageLoader from "@/components/common/PageLoader"
 
 const AppRouter = () => {
     return (
         <BrowserRouter>
             <Suspense fallback={<PageLoader />}>
                 <Routes>
+                    {/* Public Routes */}
                     <Route path="/" Component={MainLayout}>
                         <Route index Component={Home} />
                         <Route path="course/:id" Component={CourseDetailPage} />
                         <Route path="search" Component={SearchCoursesPage} />
-
                         <Route path="*" Component={NotFound} />
                     </Route>
 
@@ -56,7 +50,6 @@ const AppRouter = () => {
                             <Route path="course-player" Component={CoursePlayer} />
                             <Route path="*" Component={NotFound} />
                         </Route>
-
                     </Route>
 
                     {/* Public Auth Routes */}

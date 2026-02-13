@@ -3,6 +3,7 @@ import { Badge } from "../ui/badge"
 import { Clock, Star } from "lucide-react"
 import type { CourseCardProps } from "@/types"
 import { Skeleton } from "../ui/skeleton"
+import { Button } from "@/components/ui/button"
 
 
 
@@ -30,7 +31,7 @@ export default function CourseCard({
                         <div className="flex items-center gap-1 text-yellow-500 mb-2">
                             <Star className="size-4 fill-current" />
                             <span className="text-sm font-bold text-foreground">{course.rating}</span>
-                            <span className="text-xs text-muted-foreground ml-1">Instructor: {course.instructor}</span>
+                            
                         </div>
                         <Badge className="bg-background/80 text-foreground backdrop-blur-md">
                             <Clock className="mr-1 size-4" />
@@ -47,13 +48,11 @@ export default function CourseCard({
                 </p>
 
                 <div className='flex items-center justify-between'>
-                    <div className="flex items-center text-sm text-muted-foreground">
-                        <Clock className="mr-1 size-4" />
-                        {course.duration}
-                    </div>
-                    <span className="text-primary font-semibold text-sm group-hover:underline">
-                        View Details →
-                    </span>
+                    <span className="text-xs text-muted-foreground ml-1">Instructor: {course.instructor}</span>
+
+                    <Button asChild variant={'link'} >
+                        <a href={course.to}>View Details</a>
+                    </Button>
                 </div>
             </CardContent>
         </Card>

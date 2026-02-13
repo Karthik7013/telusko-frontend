@@ -24,7 +24,9 @@ import {
 } from "@/components/ui/video-player";
 import { cn } from "@/lib/utils";
 
-export default function CoursePlayer() {
+export default function CoursePlayer({
+
+}) {
     const [isPlaylistOpen, setPlaylistOpen] = useState(true);
 
     return (
@@ -32,7 +34,7 @@ export default function CoursePlayer() {
             <div className="container mx-auto py-6">
                 <div className={cn(
                     "grid gap-8 max-w-6xl mx-auto transition-all duration-500 ease-in-out",
-                    isPlaylistOpen ? "lg:grid-cols-[1fr_350px]" : "lg:grid-cols-[1fr_0px] lg:gap-0"
+                    isPlaylistOpen ? "lg:grid-cols-[1fr_350px]" : "max-w-4xl  lg:grid-cols-[1fr_0px] lg:gap-0"
                 )}>
                     {/* Left Column: Video Player & Details */}
                     <div className="space-y-6 min-w-0">
@@ -42,8 +44,8 @@ export default function CoursePlayer() {
                                 <video
                                     slot="media"
                                     src="https://res.cloudinary.com/dy0qvjkff/video/upload/v1770664244/ueke5mact6ac60hgeoii.mp4"
-                                    poster="https://image.mux.com/VZtzUzGRv02OhRnZCxcNg49OilvolTqdnFLEqBsTwaxU/thumbnail.webp?time=0"
-                                    className="w-full h-full object-contain"
+                                    poster="https://cdn.pixabay.com/photo/2023/12/16/00/06/mountain-8451604_1920__1b578b3c0b.jpg"
+                                    className="w-full h-full object-cover"
                                     crossOrigin=""
                                     playsInline
                                 />

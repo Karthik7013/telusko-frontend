@@ -2,7 +2,7 @@ import { useGetUserQuery } from "@/features/auth/authApi"
 import { toast } from "sonner";
 import { AlertCircle } from "lucide-react";
 import { useEffect } from "react";
-import FullScreenLoader from "@/components/common/FullScreenLoader";
+import PageLoader from "@/components/common/PageLoader";
 
 export default function AuthProvider(props: {
     children: React.ReactNode
@@ -28,7 +28,7 @@ export default function AuthProvider(props: {
 
 
     if (isLoading) {
-        return <FullScreenLoader />
+        return <PageLoader />
     }
 
     return <>

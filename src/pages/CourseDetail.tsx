@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import CourseContent from '@/components/features/CourseContent';
 import { useGetCourseByIdQuery } from "@/features/courses/coursesApi";
+import { Demo } from "@/components/ui/video-player";
 
 export default function CourseDetailPage() {
     const { id } = useParams<{ id: string }>();
@@ -38,57 +39,87 @@ export default function CourseDetailPage() {
 
     return (
         <div>
-            {/* HERO SECTION */}
-            <section className="bg-card text-card-foreground py-16 lg:py-24 relative overflow-hidden">
-                <div className="container mx-auto px-4 grid gap-8 lg:grid-cols-3">
-                    <div className="lg:col-span-2 space-y-6">
-                        <h1 className="text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
-                            {course.title}
-                        </h1>
-                        <p className="text-xl text-muted-foreground leading-relaxed">
-                            {course.sub_title}
-                        </p>
-
-                        <div className="flex flex-wrap gap-2">
-                            {course.tags.map((tag) => (
-                                <Badge key={tag} variant="secondary" className="px-3 py-1">
-                                    {tag}
-                                </Badge>
-                            ))}
+            <div className="container mx-auto px-4 py-16 lg:py-24">
+                <div className="grid gap-8 lg:grid-cols-3">
+                    <div className="lg:col-span-2 space-y-12">
+                        <div className="relative lg:hidden">
+                            <Demo />
                         </div>
-
-                        <div className="flex flex-wrap items-center gap-6 text-sm">
-                            <div className="flex items-center gap-1.5 text-orange-400 font-bold text-base">
-                                <span>{course.rating.average}</span>
-                                <div className="flex"><Star className="size-4 fill-current" /></div>
+                        {/* HERO SECTION */}
+                        <div className="space-y-3">
+                            <h1 className="text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
+                                {course.title}
+                            </h1>
+                            <p className="text-xl text-muted-foreground leading-relaxed">
+                                {course.sub_title}
+                            </p>
+                            <div className="flex flex-wrap gap-2">
+                                {course.tags.map((tag) => (
+                                    <Badge key={tag} variant="secondary" className="px-3 py-1">
+                                        {tag}
+                                    </Badge>
+                                ))}
                             </div>
-                            <span className="underline text-primary/80">({course.rating.count.toLocaleString()} ratings)</span>
-                            <span className="font-medium">{course.enrollment_count.toLocaleString()} learners</span>
+
+                            <div className="flex flex-wrap items-center gap-6 text-sm">
+                                <div className="flex items-center gap-1.5 text-orange-400 font-bold text-base">
+                                    <span>{course.rating.average}</span>
+                                    <div className="flex"><Star className="size-4 fill-current" /></div>
+                                </div>
+                                <span className="underline text-primary/80">({course.rating.count.toLocaleString()} ratings)</span>
+                                <span className="font-medium">{course.enrollment_count.toLocaleString()} learners</span>
+                            </div>
+
+                            <p className="text-base">Created by <span className="underline text-primary font-medium cursor-pointer">{course.author.name}</span></p>
+
+                            <div className="flex flex-wrap items-center gap-8 text-sm text-muted-foreground">
+                                <span className="flex items-center gap-1.5"><Info className="size-4" /> Last updated {course.last_update}</span>
+                                <span className="flex items-center gap-1.5"><Globe className="size-4" /> {course.language}</span>
+                            </div>
                         </div>
 
-                        <p className="text-base">Created by <span className="underline text-primary font-medium cursor-pointer">{course.author.name}</span></p>
+                        {/* MAIN CONTENT AREA */}
+                        <div className="space-y-16">
+                            {/* WHAT YOU'LL LEARN */}
+                            <section className="border-2 p-4 rounded-xl bg-muted/30">
+                                <h2 className="text-2xl font-bold mb-8">What you'll learn</h2>
+                                <div className="grid sm:grid-cols-2 gap-x-12 gap-y-6">
+                                    {course.learning_outcomes.map((item, i) => (
+                                        <div key={i} className="flex gap-4 text-sm leading-relaxed">
+                                            <Check className="size-5 mt-0.5 shrink-0 text-primary" />
+                                            <span className="font-medium">{item}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
 
-                        <div className="flex flex-wrap items-center gap-8 text-sm text-muted-foreground">
-                            <span className="flex items-center gap-1.5"><Info className="size-4" /> Last updated {course.last_update}</span>
-                            <span className="flex items-center gap-1.5"><Globe className="size-4" /> {course.language}</span>
+                            {/* COURSE CONTENT */}
+                            <section className="border-2 p-4 rounded-xl bg-muted/30">
+                                <CourseContent content={course.content} />
+                            </section>
+
+                            {/* REQUIREMENTS */}
+                            <section className="border-2 p-4 rounded-xl bg-muted/30">
+                                <h2 className="text-2xl font-bold mb-8">Requirements</h2>
+                                <ul className="grid gap-3">
+                                    {course.requirements.map((req, i) => (
+                                        <li key={i} className="flex gap-4 items-center font-medium">
+                                            <div className="size-2 rounded-full bg-primary shrink-0" />
+                                            {req}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </section>
                         </div>
                     </div>
 
-                    <div className='relative lg:col-span-1'>
-                        <aside className="lg:sticky lg:top-28">
-                            <div className="border bg-card shadow-2xl rounded-xl overflow-hidden">
-                                <div className="relative aspect-video group cursor-pointer">
-                                    <img
-                                        src={course.preview_video.thumbnail_url}
-                                        alt="Preview"
-                                        className="w-full h-full object-cover"
-                                    />
-                                    <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center group-hover:bg-black/60 transition-all">
-                                        <PlayCircle className="size-16 text-white" />
-                                        <span className="text-white font-bold mt-4 text-lg">Preview this course</span>
-                                    </div>
+                    {/* SIDEBAR */}
+                    <div className='relative hidden lg:block lg:col-span-1'>
+                        <aside className="sticky top-24">
+                            <div className="border bg-card text-card-foreground shadow-2xl rounded-xl overflow-hidden p-0">
+                                <div className="relative">
+                                    <Demo />
                                 </div>
-
                                 <div className="p-8 space-y-6">
                                     <div className="flex items-center gap-3">
                                         <span className="text-4xl font-bold">{course.price.currency}{course.price.current}</span>
@@ -116,44 +147,7 @@ export default function CourseDetailPage() {
                         </aside>
                     </div>
                 </div>
-            </section>
-
-            {/* MAIN CONTENT AREA */}
-            <main className="container mx-auto px-4 py-16">
-                <div className="lg:w-2/3 space-y-16">
-                    {/* WHAT YOU'LL LEARN */}
-                    <section className="border-2 p-8 rounded-xl bg-muted/30">
-                        <h2 className="text-2xl font-bold mb-8">What you'll learn</h2>
-                        <div className="grid sm:grid-cols-2 gap-x-12 gap-y-6">
-                            {course.learning_outcomes.map((item, i) => (
-                                <div key={i} className="flex gap-4 text-sm leading-relaxed">
-                                    <Check className="size-5 mt-0.5 shrink-0 text-primary" />
-                                    <span className="font-medium">{item}</span>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
-
-                    {/* COURSE CONTENT */}
-                    <section>
-                        <h2 className="text-2xl font-bold mb-8">Course content</h2>
-                        <CourseContent content={course.content} />
-                    </section>
-
-                    {/* REQUIREMENTS */}
-                    <section>
-                        <h2 className="text-2xl font-bold mb-6">Requirements</h2>
-                        <ul className="grid gap-3">
-                            {course.requirements.map((req, i) => (
-                                <li key={i} className="flex gap-4 items-center font-medium">
-                                    <div className="size-2 rounded-full bg-primary shrink-0" />
-                                    {req}
-                                </li>
-                            ))}
-                        </ul>
-                    </section>
-                </div>
-            </main>
+            </div>
         </div>
     );
 }
@@ -161,30 +155,37 @@ export default function CourseDetailPage() {
 function CourseDetailSkeleton() {
     return (
         <div>
-            <section className="bg-card text-card-foreground py-16 lg:py-24 relative overflow-hidden">
-                <div className="container mx-auto px-4 grid gap-8 lg:grid-cols-3">
-                    <div className="lg:col-span-2 space-y-6">
-                        <Skeleton className="h-12 w-3/4" />
-                        <Skeleton className="h-6 w-full" />
-                        <Skeleton className="h-6 w-2/3" />
+            <div className="container mx-auto px-4 py-16 lg:py-24">
+                <div className="grid gap-8 lg:grid-cols-3">
+                    <div className="lg:col-span-2 space-y-12">
+                        <div className="space-y-6">
+                            <Skeleton className="h-12 w-3/4" />
+                            <Skeleton className="h-6 w-full" />
+                            <Skeleton className="h-6 w-2/3" />
 
-                        <div className="flex gap-2">
-                            <Skeleton className="h-8 w-20 rounded-full" />
-                            <Skeleton className="h-8 w-24 rounded-full" />
-                            <Skeleton className="h-8 w-20 rounded-full" />
+                            <div className="flex gap-2">
+                                <Skeleton className="h-8 w-20 rounded-full" />
+                                <Skeleton className="h-8 w-24 rounded-full" />
+                                <Skeleton className="h-8 w-20 rounded-full" />
+                            </div>
+
+                            <div className="flex gap-6">
+                                <Skeleton className="h-6 w-16" />
+                                <Skeleton className="h-6 w-32" />
+                                <Skeleton className="h-6 w-24" />
+                            </div>
+
+                            <Skeleton className="h-6 w-48" />
+
+                            <div className="flex gap-8">
+                                <Skeleton className="h-6 w-32" />
+                                <Skeleton className="h-6 w-24" />
+                            </div>
                         </div>
 
-                        <div className="flex gap-6">
-                            <Skeleton className="h-6 w-16" />
-                            <Skeleton className="h-6 w-32" />
-                            <Skeleton className="h-6 w-24" />
-                        </div>
-
-                        <Skeleton className="h-6 w-48" />
-
-                        <div className="flex gap-8">
-                            <Skeleton className="h-6 w-32" />
-                            <Skeleton className="h-6 w-24" />
+                        <div className="space-y-16">
+                            <Skeleton className="h-64 w-full rounded-xl" />
+                            <Skeleton className="h-96 w-full" />
                         </div>
                     </div>
 
@@ -205,13 +206,7 @@ function CourseDetailSkeleton() {
                         </div>
                     </div>
                 </div>
-            </section>
-            <main className="container mx-auto px-4 py-16">
-                <div className="lg:w-2/3 space-y-16">
-                    <Skeleton className="h-64 w-full rounded-xl" />
-                    <Skeleton className="h-96 w-full" />
-                </div>
-            </main>
+            </div>
         </div>
     );
 }

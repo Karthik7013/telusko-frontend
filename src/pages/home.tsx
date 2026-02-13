@@ -12,7 +12,6 @@ import { BubbleBackground } from "@/components/common/BackgroundBubble"
 const Home = () => {
     return (
         <div>
-
             <BubbleBackground>
                 <HeroContainer />
             </BubbleBackground>

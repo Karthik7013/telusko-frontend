@@ -64,9 +64,8 @@ export default function CourseContent({
     }
 
     return <section>
-        <h2 className="text-lg font-bold mb-4">Course content</h2>
+        <h2 className="text-2xl font-bold">Course content</h2>
         <div className="flex flex-col sm:flex-row justify-end text-sm mb-4 gap-2">
-
             <button
                 onClick={toggleExpandAll}
                 className="font-bold text-right"

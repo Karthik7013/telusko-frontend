@@ -12,7 +12,7 @@ export type Section = {
     totalDuration: string;
 };
 
-export type CourseDetails = {
+export type CourseDetailsProps = {
     id: string;
     title: string;
     sub_title: string;
@@ -59,4 +59,25 @@ export type CourseDetails = {
     imageSrc: string; // For backward compatibility with CourseCardProps
 };
 
-export type Course = CourseDetails;
+
+// src/types/course.ts
+export type CourseCardProps = {
+    id: string;
+    title: string;
+    sub_title: string;
+    description: string;
+    instructor: string;
+    author: {
+        name: string;
+        profile_url?: string;
+    };
+    rating: {
+        average: number;
+        count: number;
+    };
+    imageSrc: string; // For backward compatibility with CourseCardProps
+};
+
+
+
+export type Course = CourseDetailsProps;
