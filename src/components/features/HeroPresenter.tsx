@@ -1,13 +1,21 @@
 
 import { ArrowRight, PlayCircle, Users } from "lucide-react";
 import { Link } from "react-router-dom";
-
+import learning from '../../assets/Learning languages-pana.svg';
+import react from '../../assets/react.svg';
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselPrevious,
+    CarouselNext
+} from "@/components/ui/carousel";
 
 export default function HeroPresenter() {
     return (
-        <section className="py-30 lg:py-38 overflow-hidden h-svh">
+        <section className="py-30 lg:py-28">
             <div className="container mx-auto px-4">
                 <div className="grid items-center gap-12 lg:grid-cols-2">
                     <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
@@ -58,22 +66,27 @@ export default function HeroPresenter() {
                         </div>
                     </div>
 
-                    <div className="relative">
-                        <div className="relative rounded-xl border bg-card shadow-2xl overflow-hidden">
-                            <img
-                                src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?q=80&w=1000&auto=format&fit=crop"
-                                alt="Student coding on a laptop with Java code on screen"
-                                className="aspect-video w-full object-cover"
-                            />
-                            <div className="p-4 bg-card/80 backdrop-blur-sm flex justify-between items-center border-t">
-                                <div className="flex gap-2">
-                                    <div className="h-3 w-3 rounded-full bg-red-500" />
-                                    <div className="h-3 w-3 rounded-full bg-yellow-500" />
-                                    <div className="h-3 w-3 rounded-full bg-green-500" />
-                                </div>
-                                <div className="text-xs font-mono text-muted-foreground">Main.java</div>
-                            </div>
-                        </div>
+                    <div className="relative hidden lg:block">
+                        <Carousel className="rounded-xl overflow-hidden">
+                            <CarouselContent className="w-full object-contain">
+                                <CarouselItem>
+                                    <img
+                                        src={learning}
+                                        alt="Student coding on a laptop with Java code on screen"
+                                        className="w-full h-full object-cover"
+                                    />
+                                </CarouselItem>
+                                <CarouselItem>
+                                    <img
+                                        src={react}
+                                        alt="React development environment"
+                                        className="w-full h-full object-cover"
+                                    />
+                                </CarouselItem>
+                            </CarouselContent>
+                            <CarouselPrevious className="bg-white/95 backdrop-blur-sm" />
+                            <CarouselNext className="bg-white/95 backdrop-blur-sm" />
+                        </Carousel>
                     </div>
                 </div>
             </div>
