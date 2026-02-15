@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import CourseCard, { CourseCardSkeleton } from "../common/CourseCard";
+import CourseCard, { CourseCardSkeleton } from "@/components/common/CourseCard";
 import { useGetCoursesQuery } from "@/features/courses/coursesApi";
 import { ApiError } from "@/components/common/ApiError";
 import { EmptyState } from "@/components/common/EmptyState";

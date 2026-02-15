@@ -12,7 +12,7 @@ import {
     EmptyMedia,
     EmptyTitle,
 } from "@/components/ui/empty";
-import downloadIcon from '../assets/download.svg';
+import downloadIcon from '@/assets/download.svg';
 export const title = "No Route Match";
 
 const NoRouteMatch = () => {

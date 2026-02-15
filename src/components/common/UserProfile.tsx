@@ -5,9 +5,9 @@ import {
     Settings,
     LogOut
 } from "lucide-react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
-import { Button } from "../ui/button";
-import { AvatarFallback, AvatarImage, Avatar } from "../ui/avatar";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { AvatarFallback, AvatarImage, Avatar } from "@/components/ui/avatar";
 import { Link } from "react-router-dom";
 import { useLogout } from "@/hooks/use-logout";
 

@@ -1,4 +1,4 @@
-import CourseCard, { CourseCardSkeleton } from "../common/CourseCard";
+import CourseCard, { CourseCardSkeleton } from "@/components/common/CourseCard";
 import { useGetUserQuery } from "@/features/auth/authApi";
 import { useGetCoursesQuery } from "@/features/courses/coursesApi";
 import { ApiError } from "@/components/common/ApiError";
