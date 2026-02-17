@@ -6,7 +6,7 @@ const MainLayout = lazy(() => import("@/layouts/MainLayout"))
 const DashboardLayout = lazy(() => import("@/layouts/DashboardLayout"))
 
 // Lazy load pages
-const Home = lazy(() => import("../pages/Home"))
+const Home = lazy(() => import("@/pages/Home"))
 // const CourseDetailPage = lazy(() => import("@/pages/CourseDetail"))
 // const SearchCoursesPage = lazy(() => import("@/pages/SearchCourses"))
 const Login = lazy(() => import("@/pages/Login"))
@@ -15,11 +15,11 @@ const ForgotPassword = lazy(() => import("@/pages/ForgotPassword"))
 const NotFound = lazy(() => import("@/pages/NotFound"))
 
 // Dashboard pages
-const AnalyticsPage = lazy(() => import("../pages/dashboard/Analytics"))
-const MyLearningsPage = lazy(() => import("../pages/dashboard/MyLearnings"))
-const WishlistPage = lazy(() => import("../pages/dashboard/Wishlist"))
+const AnalyticsPage = lazy(() => import("@/pages/dashboard/Analytics"))
+const MyLearningsPage = lazy(() => import("@/pages/dashboard/MyLearnings"))
+const WishlistPage = lazy(() => import("@/pages/dashboard/Wishlist"))
 // const TransactionsPage = lazy(() => import("@/pages/dashboard/Transactions"))
-const SettingsPage = lazy(() => import("../pages/dashboard/Settings"))
+const SettingsPage = lazy(() => import("@/pages/dashboard/Settings"))
 
 import { ProtectedRoute } from "@/features/auth/ProtectedRoute"
 import { GuestRoute } from "@/features/auth/GuestRoute"
