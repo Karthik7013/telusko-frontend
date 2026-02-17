@@ -44,7 +44,7 @@ const AppRouter = () => {
                         <Route path="/dashboard" Component={DashboardLayout} >
                             <Route index Component={AnalyticsPage} />
                             <Route path="my-learnings" Component={MyLearningsPage} />
-                            <Route path="whishlist" Component={WishlistPage} />
+                            <Route path="wishlist" Component={WishlistPage} />
                             {/* <Route path="transactions" Component={TransactionsPage} /> */}
                             <Route path="settings" Component={SettingsPage} />
                             <Route path="course-player" Component={CoursePlayer} />
