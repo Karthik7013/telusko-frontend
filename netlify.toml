@@ -6,3 +6,146 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+[build.environment]
+  NODE_VERSION = "20"
+  NPM_VERSION = "10"
+
+[build.processing]
+  skip_processing = false
+
+[build.processing.css]
+  bundle = true
+  minify = true
+
+[build.processing.js]
+  bundle = true
+  minify = true
+
+[build.processing.html]
+  pretty_urls = true
+
+[build.processing.images]
+  compress = true
+
+[functions]
+  node_bundler = "esbuild"
+
+[functions.build]
+  environment = { NODE_ENV = "production" }
+
+[context.production]
+  command = "npm run build"
+
+[context.deploy-preview]
+  command = "npm run build"
+
+[context.branch-deploy]
+  command = "npm run build"
+
+[context.staging]
+  command = "npm run build"
+
+[context.production.environment]
+  NODE_ENV = "production"
+
+[context.deploy-preview.environment]
+  NODE_ENV = "production"
+
+[context.branch-deploy.environment]
+  NODE_ENV = "production"
+
+[context.staging.environment]
+  NODE_ENV = "production"
+
+[context.production.processing]
+  skip_processing = false
+
+[context.deploy-preview.processing]
+  skip_processing = false
+
+[context.branch-deploy.processing]
+  skip_processing = false
+
+[context.staging.processing]
+  skip_processing = false
+
+[context.production.processing.css]
+  bundle = true
+  minify = true
+
+[context.deploy-preview.processing.css]
+  bundle = true
+  minify = true
+
+[context.branch-deploy.processing.css]
+  bundle = true
+  minify = true
+
+[context.staging.processing.css]
+  bundle = true
+  minify = true
+
+[context.production.processing.js]
+  bundle = true
+  minify = true
+
+[context.deploy-preview.processing.js]
+  bundle = true
+  minify = true
+
+[context.branch-deploy.processing.js]
+  bundle = true
+  minify = true
+
+[context.staging.processing.js]
+  bundle = true
+  minify = true
+
+[context.production.processing.html]
+  pretty_urls = true
+
+[context.deploy-preview.processing.html]
+  pretty_urls = true
+
+[context.branch-deploy.processing.html]
+  pretty_urls = true
+
+[context.staging.processing.html]
+  pretty_urls = true
+
+[context.production.processing.images]
+  compress = true
+
+[context.deploy-preview.processing.images]
+  compress = true
+
+[context.branch-deploy.processing.images]
+  compress = true
+
+[context.staging.processing.images]
+  compress = true
+
+[context.production.functions]
+  node_bundler = "esbuild"
+
+[context.deploy-preview.functions]
+  node_bundler = "esbuild"
+
+[context.branch-deploy.functions]
+  node_bundler = "esbuild"
+
+[context.staging.functions]
+  node_bundler = "esbuild"
+
+[context.production.functions.build]
+  environment = { NODE_ENV = "production" }
+
+[context.deploy-preview.functions.build]
+  environment = { NODE_ENV = "production" }
+
+[context.branch-deploy.functions.build]
+  environment = { NODE_ENV = "production" }
+
+[context.staging.functions.build]
+  environment = { NODE_ENV = "production" }
