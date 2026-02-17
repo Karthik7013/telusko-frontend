@@ -15,7 +15,6 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion";
-import { SwitchTheme } from "@/components/common/ToggleTheme";
 import { NAV_CATEGORIES as courseCategories } from "@/data/courses-data";
 
 export function MobileMenu() {
@@ -68,10 +67,6 @@ export function MobileMenu() {
                             </AccordionContent>
                         </AccordionItem>
                     </Accordion>
-                    <div className="flex items-center justify-between">
-                        <div className="text-sm font-medium">Theme</div>
-                        <SwitchTheme />
-                    </div>
                     <div className="flex flex-col gap-3 mt-4">
                         <Button variant="outline" className="w-full" asChild>
                             <Link to="/login">Log in</Link>

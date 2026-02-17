@@ -5,7 +5,6 @@ import {
     SidebarTrigger,
 } from "@/components/ui/sidebar"
 
-import { ToggleTheme } from "@/components/common/ToggleTheme";
 import { Outlet } from "react-router-dom";
 import { DashboardFooter } from "@/components/dashboard/DashboardFooter";
 
@@ -18,9 +17,7 @@ export default function Dashboard() {
                     <div className="flex items-center gap-2">
                         <SidebarTrigger itemScope />
                     </div>
-                    <div className="flex items-center gap-2">
-                        <ToggleTheme />
-                    </div>
+
                 </header>
                 <div className="flex flex-1 flex-col gap-4 px-6 pt-10 pb-18">
                     <Outlet />

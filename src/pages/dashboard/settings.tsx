@@ -16,6 +16,7 @@ import {
     TabsTrigger,
 } from "@/components/ui/tabs";
 import { useGetUserQuery } from "@/features/auth/authApi";
+import { SwitchTheme } from "@/components/common/ToggleTheme";
 
 export default function SettingsPage() {
     const { data: user } = useGetUserQuery();
@@ -30,6 +31,7 @@ export default function SettingsPage() {
             <Tabs defaultValue="account" className="space-y-4">
                 <TabsList>
                     <TabsTrigger value="account">Account</TabsTrigger>
+                    <TabsTrigger value="appearance">Appearance</TabsTrigger>
                     <TabsTrigger value="password">Password</TabsTrigger>
                     <TabsTrigger value="notifications">Notifications</TabsTrigger>
                 </TabsList>
@@ -63,6 +65,20 @@ export default function SettingsPage() {
                         </CardContent>
                         <CardFooter>
                             <Button>Save Changes</Button>
+                        </CardFooter>
+                    </Card>
+                </TabsContent>
+                <TabsContent value="appearance" className="space-y-4">
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Theme</CardTitle>
+                            <CardDescription>Choose your preferred theme for the application.</CardDescription>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                            <SwitchTheme />
+                        </CardContent>
+                        <CardFooter>
+                            <p className="text-sm text-muted-foreground">Theme changes are applied automatically.</p>
                         </CardFooter>
                     </Card>
                 </TabsContent>
