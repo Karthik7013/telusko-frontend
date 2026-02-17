@@ -27,7 +27,7 @@ export default function WishlistPage() {
     if (wishlistCourses.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center h-[60vh] text-center space-y-4">
-                <div className="bg-muted p-6 rounded-full">
+                <div className="bg-muted p-6 bg-primary/20 rounded-full">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"

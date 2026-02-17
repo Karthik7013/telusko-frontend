@@ -31,7 +31,7 @@ export default function CoursePlayer({
 
     return (
         <div className="min-h-screen bg-background pb-10">
-            <div className="container mx-auto py-6">
+            <div className="container mx-auto">
                 <div className={cn(
                     "grid gap-8 max-w-6xl mx-auto transition-all duration-500 ease-in-out",
                     isPlaylistOpen ? "lg:grid-cols-[1fr_350px]" : "max-w-4xl  lg:grid-cols-[1fr_0px] lg:gap-0"

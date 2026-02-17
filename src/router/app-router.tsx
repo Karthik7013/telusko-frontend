@@ -7,8 +7,8 @@ const DashboardLayout = lazy(() => import("@/layouts/DashboardLayout"))
 
 // Lazy load pages
 const Home = lazy(() => import("@/pages/Home"))
-const CourseDetailPage = lazy(() => import("@/pages/CourseDetail"))
-const SearchCoursesPage = lazy(() => import("@/pages/SearchCourses"))
+// const CourseDetailPage = lazy(() => import("@/pages/CourseDetail"))
+// const SearchCoursesPage = lazy(() => import("@/pages/SearchCourses"))
 const Login = lazy(() => import("@/pages/Login"))
 const Signup = lazy(() => import("@/pages/Signup"))
 const ForgotPassword = lazy(() => import("@/pages/ForgotPassword"))
@@ -18,7 +18,7 @@ const NotFound = lazy(() => import("@/pages/NotFound"))
 const AnalyticsPage = lazy(() => import("@/pages/dashboard/Analytics"))
 const MyLearningsPage = lazy(() => import("@/pages/dashboard/MyLearnings"))
 const WishlistPage = lazy(() => import("@/pages/dashboard/Wishlist"))
-const TransactionsPage = lazy(() => import("@/pages/dashboard/Transactions"))
+// const TransactionsPage = lazy(() => import("@/pages/dashboard/Transactions"))
 const SettingsPage = lazy(() => import("@/pages/dashboard/Settings"))
 
 import { ProtectedRoute } from "@/features/auth/ProtectedRoute"
@@ -34,8 +34,8 @@ const AppRouter = () => {
                     {/* Public Routes */}
                     <Route path="/" Component={MainLayout}>
                         <Route index Component={Home} />
-                        <Route path="course/:id" Component={CourseDetailPage} />
-                        <Route path="search" Component={SearchCoursesPage} />
+                        {/* <Route path="course/:id" Component={CourseDetailPage} /> */}
+                        {/* <Route path="search" Component={SearchCoursesPage} /> */}
                         <Route path="*" Component={NotFound} />
                     </Route>
 
@@ -45,7 +45,7 @@ const AppRouter = () => {
                             <Route index Component={AnalyticsPage} />
                             <Route path="my-learnings" Component={MyLearningsPage} />
                             <Route path="whishlist" Component={WishlistPage} />
-                            <Route path="transactions" Component={TransactionsPage} />
+                            {/* <Route path="transactions" Component={TransactionsPage} /> */}
                             <Route path="settings" Component={SettingsPage} />
                             <Route path="course-player" Component={CoursePlayer} />
                             <Route path="*" Component={NotFound} />
