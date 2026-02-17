@@ -48,7 +48,7 @@ export default function CookieBanner() {
                     </button>
                 </div>
 
-                <div className="mt-6 flex sm:flex-col lg:flex-col gap-2">
+                <div className="mt-6 flex flex-col lg:flex-col gap-2">
                     <Button onClick={() => { }} className="w-full h-9 text-xs">
                         Accept All
                     </Button>
