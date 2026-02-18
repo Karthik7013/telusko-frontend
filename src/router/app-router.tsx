@@ -17,7 +17,7 @@ const NotFound = lazy(() => import("@/pages/NotFound"))
 // Dashboard pages
 const AnalyticsPage = lazy(() => import("@/pages/dashboard/Analytics"))
 const MyLearningsPage = lazy(() => import("@/pages/dashboard/MyLearnings"))
-const WishlistPage = lazy(() => import("@/pages/dashboard/Wishlist"))
+// const WishlistPage = lazy(() => import("@/pages/dashboard/Wishlist"))
 // const TransactionsPage = lazy(() => import("@/pages/dashboard/Transactions"))
 const SettingsPage = lazy(() => import("@/pages/dashboard/Settings"))
 
@@ -44,7 +44,7 @@ const AppRouter = () => {
                         <Route path="/dashboard" Component={DashboardLayout} >
                             <Route index Component={AnalyticsPage} />
                             <Route path="my-learnings" Component={MyLearningsPage} />
-                            <Route path="wishlist" Component={WishlistPage} />
+                            {/* <Route path="wishlist" Component={WishlistPage} /> */}
                             {/* <Route path="transactions" Component={TransactionsPage} /> */}
                             <Route path="settings" Component={SettingsPage} />
                             <Route path="course-player" Component={CoursePlayer} />
