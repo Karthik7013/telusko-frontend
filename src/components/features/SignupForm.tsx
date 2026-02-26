@@ -66,19 +66,15 @@ export function SignupForm({ className, ...props }: React.ComponentProps<typeof 
 
     async function onSubmit(data: z.infer<typeof formSchema>) {
         try {
-            const [firstName, ...lastNameParts] = data.full_name.split(' ');
-            const lastName = lastNameParts.join(' ') || 'User';
-
             await signUp({
-                firstName,
-                lastName,
+                fullName: data.full_name,
                 email: data.email,
-                username: data.email.split('@')[0], // Mock username
-                password: data.password
+                password: data.password,
+                isInstructor: false // Default to student, can be changed later
             }).unwrap();
 
             toast.success("Account created successfully!", {
-                description: `Welcome, ${firstName}! Please sign in to continue.`,
+                description: `Welcome! Please sign in to continue.`,
             })
 
             navigate('/login');

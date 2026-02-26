@@ -18,9 +18,61 @@ import {
 import { useGetUserQuery } from "@/features/auth/authApi";
 import { SwitchTheme } from "@/components/common/ToggleTheme";
 
-export default function SettingsPage() {
-    const { data: user } = useGetUserQuery();
 
+
+const ProfileSettings = () => {
+    const { data: user } = useGetUserQuery();
+    return <Card>
+        <CardHeader>
+            <CardTitle>Profile Information</CardTitle>
+            <CardDescription>
+                Update your personal details and professional title.
+            </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                    <Label htmlFor="first-name">First Name</Label>
+                    <Input id="first-name" defaultValue={user?.firstName} />
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="last-name">Last Name</Label>
+                    <Input id="last-name" defaultValue={user?.lastName} />
+                </div>
+            </div>
+            <div className="space-y-2">
+                <Label htmlFor="email">Email address</Label>
+                <Input id="email" defaultValue={user?.email} disabled />
+            </div>
+            <div className="space-y-2">
+                <Label htmlFor="title">Professional Title</Label>
+                <Input id="title" defaultValue={user?.company || "Full Stack Developer"} />
+            </div>
+        </CardContent>
+        <CardFooter>
+            <Button>Save Changes</Button>
+        </CardFooter>
+    </Card>
+}
+
+const AppearanceSettings = () => {
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle>Theme</CardTitle>
+                <CardDescription>Choose your preferred theme for the application.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+                <SwitchTheme />
+            </CardContent>
+            <CardFooter>
+                <p className="text-sm text-muted-foreground">Theme changes are applied automatically.</p>
+            </CardFooter>
+        </Card>
+    )
+}
+
+export default function SettingsPage() {
     return (
         <div className="space-y-6">
             <div>
@@ -33,54 +85,13 @@ export default function SettingsPage() {
                     <TabsTrigger value="account">Account</TabsTrigger>
                     <TabsTrigger value="appearance">Appearance</TabsTrigger>
                     <TabsTrigger value="password">Password</TabsTrigger>
-                    <TabsTrigger value="notifications">Notifications</TabsTrigger>
+                 
                 </TabsList>
                 <TabsContent value="account" className="space-y-4">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Profile Information</CardTitle>
-                            <CardDescription>
-                                Update your personal details and professional title.
-                            </CardDescription>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                            <div className="grid grid-cols-2 gap-4">
-                                <div className="space-y-2">
-                                    <Label htmlFor="first-name">First Name</Label>
-                                    <Input id="first-name" defaultValue={user?.firstName} />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="last-name">Last Name</Label>
-                                    <Input id="last-name" defaultValue={user?.lastName} />
-                                </div>
-                            </div>
-                            <div className="space-y-2">
-                                <Label htmlFor="email">Email address</Label>
-                                <Input id="email" defaultValue={user?.email} disabled />
-                            </div>
-                            <div className="space-y-2">
-                                <Label htmlFor="title">Professional Title</Label>
-                                <Input id="title" defaultValue={user?.company?.title || "Full Stack Developer"} />
-                            </div>
-                        </CardContent>
-                        <CardFooter>
-                            <Button>Save Changes</Button>
-                        </CardFooter>
-                    </Card>
+                    <ProfileSettings />
                 </TabsContent>
                 <TabsContent value="appearance" className="space-y-4">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Theme</CardTitle>
-                            <CardDescription>Choose your preferred theme for the application.</CardDescription>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                            <SwitchTheme />
-                        </CardContent>
-                        <CardFooter>
-                            <p className="text-sm text-muted-foreground">Theme changes are applied automatically.</p>
-                        </CardFooter>
-                    </Card>
+                    <AppearanceSettings />
                 </TabsContent>
                 <TabsContent value="password">
                     <Card>

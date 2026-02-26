@@ -1,54 +1,32 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-// Use 'import type' for these specific interfaces
-import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query/react'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 
 // --- Interfaces ---
 export interface User {
     id: number;
-    username: string;
     email: string;
-    firstName: string;
-    lastName: string;
-    gender: string;
-    image: string;
-    accessToken?: string;
-    refreshToken?: string;
-    address?: {
-        address: string;
-        city: string;
-        state: string;
-        stateCode: string;
-        postalCode: string;
-        coordinates: {
-            lat: number;
-            lng: number;
-        };
-        country: string;
-    };
-    company?: {
-        department: string;
-        name: string;
-        title: string;
-        address: {
-            address: string;
-            city: string;
-            state: string;
-            stateCode: string;
-            postalCode: string;
-            coordinates: {
-                lat: number;
-                lng: number;
-            };
-            country: string;
-        };
-    };
-    role: string;
+    fullName: string;
+    firstName?: string;
+    lastName?: string;
+    isInstructor: boolean;
+    avatar?: string;
+    image?: string;
+    company?: string;
+    createdAt: string;
+    updatedAt: string;
 }
 
 export interface LoginRequest {
-    username: string;
+    email: string;
     password: string;
-    expiresInMins?: number;
+}
+
+export interface LoginResponse {
+    data: {
+        accessToken: string;
+        refreshToken: string;
+        user: User;
+    }
 }
 
 export interface RefreshResponse {
@@ -57,14 +35,13 @@ export interface RefreshResponse {
 }
 
 export interface SignUpRequest {
-    firstName: string;
-    lastName: string;
     email: string;
-    username: string;
-    password?: string;
+    password: string;
+    fullName: string;
+    isInstructor: boolean;
 }
 
-const BASE_URL = 'https://dummyjson.com'
+const BASE_URL = 'http://localhost:3000';
 
 // --- 1. The Standard Base Query ---
 const rawBaseQuery = fetchBaseQuery({
@@ -95,9 +72,9 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
             // Call the refresh endpoint
             const refreshResult = await rawBaseQuery(
                 {
-                    url: '/auth/refresh',
+                    url: '/auth/refresh-token',
                     method: 'POST',
-                    body: { refreshToken, expiresInMins: 30 },
+                    body: { refreshToken },
                 },
                 api,
                 extraOptions
@@ -128,7 +105,7 @@ export const authApi = createApi({
     reducerPath: 'authApi',
     baseQuery: baseQueryWithReauth,
     endpoints: (builder) => ({
-        login: builder.mutation<User, LoginRequest>({
+        login: builder.mutation<LoginResponse, LoginRequest>({
             query: (payload) => ({
                 url: '/auth/login',
                 method: 'POST',
@@ -137,18 +114,17 @@ export const authApi = createApi({
         }),
         signUp: builder.mutation<User, SignUpRequest>({
             query: (payload) => ({
-                url: '/users/add',
+                url: '/auth/register',
                 method: 'POST',
                 body: payload,
             }),
         }),
         getUser: builder.query<User, void>({
-            query: () => '/auth/me',
+            query: () => '/auth/profile',
         }),
-        // Manual refresh if ever needed
         refreshToken: builder.mutation<RefreshResponse, { refreshToken: string }>({
             query: (payload) => ({
-                url: '/auth/refresh',
+                url: '/auth/refresh-token',
                 method: 'POST',
                 body: payload,
             }),
@@ -160,8 +136,8 @@ export const authApi = createApi({
                 body: payload,
             }),
         }),
-    })
-})
+    }),
+});
 
 export const {
     useLoginMutation,
@@ -169,7 +145,7 @@ export const {
     useGetUserQuery,
     useLazyGetUserQuery,
     useRefreshTokenMutation,
-    useForgotPasswordMutation
+    useForgotPasswordMutation,
 } = authApi;
 
 export default authApi;

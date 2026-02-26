@@ -7,23 +7,25 @@ const DashboardLayout = lazy(() => import("@/layouts/DashboardLayout"))
 
 // Lazy load pages
 const Home = lazy(() => import("@/pages/Home"))
-// const CourseDetailPage = lazy(() => import("@/pages/CourseDetail"))
-// const SearchCoursesPage = lazy(() => import("@/pages/SearchCourses"))
 const Login = lazy(() => import("@/pages/Login"))
 const Signup = lazy(() => import("@/pages/Signup"))
 const ForgotPassword = lazy(() => import("@/pages/ForgotPassword"))
 const NotFound = lazy(() => import("@/pages/NotFound"))
+const Profile = lazy(() => import("@/pages/Profile"))
+const Settings = lazy(() => import("@/pages/dashboard/Settings"))
 
 // Dashboard pages
 const AnalyticsPage = lazy(() => import("@/pages/dashboard/Analytics"))
 const MyLearningsPage = lazy(() => import("@/pages/dashboard/MyLearnings"))
-// const WishlistPage = lazy(() => import("@/pages/dashboard/Wishlist"))
-// const TransactionsPage = lazy(() => import("@/pages/dashboard/Transactions"))
-const SettingsPage = lazy(() => import("@/pages/dashboard/Settings"))
+const CoursePlayer = lazy(() => import("@/pages/dashboard/CoursePlayer"))
 
+// Admin pages
+const AdminDashboard = lazy(() => import("@/pages/admin/AdminDashboard"))
+const UserManagement = lazy(() => import("@/features/admin/UserManagement"))
+
+// Auth guard components
 import { ProtectedRoute } from "@/features/auth/ProtectedRoute"
 import { GuestRoute } from "@/features/auth/GuestRoute"
-import CoursePlayer from "@/pages/dashboard/CoursePlayer"
 import PageLoader from "@/components/common/PageLoader"
 
 const AppRouter = () => {
@@ -34,22 +36,29 @@ const AppRouter = () => {
                     {/* Public Routes */}
                     <Route path="/" Component={MainLayout}>
                         <Route index Component={Home} />
-                        {/* <Route path="course/:id" Component={CourseDetailPage} /> */}
-                        {/* <Route path="search" Component={SearchCoursesPage} /> */}
                         <Route path="*" Component={NotFound} />
                     </Route>
 
                     {/* Protected Dashboard Routes */}
                     <Route element={<ProtectedRoute />}>
-                        <Route path="/dashboard" Component={DashboardLayout} >
+                        <Route path="/dashboard" Component={DashboardLayout}>
                             <Route index Component={AnalyticsPage} />
                             <Route path="my-learnings" Component={MyLearningsPage} />
-                            {/* <Route path="wishlist" Component={WishlistPage} /> */}
-                            {/* <Route path="transactions" Component={TransactionsPage} /> */}
-                            <Route path="settings" Component={SettingsPage} />
+                            <Route path="settings" Component={Settings} />
                             <Route path="course-player" Component={CoursePlayer} />
                             <Route path="*" Component={NotFound} />
                         </Route>
+                    </Route>
+
+                    {/* Protected User Routes (non-dashboard) */}
+                    <Route element={<ProtectedRoute />}>
+                        <Route path="/profile" Component={Profile} />
+                    </Route>
+
+                    {/* Admin Routes */}
+                    <Route element={<ProtectedRoute requiredRoles={['ADMIN']} />}>
+                        <Route path="/admin" Component={AdminDashboard} />
+                        <Route path="/users" Component={UserManagement} />
                     </Route>
 
                     {/* Public Auth Routes */}

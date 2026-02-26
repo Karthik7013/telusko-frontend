@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -26,9 +26,8 @@ import { useLoginMutation } from "@/features/auth/authApi"
 
 // 1. Login Validation Schema
 const loginSchema = z.object({
-    username: z.string(),
-    password: z.string().min(1, "Password is required"),
-    expiresInMins: z.number().optional()
+    email: z.string().email("Please enter a valid email address."),
+    password: z.string().min(1, "Password is required")
 })
 
 type LoginFormValues = z.infer<typeof loginSchema>
@@ -40,29 +39,36 @@ export function LoginForm({
     const form = useForm<LoginFormValues>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
-            username: "",
+            email: "",
             password: ""
         },
     })
-    const [handleLoginSubmit] = useLoginMutation();
+    const [login, { isLoading }] = useLoginMutation();
+    const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors, isSubmitting } } = form
+
+    const isLoggingIn = isSubmitting || isLoading;
 
     async function onSubmit(data: LoginFormValues) {
         try {
-            const response = await handleLoginSubmit(data).unwrap();
+            const response = await login(data).unwrap();
             console.log(response)
-            toast.success("Welcome back!", {
-                description: "You have successfully logged in.",
-            })
-            if (response.accessToken && response.refreshToken) {
-                localStorage.setItem('accessToken', response.accessToken)
-                localStorage.setItem('refreshToken', response.refreshToken)
-                window.location.href = '/'
+            if (response?.data.accessToken && response?.data.refreshToken) {
+                toast.success("Welcome back!", {
+                    description: "You have successfully logged in.",
+                })
+                localStorage.setItem('accessToken', response.data.accessToken)
+                localStorage.setItem('refreshToken', response.data.refreshToken)
+                navigate('/dashboard');
+            } else {
+                toast.error("Login Failed", {
+                    description: "Authentication tokens were not provided.",
+                })
             }
-        } catch (error) {
-            console.log(error)
-            toast.error('failed to authenticate')
-
+        } catch (error: any) {
+            toast.error("Login Failed", {
+                description: error.data?.message || "Please check your credentials and try again.",
+            })
         }
     }
 
@@ -85,11 +91,11 @@ export function LoginForm({
                                 <Input
                                     id="email"
                                     placeholder="m@example.com"
-                                    {...register("username")}
-                                    aria-invalid={!!errors.username}
+                                    {...register("email")}
+                                    aria-invalid={!!errors.email}
                                 />
-                                {errors.username && (
-                                    <FieldError>{errors.username.message}</FieldError>
+                                {errors.email && (
+                                    <FieldError>{errors.email.message}</FieldError>
                                 )}
                             </Field>
 
@@ -117,9 +123,9 @@ export function LoginForm({
 
                             {/* Action Buttons */}
                             <div className="flex flex-col gap-3 pt-2">
-                                <Button type="submit" className="w-full" disabled={isSubmitting}>
-                                    {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                                    {isSubmitting ? "Logging in..." : "Login"}
+                                <Button type="submit" className="w-full" disabled={isLoggingIn}>
+                                    {isLoggingIn && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                                    {isLoggingIn ? "Logging in..." : "Login"}
                                 </Button>
                                 <Button variant="outline" type="button" className="w-full">
                                     Login with Google
@@ -130,9 +136,9 @@ export function LoginForm({
 
                         <p className="text-center text-sm text-muted-foreground mt-4">
                             Don&apos;t have an account?{" "}
-                            <a href="#" className="underline underline-offset-4 hover:text-primary">
+                            <Link to="/signup" className="underline underline-offset-4 hover:text-primary">
                                 Sign up
-                            </a>
+                            </Link>
                         </p>
                     </form>
                 </CardContent>
