@@ -10,6 +10,7 @@
 [build.environment]
   NODE_VERSION = "20"
   NPM_VERSION = "10"
+  NPM_CONFIG_PRODUCTION = "false"
 
 [build.processing]
   skip_processing = false
@@ -48,15 +49,19 @@
 
 [context.production.environment]
   NODE_ENV = "production"
+  NPM_CONFIG_PRODUCTION = "false"
 
 [context.deploy-preview.environment]
   NODE_ENV = "production"
+  NPM_CONFIG_PRODUCTION = "false"
 
 [context.branch-deploy.environment]
   NODE_ENV = "production"
+  NPM_CONFIG_PRODUCTION = "false"
 
 [context.staging.environment]
   NODE_ENV = "production"
+  NPM_CONFIG_PRODUCTION = "false"
 
 [context.production.processing]
   skip_processing = false
