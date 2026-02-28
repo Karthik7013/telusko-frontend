@@ -49,13 +49,12 @@ export function LoginForm({
 
     const isLoggingIn = isSubmitting || isLoading;
 
-    async function onSubmit(data: LoginFormValues) {
+    async function onSubmit(userData: LoginFormValues) {
         try {
-            const response = await login(data).unwrap();
-            console.log(response)
-            if (response?.data.accessToken && response?.data.refreshToken) {
+            const response = await login(userData).unwrap();
+            if (response.data?.accessToken && response.data?.refreshToken) {
                 toast.success("Welcome back!", {
-                    description: "You have successfully logged in.",
+                    description: "You have successfully logged in."
                 })
                 localStorage.setItem('accessToken', response.data.accessToken)
                 localStorage.setItem('refreshToken', response.data.refreshToken)

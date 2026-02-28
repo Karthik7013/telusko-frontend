@@ -18,6 +18,7 @@ import {
 
 
 import { DASHBOARD_NAV as navData } from "@/data/navigation-data"
+import { Separator } from "../ui/separator"
 
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -30,6 +31,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <NavMain items={navData} />
             </SidebarContent>
             <SidebarFooter>
+                <Separator />
                 <NavUser />
             </SidebarFooter>
             <SidebarRail />

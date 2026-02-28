@@ -19,7 +19,7 @@ export default function UserProfile() {
         logout();
     };
 
-    if (error) {
+    if (error || !user) {
         return 'failed to load profile'
     }
 
@@ -28,17 +28,17 @@ export default function UserProfile() {
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-10 w-10 rounded-full">
                     <Avatar className="h-10 w-10 border">
-                        <AvatarImage src={user?.image || "https://github.com/shadcn.png"} alt={user?.firstName} />
-                        <AvatarFallback>{user?.firstName?.substring(0, 2).toUpperCase() || "US"}</AvatarFallback>
+                        <AvatarImage src={user.data?.profilePictureUrl || "https://github.com/shadcn.png"} alt={user.data?.fullName} />
+                        <AvatarFallback>{user?.data?.fullName?.substring(0, 2).toUpperCase() || "US"}</AvatarFallback>
                     </Avatar>
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56" align="end" forceMount>
                 <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
-                        <p className="text-sm font-medium leading-none">{user?.firstName || "User"}</p>
+                        <p className="text-sm font-medium leading-none">{user?.data?.fullName || "User"}</p>
                         <p className="text-xs leading-none text-muted-foreground">
-                            {user?.email || "user@example.com"}
+                            {user?.data?.email || "user@example.com"}
                         </p>
                     </div>
                 </DropdownMenuLabel>

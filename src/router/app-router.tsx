@@ -11,7 +11,7 @@ const Login = lazy(() => import("@/pages/Login"))
 const Signup = lazy(() => import("@/pages/Signup"))
 const ForgotPassword = lazy(() => import("@/pages/ForgotPassword"))
 const NotFound = lazy(() => import("@/pages/NotFound"))
-const Profile = lazy(() => import("@/pages/Profile"))
+// const Profile = lazy(() => import("@/pages/Profile"))
 const Settings = lazy(() => import("@/pages/dashboard/Settings"))
 
 // Dashboard pages
@@ -19,14 +19,13 @@ const AnalyticsPage = lazy(() => import("@/pages/dashboard/Analytics"))
 const MyLearningsPage = lazy(() => import("@/pages/dashboard/MyLearnings"))
 const CoursePlayer = lazy(() => import("@/pages/dashboard/CoursePlayer"))
 
-// Admin pages
-const AdminDashboard = lazy(() => import("@/pages/admin/AdminDashboard"))
-const UserManagement = lazy(() => import("@/features/admin/UserManagement"))
 
 // Auth guard components
 import { ProtectedRoute } from "@/features/auth/ProtectedRoute"
 import { GuestRoute } from "@/features/auth/GuestRoute"
 import PageLoader from "@/components/common/PageLoader"
+import CourseDetailPage from "@/pages/CourseDetail"
+import SearchCoursesPage from "@/pages/SearchCourses"
 
 const AppRouter = () => {
     return (
@@ -36,6 +35,8 @@ const AppRouter = () => {
                     {/* Public Routes */}
                     <Route path="/" Component={MainLayout}>
                         <Route index Component={Home} />
+                        <Route path="course/:id" Component={CourseDetailPage} />
+                        <Route path="search" Component={SearchCoursesPage} />
                         <Route path="*" Component={NotFound} />
                     </Route>
 
@@ -48,17 +49,6 @@ const AppRouter = () => {
                             <Route path="course-player" Component={CoursePlayer} />
                             <Route path="*" Component={NotFound} />
                         </Route>
-                    </Route>
-
-                    {/* Protected User Routes (non-dashboard) */}
-                    <Route element={<ProtectedRoute />}>
-                        <Route path="/profile" Component={Profile} />
-                    </Route>
-
-                    {/* Admin Routes */}
-                    <Route element={<ProtectedRoute requiredRoles={['ADMIN']} />}>
-                        <Route path="/admin" Component={AdminDashboard} />
-                        <Route path="/users" Component={UserManagement} />
                     </Route>
 
                     {/* Public Auth Routes */}

@@ -5,7 +5,7 @@ const NavbarContainer = () => {
     const { data } = useGetUserQuery()
     const isAuthenticated = !!data;
     return (
-        <NavbarPresenter isLogin={isAuthenticated} data={data} />
+        <NavbarPresenter isLogin={isAuthenticated} />
     )
 }
 

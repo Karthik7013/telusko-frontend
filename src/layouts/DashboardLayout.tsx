@@ -17,7 +17,6 @@ export default function Dashboard() {
                     <div className="flex items-center gap-2">
                         <SidebarTrigger itemScope />
                     </div>
-
                 </header>
                 <div className="flex flex-1 flex-col gap-4 px-6 pt-10 pb-18">
                     <Outlet />

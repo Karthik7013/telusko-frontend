@@ -32,21 +32,13 @@ const ProfileSettings = () => {
         <CardContent className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                    <Label htmlFor="first-name">First Name</Label>
-                    <Input id="first-name" defaultValue={user?.firstName} />
-                </div>
-                <div className="space-y-2">
-                    <Label htmlFor="last-name">Last Name</Label>
-                    <Input id="last-name" defaultValue={user?.lastName} />
+                    <Label htmlFor="first-name">Full Name</Label>
+                    <Input id="first-name" defaultValue={user?.data?.fullName} />
                 </div>
             </div>
             <div className="space-y-2">
                 <Label htmlFor="email">Email address</Label>
-                <Input id="email" defaultValue={user?.email} disabled />
-            </div>
-            <div className="space-y-2">
-                <Label htmlFor="title">Professional Title</Label>
-                <Input id="title" defaultValue={user?.company || "Full Stack Developer"} />
+                <Input id="email" defaultValue={user?.data?.email} disabled />
             </div>
         </CardContent>
         <CardFooter>
@@ -85,7 +77,7 @@ export default function SettingsPage() {
                     <TabsTrigger value="account">Account</TabsTrigger>
                     <TabsTrigger value="appearance">Appearance</TabsTrigger>
                     <TabsTrigger value="password">Password</TabsTrigger>
-                 
+
                 </TabsList>
                 <TabsContent value="account" className="space-y-4">
                     <ProfileSettings />

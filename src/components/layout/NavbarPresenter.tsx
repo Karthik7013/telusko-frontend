@@ -1,6 +1,6 @@
 
-import { Link } from "react-router-dom";
-import { BookOpen, GraduationCap } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { GraduationCap, Search } from "lucide-react";
 
 import {
     NavigationMenu,
@@ -24,50 +24,23 @@ export function NavbarPresenter({
     isLogin
 }: {
     isLogin: boolean,
-    data: User | undefined
+    data?: User | undefined
 }) {
+    const navigate = useNavigate();
 
     return (
         <header className="fixed border-b top-0 z-50 w-full bg-background/10 backdrop-blur">
             <AnnouncementBanner />
             <div className="container flex h-16 items-center mx-auto justify-between px-4">
 
-                {/* --- LEFT SECTION: LOGO & BRAND --- */}
+                {/* --- LEFT SECTION: LOGO & NAVIGATION --- */}
                 <div className="flex items-center gap-8">
-                    <Link to="/" className="flex items-center space-x-2">
-                        <GraduationCap className="h-8 w-8 text-primary" />
-                        <span className="font-bold text-xl tracking-tight">Telusko</span>
+                    <Link to="/" className="flex items-center gap-2">
+                        <div className="bg-primary p-1.5 rounded-lg">
+                            <GraduationCap className="size-6 text-primary-foreground" />
+                        </div>
+                        <span className="text-xl font-bold tracking-tight">Telusko</span>
                     </Link>
-
-                    {/* DESKTOP NAV: Explore Courses */}
-                    {!isLogin && <NavigationMenu className="hidden lg:flex">
-                        <NavigationMenuList>
-                            <NavigationMenuItem>
-                                <NavigationMenuTrigger className="hover:bg-transparent data-[active]:bg-transparent data-[state=open]:bg-transparent !bg-transparent">Explore Courses</NavigationMenuTrigger>
-                                <NavigationMenuContent>
-                                    <ul className="grid w-[600px] gap-3 p-4 md:grid-cols-2">
-                                        <li className="row-span-3">
-                                            <NavigationMenuLink asChild>
-                                                <Link to="/bootcamps" className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none">
-                                                    <BookOpen className="h-6 w-6 text-primary" />
-                                                    <div className="mb-2 mt-4 text-lg font-medium">Job Ready Bootcamps</div>
-                                                    <p className="text-sm leading-tight text-muted-foreground">Intensive training programs designed to get you hired.</p>
-                                                </Link>
-                                            </NavigationMenuLink>
-                                        </li>
-                                        <NavbarItem to="/courses/live" icon="https://www.svgrepo.com/show/520494/video-course.svg" title="Recorded Classes">Life time access full purchase</NavbarItem>
-                                        <NavbarItem to="/courses/free" icon="https://www.svgrepo.com/show/418658/free-price-tag.svg" title="Free Tutorials">1000+ hours of coding content.</NavbarItem>
-                                        <NavbarItem to="/certificates" icon="https://www.svgrepo.com/show/210227/certificate-medal.svg" title="Certifications">Industry-recognized certificates.</NavbarItem>
-                                    </ul>
-                                </NavigationMenuContent>
-                            </NavigationMenuItem>
-                        </NavigationMenuList>
-                    </NavigationMenu>}
-                </div>
-
-                {/* --- CENTER SECTION: DESKTOP SEARCH & NAVIGATION --- */}
-                <div className="hidden lg:flex items-center gap-4 flex-1 max-w-lg mx-8">
-                    {/* Placeholder for Search Bar if needed later */}
                     {!isLogin && <div className="hidden lg:block">
                         <NavigationMenu viewport={false}>
                             <NavigationMenuList>
@@ -116,8 +89,21 @@ export function NavbarPresenter({
                     </div>}
                 </div>
 
-                {/* --- RIGHT SECTION: AUTH & MOBILE MENU --- */}
+                {/* --- CENTER SECTION: DESKTOP SEARCH --- */}
+                <div className="hidden md:flex items-center justify-center gap-4 flex-1">
+              
+                </div>
+
+                {/* --- RIGHT SECTION: AUTH & MOBILE ICONS --- */}
                 <div className="flex items-center gap-2">
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        className="md:hidden text-muted-foreground"
+                        onClick={() => navigate("/search")}
+                    >
+                        <Search className="h-5 w-5" />
+                    </Button>
                     {!isLogin && <div className="items-center gap-2 hidden lg:flex">
                         <Button variant="ghost" asChild>
                             <Link to="/login">Log in</Link>

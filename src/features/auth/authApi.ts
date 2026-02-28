@@ -1,19 +1,20 @@
+import { ApiResponse } from '@/lib/api-utils';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 
 // --- Interfaces ---
 export interface User {
-    id: number;
-    email: string;
+    // id: number;
+    // email: string;
+    // fullName: string;
+    // isInstructor: boolean;
+    id: string,
+    email: string,
     fullName: string;
-    firstName?: string;
-    lastName?: string;
-    isInstructor: boolean;
-    avatar?: string;
-    image?: string;
-    company?: string;
-    createdAt: string;
-    updatedAt: string;
+    roles: string[];
+    isInstructor: true;
+    profilePictureUrl: string;
+
 }
 
 export interface LoginRequest {
@@ -22,11 +23,9 @@ export interface LoginRequest {
 }
 
 export interface LoginResponse {
-    data: {
-        accessToken: string;
-        refreshToken: string;
-        user: User;
-    }
+    accessToken: string;
+    refreshToken: string;
+    user: User;
 }
 
 export interface RefreshResponse {
@@ -105,21 +104,21 @@ export const authApi = createApi({
     reducerPath: 'authApi',
     baseQuery: baseQueryWithReauth,
     endpoints: (builder) => ({
-        login: builder.mutation<LoginResponse, LoginRequest>({
+        login: builder.mutation<ApiResponse<LoginResponse>, LoginRequest>({
             query: (payload) => ({
                 url: '/auth/login',
                 method: 'POST',
                 body: payload,
             }),
         }),
-        signUp: builder.mutation<User, SignUpRequest>({
+        signUp: builder.mutation<ApiResponse<User>, SignUpRequest>({
             query: (payload) => ({
                 url: '/auth/register',
                 method: 'POST',
                 body: payload,
             }),
         }),
-        getUser: builder.query<User, void>({
+        getUser: builder.query<ApiResponse<User>, void>({
             query: () => '/auth/profile',
         }),
         refreshToken: builder.mutation<RefreshResponse, { refreshToken: string }>({
@@ -135,8 +134,8 @@ export const authApi = createApi({
                 method: 'POST',
                 body: payload,
             }),
-        }),
-    }),
+        })
+    })
 });
 
 export const {
