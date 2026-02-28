@@ -97,14 +97,14 @@ export const VideoPlayerContent = ({ className, ...props }: VideoPlayerContentPr
 )
 
 // Demo
-export function Demo() {
+export function Demo({ src, poster }: { src?: string; poster?: string }) {
   return (
     <div className="flex w-full h-full object-fit items-center justify-center">
       <VideoPlayer>
         <video
           slot="media"
-          src="https://res.cloudinary.com/dy0qvjkff/video/upload/v1768656497/zpz6ai4mgdzztafwdnpz.mp4"
-          poster="https://cdn.pixabay.com/photo/2023/12/16/00/06/mountain-8451604_1920__1b578b3c0b.jpg"
+          src={src}
+          poster={poster}
           suppressHydrationWarning
           preload="none"
           width="100%"

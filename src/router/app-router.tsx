@@ -35,7 +35,7 @@ const AppRouter = () => {
                     {/* Public Routes */}
                     <Route path="/" Component={MainLayout}>
                         <Route index Component={Home} />
-                        <Route path="course/:id" Component={CourseDetailPage} />
+                        <Route path="course/:courseSlug" Component={CourseDetailPage} />
                         <Route path="search" Component={SearchCoursesPage} />
                         <Route path="*" Component={NotFound} />
                     </Route>

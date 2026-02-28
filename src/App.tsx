@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { Toaster } from "@/components/ui/sonner";
 import {
@@ -12,7 +13,20 @@ import {
 import AppRouter from "@/router/app-router";
 import ContextProvider from "@/providers/ContextProvider";
 import AuthProvider from "@/providers/AuthProvider";
+import logo from "@/assets/logo.svg";
+
 export function App() {
+    useEffect(() => {
+        let link = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
+        if (!link) {
+            link = document.createElement('link');
+            link.rel = 'icon';
+            document.head.appendChild(link);
+        }
+        link.href = logo;
+        link.type = 'image/svg+xml';
+    }, []);
+
     return (
         <ContextProvider>
             <ThemeProvider defaultTheme="light" storageKey="app-theme">
@@ -33,7 +47,6 @@ export function App() {
             </ThemeProvider>
         </ContextProvider>
     )
-        ;
 }
 
 export default App;

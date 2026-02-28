@@ -1,11 +1,11 @@
-// import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
     Check,
-    PlayCircle,
+    // PlayCircle,
     Globe,
     Info,
     Star,
-    Trophy,
+    // Trophy,
     Infinity,
     AlertCircle,
 } from 'lucide-react';
@@ -13,19 +13,31 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import CourseContent from '@/components/features/CourseContent';
-// import { useGetCourseByIdQuery } from "@/features/courses/coursesApi";
+import { useGetCourseBySlugQuery } from "@/features/courses/coursesApi";
 import { Demo } from "@/components/ui/video-player";
-import { Course } from "@/types/course";
-import { ALL_COURSES } from "@/data/courses-data";
+// import { CourseDetailsProps } from "@/types/course";
+// import type { Section, Lecture } from "@/types/course";
 
 
-
-const error = null;
-const course: Course = ALL_COURSES[2];
-const isLoading = false;
 export default function CourseDetailPage() {
-    // const { id } = useParams<{ id: string }>();
-    // const { data: course, isLoading, error } = useGetCourseByIdQuery(id || "");
+    const { courseSlug } = useParams<{ courseSlug: string }>();
+    console.log(courseSlug, "courseSlug")
+
+    // Guard: if courseSlug is undefined, show error
+    if (!courseSlug) {
+        return (
+            <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
+                <AlertCircle className="size-16 text-destructive mb-4" />
+                <h2 className="text-2xl font-bold mb-2">Invalid course URL</h2>
+                <p className="text-muted-foreground mb-6">The course identifier is missing.</p>
+                <Button asChild>
+                    <a href="/search">Browse all courses</a>
+                </Button>
+            </div>
+        );
+    }
+
+    const { data: course, isLoading, error } = useGetCourseBySlugQuery(courseSlug);
 
     if (isLoading) {
         return <CourseDetailSkeleton />;
@@ -44,24 +56,29 @@ export default function CourseDetailPage() {
         );
     }
 
+
+    console.log(course, "cash-course");
+
     return (
         <div>
             <div className="container mx-auto px-4 py-16 lg:py-24">
                 <div className="grid gap-8 lg:grid-cols-3">
-                    <div className="lg:col-span-2 space-y-12">
-                        <div className="relative lg:hidden">
-                            <Demo />
+                    <div className="lg:col-span-2 space-y-6">
+                        <div className="relative mt-3 lg:hidden">
+                            <Demo
+                                poster={course.data.thumbnailUrl}
+                                src={course.data.previewVideoUrl} />
                         </div>
                         {/* HERO SECTION */}
                         <div className="space-y-3">
                             <h1 className="text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
-                                {course.title}
+                                {course.data.title}
                             </h1>
-                            <p className="text-xl text-muted-foreground leading-relaxed">
-                                {course.sub_title}
+                            <p className="text-md text-muted-foreground leading-relaxed">
+                                {course.data.description}
                             </p>
                             <div className="flex flex-wrap gap-2">
-                                {course.tags.map((tag) => (
+                                {course.data.tags?.map((tag: string) => (
                                     <Badge key={tag} variant="secondary" className="px-3 py-1">
                                         {tag}
                                     </Badge>
@@ -69,19 +86,20 @@ export default function CourseDetailPage() {
                             </div>
 
                             <div className="flex flex-wrap items-center gap-6 text-sm">
-                                <div className="flex items-center gap-1.5 text-orange-400 font-bold text-base">
-                                    <span>{course.rating.average}</span>
-                                    <div className="flex"><Star className="size-4 fill-current" /></div>
+                                <div className="flex items-center gap-1.5 text-primary font-bold text-base">
+                                    <div className="flex">
+                                        <Star className="size-4 fill-current" /></div>
+                                    <span>{course.data.rating}</span>
                                 </div>
-                                <span className="underline text-primary/80">({course.rating.count.toLocaleString()} ratings)</span>
-                                <span className="font-medium">{course.enrollment_count.toLocaleString()} learners</span>
+                                <span className="underline text-primary/80">({course.data.rating} ratings)</span>
+                                <span className="font-medium">{course.data.enrollmentCount.toLocaleString()} learners</span>
                             </div>
 
-                            <p className="text-base">Created by <span className="underline text-primary font-medium cursor-pointer">{course.author.name}</span></p>
+                            <p className="text-base">Created by <span className="underline text-primary font-medium cursor-pointer">{course.data.instructor.fullName || "Instructor"}</span></p>
 
                             <div className="flex flex-wrap items-center gap-8 text-sm text-muted-foreground">
-                                <span className="flex items-center gap-1.5"><Info className="size-4" /> Last updated {course.last_update}</span>
-                                <span className="flex items-center gap-1.5"><Globe className="size-4" /> {course.language}</span>
+                                <span className="flex items-center gap-1.5"><Info className="size-4" /> Last updated {course.data.updatedAt?.split("T")[0] || "N/A"}</span>
+                                <span className="flex items-center gap-1.5"><Globe className="size-4" /> {course.language || "English"}</span>
                             </div>
                         </div>
 
@@ -91,7 +109,7 @@ export default function CourseDetailPage() {
                             <section className="border-2 p-4 rounded-xl bg-muted/30">
                                 <h2 className="text-2xl font-bold mb-8">What you'll learn</h2>
                                 <div className="grid sm:grid-cols-2 gap-x-12 gap-y-6">
-                                    {course.learning_outcomes.map((item, i) => (
+                                    {course.data.whatYouLearn?.map((item: string, i: number) => (
                                         <div key={i} className="flex gap-4 text-sm leading-relaxed">
                                             <Check className="size-5 mt-0.5 shrink-0 text-primary" />
                                             <span className="font-medium">{item}</span>
@@ -101,15 +119,15 @@ export default function CourseDetailPage() {
                             </section>
 
                             {/* COURSE CONTENT */}
-                            <section className="border-2 p-4 rounded-xl bg-muted/30">
-                                <CourseContent content={course.content} />
-                            </section>
+                            <CourseContent content={{
+                                sections:[]
+                            }} />
 
                             {/* REQUIREMENTS */}
                             <section className="border-2 p-4 rounded-xl bg-muted/30">
                                 <h2 className="text-2xl font-bold mb-8">Requirements</h2>
                                 <ul className="grid gap-3">
-                                    {course.requirements.map((req, i) => (
+                                    {course.data.requirements?.map((req: string, i: number) => (
                                         <li key={i} className="flex gap-4 items-center font-medium">
                                             <div className="size-2 rounded-full bg-primary shrink-0" />
                                             {req}
@@ -125,13 +143,19 @@ export default function CourseDetailPage() {
                         <aside className="sticky top-24">
                             <div className="border bg-card text-card-foreground shadow-2xl rounded-xl overflow-hidden p-0">
                                 <div className="relative">
-                                    <Demo />
+                                    <Demo
+                                        poster={course.data.thumbnailUrl}
+                                        src={course.data.previewVideoUrl} />
                                 </div>
                                 <div className="p-8 space-y-6">
                                     <div className="flex items-center gap-3">
-                                        <span className="text-4xl font-bold">{course.price.currency}{course.price.current}</span>
-                                        <span className="text-muted-foreground line-through text-lg">{course.price.currency}{course.price.original}</span>
-                                        <Badge variant="destructive" className="ml-auto">{course.price.discount_percentage}% off</Badge>
+                                        {/* <span className="text-4xl font-bold">{course.price.currency || "$"}{course.price.current}</span> */}
+                                        {/* {course.price.original && (
+                                            <span className="text-muted-foreground line-through text-lg">{course.price.currency || "$"}{course.price.original}</span>
+                                        )} */}
+                                        {/* {course.price.original && (
+                                            <Badge variant="destructive" className="ml-auto">{(course.price.original - course.price.current) / course.price.original * 100}% off</Badge>
+                                        )} */}
                                     </div>
 
                                     <div className="grid gap-3">
@@ -144,9 +168,9 @@ export default function CourseDetailPage() {
                                     <div className="space-y-4 pt-6 border-t">
                                         <h3 className="font-bold text-sm tracking-wide uppercase">This course includes:</h3>
                                         <div className="space-y-3 text-sm">
-                                            {course.features.has_lifetime_access && <div className="flex items-center gap-3 font-medium"><Infinity className="size-5 text-muted-foreground" /> Full lifetime access</div>}
-                                            {course.features.has_certificate && <div className="flex items-center gap-3 font-medium"><Trophy className="size-5 text-muted-foreground" /> Certificate of completion</div>}
-                                            <div className="flex items-center gap-3 font-medium"><PlayCircle className="size-5 text-muted-foreground" /> {course.features.video_hours} hours on-demand video</div>
+                                            <div className="flex items-center gap-3 font-medium"><Infinity className="size-5 text-muted-foreground" /> Full lifetime access</div>
+                                            {/* {course.features.has_certificate && <div className="flex items-center gap-3 font-medium"><Trophy className="size-5 text-muted-foreground" /> Certificate of completion</div>} */}
+                                            {/* <div className="flex items-center gap-3 font-medium"><PlayCircle className="size-5 text-muted-foreground" /> {course.features.video_hours} hours on-demand video</div> */}
                                         </div>
                                     </div>
                                 </div>
@@ -162,7 +186,7 @@ export default function CourseDetailPage() {
 function CourseDetailSkeleton() {
     return (
         <div>
-            <div className="container mx-auto px-4 py-16 lg:py-24">
+            <div className="container mx-auto px-4 py-16 lg:py-24 mt-4">
                 <div className="grid gap-8 lg:grid-cols-3">
                     <div className="lg:col-span-2 space-y-12">
                         <div className="space-y-6">

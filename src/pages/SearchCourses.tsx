@@ -13,13 +13,10 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet";
 import CourseCard, { CourseCardSkeleton } from "@/components/common/CourseCard";
-// import { useGetCoursesQuery } from "@/features/courses/coursesApi";
+import { useGetCoursesQuery } from "@/features/courses/coursesApi";
 import { ApiError } from "@/components/common/ApiError";
-import { ALL_COURSES, CATEGORIES, LEVELS } from "@/data/courses-data";
+import { CATEGORIES, LEVELS } from "@/data/courses-data";
 
-const allCourses = ALL_COURSES
-const isLoading = false;
-const error = null
 export default function SearchCoursesPage() {
     const [searchParams, setSearchParams] = useSearchParams();
     const query = searchParams.get("q") || "";
@@ -27,21 +24,30 @@ export default function SearchCoursesPage() {
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
     const [selectedLevels, setSelectedLevels] = useState<string[]>([]);
 
+    const { data: courses, isLoading: isFetching, error: fetchError } = useGetCoursesQuery({
+        search: query,
+        category: selectedCategories.length > 0 ? selectedCategories[0] : undefined,
+        level: selectedLevels.length > 0 ? selectedLevels[0].toLowerCase() : undefined,
+    });
+
     const filteredCourses = useMemo(() => {
-        return allCourses.filter(course => {
+        if (!courses?.courses) return [];
+
+        return courses.courses.filter((course: any) => {
             const matchesQuery = course.title.toLowerCase().includes(query.toLowerCase()) ||
                 course.description.toLowerCase().includes(query.toLowerCase()) ||
-                course.instructor.toLowerCase().includes(query.toLowerCase());
+                course.instructor?.fullName?.toLowerCase().includes(query.toLowerCase()) ||
+                course.instructor?.email?.toLowerCase().includes(query.toLowerCase());
 
             const matchesCategory = selectedCategories.length === 0 ||
                 selectedCategories.includes(course.category);
 
             const matchesLevel = selectedLevels.length === 0 ||
-                selectedLevels.includes(course.level);
+                selectedLevels.some(level => level.toLowerCase() === course.level?.toLowerCase());
 
             return matchesQuery && matchesCategory && matchesLevel;
         });
-    }, [allCourses, query, selectedCategories, selectedLevels]);
+    }, [courses?.courses, query, selectedCategories, selectedLevels]);
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchParams({ q: e.target.value });
@@ -109,7 +115,7 @@ export default function SearchCoursesPage() {
                             {query ? `Search results for "${query}"` : "Explore Courses"}
                         </h1>
                         <p className="text-muted-foreground">
-                            {isLoading ? "Finding courses..." : `${filteredCourses.length} courses found`}
+                            {isFetching ? "Finding courses..." : `${filteredCourses.length} courses found`}
                         </p>
                     </div>
 
@@ -141,8 +147,6 @@ export default function SearchCoursesPage() {
                                 </SheetContent>
                             </Sheet>
                         </div>
-
-
                     </div>
                 </div>
 
@@ -160,34 +164,33 @@ export default function SearchCoursesPage() {
 
                     {/* --- COURSE GRID --- */}
                     <main className="flex-1">
-                        {isLoading ? (
+                        {isFetching ? (
                             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
                                 {[1, 2, 3, 4, 5, 6].map((i) => (
                                     <CourseCardSkeleton key={i} />
                                 ))}
                             </div>
-                        ) : error ? (
+                        ) : fetchError ? (
                             <div className="max-w-2xl mx-auto">
                                 <ApiError
                                     error="Failed to load courses. Please try again."
-                                // onRetry={() => refetch()}
                                 />
                             </div>
                         ) : filteredCourses.length > 0 ? (
                             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-                                {filteredCourses.map((course) => (
+                                {filteredCourses.map((course: any) => (
                                     <CourseCard key={course.id} course={{
                                         ...course,
-                                        to: `/course/${course.id}`,
-                                        rating: course.rating.average.toString(),
-                                        duration: `${course.features.video_hours} Hours`
+                                        to: `/course/${course.slug}`,
+                                        rating: course.rating.toString(),
+                                        duration: `${course.durationHours} Hours`
                                     }} />
                                 ))}
                             </div>
                         ) : (
                             <div className="flex flex-col items-center justify-center py-20 text-center">
-                                <div className="bg-primary p-6 rounded-full mb-6">
-                                    <PackageOpen className="h-12 w-12 " />
+                                <div className="bg-primary text-primary-foreground p-6 rounded-full mb-6">
+                                    <PackageOpen className="h-8 w-8" />
                                 </div>
                                 <h2 className="text-2xl font-bold mb-2">No courses found</h2>
                                 <p className="text-muted-foreground max-w-[400px]">

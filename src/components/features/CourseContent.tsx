@@ -20,7 +20,9 @@ export default function CourseContent({
             id: string, title: string,
             lectures: {
                 id: string,
-                title: string
+                title: string,
+                duration: string,
+                isPreviewable: boolean
             }[]
         }[]
     }
@@ -100,8 +102,12 @@ export default function CourseContent({
                                     </span>
                                 </div>
                                 <div className="flex gap-6 items-center">
-
-
+                                    <span className="text-xs text-muted-foreground">
+                                        {lecture.duration}
+                                    </span>
+                                    {lecture.isPreviewable && (
+                                        <span className="text-xs text-primary">Preview</span>
+                                    )}
                                 </div>
                             </div>
                         ))}
