@@ -1,16 +1,7 @@
 import { useState } from "react";
 import { AccordionContent, AccordionItem, AccordionTrigger, Accordion } from "@/components/ui/accordion";
-import { FileVideo, PlayCircle } from "lucide-react";
+import { ListVideo, FileVideo, PlayCircle } from "lucide-react";
 import { Empty, EmptyDescription, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
-
-export type CourseContentProp = {
-    sections: {
-        id: string, title: string,
-        lectures: {
-            id: string, title: string, duration: string, isPreviewable: boolean
-        }[]
-    }
-}
 
 export default function CourseContent({
     content
@@ -18,10 +9,11 @@ export default function CourseContent({
     content: {
         sections: {
             id: string, title: string,
+            orderIndex: number,
             lectures: {
                 id: string,
                 title: string,
-                duration: string,
+                durationMinutes: string,
                 isPreviewable: boolean
             }[]
         }[]
@@ -65,8 +57,10 @@ export default function CourseContent({
         );
     }
 
-    return <section>
-        <h2 className="text-2xl font-bold">Course content</h2>
+    return <section className="border p-4 rounded-xl bg-muted/30">
+        <h2 className="text-2xl font-bold mb-8 flex items-center gap-2">
+            <ListVideo className="size-6" />Course content
+        </h2>
         <div className="flex flex-col sm:flex-row justify-end text-sm mb-4 gap-2">
             <button
                 onClick={toggleExpandAll}
@@ -80,13 +74,13 @@ export default function CourseContent({
             type="multiple"
             value={openSections}
             onValueChange={setOpenSections}
-            className="border rounded-sm"
+            className="border rounded-xl"
         >
             {content.sections.map((section) => (
                 <AccordionItem key={section.id} value={section.id} className="border-b last:border-0">
                     <AccordionTrigger className="px-4 py-4 hover:bg-muted/50 transition-all text-left">
                         <div className="flex justify-between w-full pr-4">
-                            <span className="font-bold">{section.title}</span>
+                            <span className="font-bold text-md">{section.orderIndex} {section.title}</span>
                             <span className="text-xs font-normal text-muted-foreground">
                                 {section.lectures.length} lectures
                             </span>
@@ -96,14 +90,14 @@ export default function CourseContent({
                         {section.lectures.map((lecture) => (
                             <div key={lecture.id} className="flex justify-between items-center py-3 text-sm">
                                 <div className="flex items-center gap-3">
-                                    <PlayCircle className="size-4 text-muted-foreground" />
-                                    <span>
+                                    <PlayCircle className="text-primary size-4 text-muted-foreground" />
+                                    <span className="hover:underline">
                                         {lecture.title}
                                     </span>
                                 </div>
                                 <div className="flex gap-6 items-center">
                                     <span className="text-xs text-muted-foreground">
-                                        {lecture.duration}
+                                        {lecture.durationMinutes} min
                                     </span>
                                     {lecture.isPreviewable && (
                                         <span className="text-xs text-primary">Preview</span>

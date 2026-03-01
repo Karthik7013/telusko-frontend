@@ -8,6 +8,8 @@ import {
     // Trophy,
     Infinity,
     AlertCircle,
+    Target,
+    ClipboardList,
 } from 'lucide-react';
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -106,8 +108,10 @@ export default function CourseDetailPage() {
                         {/* MAIN CONTENT AREA */}
                         <div className="space-y-16">
                             {/* WHAT YOU'LL LEARN */}
-                            <section className="border-2 p-4 rounded-xl bg-muted/30">
-                                <h2 className="text-2xl font-bold mb-8">What you'll learn</h2>
+                            <section className="border p-4 rounded-xl bg-muted/30">
+                                <h2 className="text-2xl font-bold mb-8 flex items-center gap-2">
+                                    <Target className="size-6" />What you'll learn
+                                </h2>
                                 <div className="grid sm:grid-cols-2 gap-x-12 gap-y-6">
                                     {course.data.whatYouLearn?.map((item: string, i: number) => (
                                         <div key={i} className="flex gap-4 text-sm leading-relaxed">
@@ -120,12 +124,14 @@ export default function CourseDetailPage() {
 
                             {/* COURSE CONTENT */}
                             <CourseContent content={{
-                                sections:[]
+                                sections: course?.data?.sections || []
                             }} />
 
                             {/* REQUIREMENTS */}
-                            <section className="border-2 p-4 rounded-xl bg-muted/30">
-                                <h2 className="text-2xl font-bold mb-8">Requirements</h2>
+                            <section className="border p-4 rounded-xl bg-muted/30">
+                                <h2 className="text-2xl font-bold mb-8 flex items-center gap-2">
+                                    <ClipboardList className="size-6" />Requirements
+                                </h2>
                                 <ul className="grid gap-3">
                                     {course.data.requirements?.map((req: string, i: number) => (
                                         <li key={i} className="flex gap-4 items-center font-medium">
