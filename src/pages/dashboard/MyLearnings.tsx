@@ -1,27 +1,27 @@
-import CourseCard from "@/components/common/CourseCard";
+// import CourseCard from "@/components/common/CourseCard";
 
-const enrolledCourses = [
-    {
-        title: "Mastering Spring Boot 3.0",
-        instructor: "Navin Reddy",
-        description: "Comprehensive guide to building production-ready applications with Spring.",
-        rating: "4.9",
-        duration: "45 Hours",
-        to: "/course/spring-boot-3",
-        imageSrc: "https://images.unsplash.com/photo-1587620962725-abab7fe55159?q=80&w=800&auto=format&fit=crop",
-        progress: 65
-    },
-    {
-        title: "Docker & Kubernetes for Java Devs",
-        instructor: "Telusko Team",
-        description: "Learn to containerize and orchestrate your microservices.",
-        rating: "4.8",
-        duration: "30 Hours",
-        to: "/course/docker-k8s",
-        imageSrc: "https://images.unsplash.com/photo-1605745341112-85968b193ef5?q=80&w=800&auto=format&fit=crop",
-        progress: 30
-    }
-];
+// const enrolledCourses = [
+//     {
+//         title: "Mastering Spring Boot 3.0",
+//         instructor: "Navin Reddy",
+//         description: "Comprehensive guide to building production-ready applications with Spring.",
+//         rating: "4.9",
+//         duration: "45 Hours",
+//         to: "/course/spring-boot-3",
+//         imageSrc: "https://images.unsplash.com/photo-1587620962725-abab7fe55159?q=80&w=800&auto=format&fit=crop",
+//         progress: 65
+//     },
+//     {
+//         title: "Docker & Kubernetes for Java Devs",
+//         instructor: "Telusko Team",
+//         description: "Learn to containerize and orchestrate your microservices.",
+//         rating: "4.8",
+//         duration: "30 Hours",
+//         to: "/course/docker-k8s",
+//         imageSrc: "https://images.unsplash.com/photo-1605745341112-85968b193ef5?q=80&w=800&auto=format&fit=crop",
+//         progress: 30
+//     }
+// ];
 
 export default function MyLearningsPage() {
     return (
@@ -32,11 +32,11 @@ export default function MyLearningsPage() {
             </div>
 
             <div className="grid gap-8 lg:grid-cols-2 xl:grid-cols-3">
-                {enrolledCourses.map((course, index) => (
+                {/* {enrolledCourses.map((course, index) => (
                     <div key={index} className="space-y-3">
                         <CourseCard course={course} />
                     </div>
-                ))}
+                ))} */}
             </div>
         </div>
     );

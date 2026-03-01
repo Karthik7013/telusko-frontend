@@ -1,11 +1,13 @@
 // import { Course } from '@/types/course';
+import { ApiResponse } from '@/lib/api-utils';
+import { CourseCardProps } from '@/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 const BASE_URL = 'http://localhost:3000';
 export const coursesApi = createApi({
   reducerPath: 'coursesApi',
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: (builder) => ({
-    getCourses: builder.query({
+    getCourses: builder.query<ApiResponse<{courses: CourseCardProps[], total:number}>, any>({
       query: (params?: any) => ({
         url: '/courses',
         params,

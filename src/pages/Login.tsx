@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 const Login = () => {
     return (
-        <div className='h-svh flex flex-col'>
+        <div className='h-svh flex flex-col bg-primary/10'>
             {/* Top Branding Bar */}
             <header>
                 <div className="flex h-16 items-center px-4">

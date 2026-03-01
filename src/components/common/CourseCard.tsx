@@ -4,6 +4,7 @@ import { Clock, Star } from "lucide-react"
 import type { CourseCardProps } from "@/types"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Button } from "@/components/ui/button"
+import { Link } from "react-router-dom"
 
 
 
@@ -13,6 +14,7 @@ export default function CourseCard({
 }: {
     course: CourseCardProps
 }) {
+    // console.log(course.,'single-course')
     return (
         <Card className='group h-full overflow-hidden shadow-none transition-all duration-300'>
             <CardContent className='space-y-3.5'>
@@ -20,7 +22,7 @@ export default function CourseCard({
                     <a href={"#"}>
                         <img
                             alt={course.title}
-                            src={course.imageSrc}
+                            src={course.thumbnailUrl}
                             loading="lazy"
                             className='h-59.5 w-full object-cover transition-transform duration-300 group-hover:scale-105'
                         />
@@ -31,11 +33,11 @@ export default function CourseCard({
                         <div className="flex items-center gap-1 text-yellow-500 mb-2">
                             <Star className="size-4 fill-current" />
                             <span className="text-sm font-bold text-foreground">{course.rating}</span>
-                            
+
                         </div>
                         <Badge className="bg-background/80 text-foreground backdrop-blur-md">
                             <Clock className="mr-1 size-4" />
-                            {course.duration}
+                            {course.durationHours} Hrs
                         </Badge>
                     </div>
 
@@ -48,10 +50,9 @@ export default function CourseCard({
                 </p>
 
                 <div className='flex items-center justify-between'>
-                    <span className="text-xs text-muted-foreground ml-1">Instructor: {course.instructor}</span>
-
+                    {/* <span className="text-xs text-muted-foreground ml-1">Instructor: {course.instructor}</span> */}
                     <Button asChild variant={'link'} >
-                        <a href={course.to}>View Details</a>
+                        <Link to={`/course/${course.slug}`}>View Details</Link>
                     </Button>
                 </div>
             </CardContent>

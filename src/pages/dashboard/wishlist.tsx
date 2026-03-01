@@ -1,4 +1,4 @@
-import CourseCard from "@/components/common/CourseCard";
+// import CourseCard from "@/components/common/CourseCard";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -62,9 +62,9 @@ export default function WishlistPage() {
             </div>
 
             <div className="grid gap-8 lg:grid-cols-2 xl:grid-cols-3">
-                {wishlistCourses.map((course, index) => (
+                {/* {wishlistCourses.map((course, index) => (
                     <CourseCard key={index} course={course} />
-                ))}
+                ))} */}
             </div>
         </div>
     );

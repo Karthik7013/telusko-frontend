@@ -14,6 +14,7 @@ export interface User {
     roles: string[];
     isInstructor: true;
     profilePictureUrl: string;
+    bio: string;
 
 }
 
