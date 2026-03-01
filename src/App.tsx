@@ -25,8 +25,23 @@ export function App() {
         }
         link.href = logo;
         link.type = 'image/svg+xml';
+        const meta = document.querySelector("meta[name='theme-color']");
+        if (meta) {
+            const oldColor = meta.getAttribute("content");
+            meta.setAttribute("content", "#d87757");
+            return () => {
+                if (oldColor) meta.setAttribute("content", oldColor);
+            };
+        } else {
+            const newMeta = document.createElement('meta');
+            newMeta.name = 'theme-color';
+            newMeta.content = '#d87757';
+            document.head.appendChild(newMeta);
+            return () => {
+                document.head.removeChild(newMeta);
+            };
+        }
     }, []);
-
     return (
         <ContextProvider>
             <ThemeProvider defaultTheme="light" storageKey="app-theme">
