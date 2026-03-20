@@ -15,10 +15,10 @@ import {
 
 export default function HeroPresenter() {
     return (
-        <section className="py-30 lg:py-28">
+        <section className="h-screen flex lg:py-28">
             <div className="container mx-auto px-4">
-                <div className="grid items-center gap-12 lg:grid-cols-2">
-                    <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+                <div className="grid lg:items-center lg:gap-12 lg:grid-cols-2 h-full">
+                    <div className="flex flex-col justify-center items-center text-center lg:items-start lg:text-left">
                         <Badge variant="outline" className="px-3 py-2 border-primary/30 text-primary">
                             <Users className="size-3.5" />
                             Trusted by 2M+ Developers Worldwide
@@ -29,7 +29,7 @@ export default function HeroPresenter() {
                             <span className="text-primary">Build Your Future.</span>
                         </h1>
 
-                        <p className="text-muted-foreground mb-8 text-balance lg:text-xl max-w-[600px]">
+                        <p className="text-muted-foreground mb-8 text-balance lg:text-xl max-w-150">
                             Level up your tech skills with industry-led courses in Java, Python, Full-stack
                             development, and DevOps. Learn by building real-world projects.
                         </p>
