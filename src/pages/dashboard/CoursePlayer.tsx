@@ -43,7 +43,7 @@ export default function CoursePlayer({
                             <VideoPlayer className="w-full h-full">
                                 <video
                                     slot="media"
-                                    src="https://res.cloudinary.com/dy0qvjkff/video/upload/v1770664244/ueke5mact6ac60hgeoii.mp4"
+                                    src="https://archive.org/download/a-beginners-guide-to-python-programming/%5BTutsNode.com%5D%20-%20A%20Beginners%20Guide%20to%20Python%20Programming%2F01%20Introduction%2F001%20Introduction.mp4"
                                     poster="https://cdn.pixabay.com/photo/2023/12/16/00/06/mountain-8451604_1920__1b578b3c0b.jpg"
                                     className="w-full h-full object-cover"
                                     crossOrigin=""

@@ -185,7 +185,7 @@ export default function SearchCoursesPage() {
         </div>
     );
 
-    console.log(courses?.data?.courses, "courses")
+    // console.log(courses?.data?.courses, "courses")
     return (
         <div className="py-32">
             <div className="container mx-auto px-4">

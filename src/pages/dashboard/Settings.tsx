@@ -23,7 +23,7 @@ import { SwitchTheme } from "@/components/common/ToggleTheme";
 
 const ProfileSettings = () => {
     const { data: user } = useGetUserQuery();
-    console.log(user, "user-1");
+    // console.log(user, "user-1");
     return <Card>
         <CardHeader>
             <CardTitle>Profile Information</CardTitle>

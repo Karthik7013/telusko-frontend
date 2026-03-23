@@ -18,13 +18,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 import CourseContent from '@/components/features/CourseContent';
 import { useGetCourseBySlugQuery } from "@/features/courses/coursesApi";
 import { Demo } from "@/components/ui/video-player";
-// import { CourseDetailsProps } from "@/types/course";
-// import type { Section, Lecture } from "@/types/course";
 
 
 export default function CourseDetailPage() {
     const { courseSlug } = useParams<{ courseSlug: string }>();
-    console.log(courseSlug, "courseSlug")
+    // console.log(courseSlug, "courseSlug")
 
     useEffect(() => {
         const meta = document.querySelector("meta[name='theme-color']");
@@ -79,7 +77,7 @@ export default function CourseDetailPage() {
     }
 
 
-    console.log(course, "cash-course");
+    // console.log(course, "cash-course");
 
     return (
         <div>
@@ -185,8 +183,7 @@ export default function CourseDetailPage() {
                                     </div>
 
                                     <div className="grid gap-3">
-                                        <Button className="w-full h-14 text-lg font-bold">Add to cart</Button>
-                                        <Button variant="outline" className="w-full h-14 font-bold border-2">Buy now</Button>
+                                        <Button className="w-full h-14 text-lg font-bold">Enroll now</Button>
                                     </div>
 
                                     <p className="text-center text-xs text-muted-foreground font-medium uppercase tracking-wide">30-Day Money-Back Guarantee</p>

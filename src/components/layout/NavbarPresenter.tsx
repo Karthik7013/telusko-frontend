@@ -1,6 +1,6 @@
 
 import { Link, useNavigate } from "react-router-dom";
-import { GraduationCap, Search } from "lucide-react";
+import { GraduationCap, Menu, Search, X } from "lucide-react";
 
 import {
     NavigationMenu,
@@ -18,6 +18,7 @@ import { AnnouncementBanner } from "@/components/common/AnnouncementBanner";
 import UserProfile from "@/components/common/UserProfile";
 import { MobileMenu } from "@/components/layout/MobileMenu";
 import { NavbarItem } from "@/components/layout/NavbarItem";
+import { useState } from "react";
 
 
 export function NavbarPresenter({
@@ -26,12 +27,14 @@ export function NavbarPresenter({
     isLogin: boolean,
     data?: User | undefined
 }) {
+    const [openMobileMenu, setOpenMobileMenu] = useState(false)
     const navigate = useNavigate();
 
+
     return (
-        <header className="fixed border-b top-0 z-50 w-full bg-background/10 backdrop-blur">
+        <header className={`fixed flex flex-col border-b top-0 z-50 w-full py-1 p-4 bg-background ${openMobileMenu && 'h-screen'}`}>
             <AnnouncementBanner />
-            <div className="container flex h-16 items-center mx-auto justify-between px-4">
+            <div className="container flex h-16 items-center mx-auto justify-between">
 
                 {/* --- LEFT SECTION: LOGO & NAVIGATION --- */}
                 <div className="flex items-center gap-8">
@@ -91,7 +94,7 @@ export function NavbarPresenter({
 
                 {/* --- CENTER SECTION: DESKTOP SEARCH --- */}
                 <div className="hidden md:flex items-center justify-center gap-4 flex-1">
-              
+
                 </div>
 
                 {/* --- RIGHT SECTION: AUTH & MOBILE ICONS --- */}
@@ -104,6 +107,18 @@ export function NavbarPresenter({
                     >
                         <Search className="h-5 w-5" />
                     </Button>
+                    {!isLogin && <div className="lg:hidden flex-1">
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="relative"
+                            onClick={() => setOpenMobileMenu(!openMobileMenu)}
+                        >
+                            <Menu className={`h-5 w-5 transition-all duration-300 ${openMobileMenu ? "scale-0 rotate-90 opacity-0" : "scale-100 rotate-0 opacity-100"}`} />
+                            <X className={`absolute h-5 w-5 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ${openMobileMenu ? "scale-100 rotate-0 opacity-100" : "scale-0 -rotate-90 opacity-0"}`} />
+                            <span className="sr-only">Toggle Menu</span>
+                        </Button>
+                    </div>}
                     {!isLogin && <div className="items-center gap-2 hidden lg:flex">
                         <Button variant="ghost" asChild>
                             <Link to="/login">Log in</Link>
@@ -112,14 +127,14 @@ export function NavbarPresenter({
                             <Link to="/signup">Join for Free</Link>
                         </Button>
                     </div>}
-
-                    {!isLogin && <div className="lg:hidden">
-                        <MobileMenu />
-                    </div>}
-
                     {isLogin && <UserProfile />}
                 </div>
             </div>
+            {!isLogin && <div className="lg:hidden">
+                <MobileMenu open={openMobileMenu}
+                    onClose={setOpenMobileMenu}
+                />
+            </div>}
         </header>
     );
 }
