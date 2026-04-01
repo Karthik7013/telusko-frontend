@@ -18,9 +18,9 @@ export function MobileMenu({
     onClose: (open: boolean) => void
 }) {
     return (
-        <div className="bg-pink-900">
-            <Collapsible open={open} onOpenChange={onClose}>
-                <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
+        <Collapsible open={open} onOpenChange={onClose}>
+            <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
+                <div className="flex-1 h-full">
                     <div className="flex flex-col gap-4 py-4 border-t">
                         <Accordion type="single" collapsible className="w-full flex-1">
                             <AccordionItem value="courses">
@@ -53,16 +53,17 @@ export function MobileMenu({
                             </AccordionItem>
                         </Accordion>
                     </div>
-                    <div className="flex flex-col gap-3 mt-4">
+                    <div className="flex flex-col gap-3 pb-4">
                         <Button variant="outline" className="w-full" asChild>
                             <Link to="/login">Log in</Link>
                         </Button>
                         <Button className="w-full bg-primary" asChild>
-                            <Link to="/signup">Join for Free <ArrowRight /></Link>
+                            <Link to="/signup">Join for Free <ArrowRight />
+                            </Link>
                         </Button>
                     </div>
-                </CollapsibleContent>
-            </Collapsible>
-        </div>
+                </div>
+            </CollapsibleContent>
+        </Collapsible>
     );
 }
