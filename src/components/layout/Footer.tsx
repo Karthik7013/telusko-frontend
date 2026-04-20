@@ -32,8 +32,8 @@ export default function FooterPresenter() {
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 py-12">
                     <div className="col-span-2 lg:col-span-2">
                         <Link to="/" className="flex items-center gap-2 mb-4">
-                            <div className="bg-primary p-1.5 rounded-lg">
-                                <GraduationCap className="size-6 text-primary-foreground" />
+                            <div className="p-0.5 rounded-lg">
+                                <GraduationCap className="size-8 text-primary" />
                             </div>
                             <span className="text-xl font-bold tracking-tight">Telusko</span>
                         </Link>

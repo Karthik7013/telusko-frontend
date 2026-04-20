@@ -45,7 +45,6 @@ const formSchema = z.object({
 })
 
 import { useNavigate, Link } from "react-router-dom"
-import { ArrowLeft } from "lucide-react"
 import { useSignUpMutation } from "@/features/auth/authApi"
 
 export function SignupForm({ className, ...props }: React.ComponentProps<typeof Card>) {
@@ -89,7 +88,7 @@ export function SignupForm({ className, ...props }: React.ComponentProps<typeof 
 
     return (
         <div className={cn("w-full flex flex-col gap-6 max-w-xs lg:max-w-sm mx-auto", className)} {...props}>
-            <div className="flex items-center justify-between">
+            {/* <div className="flex items-center justify-between">
                 <Link
                     to="/"
                     className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
@@ -97,7 +96,7 @@ export function SignupForm({ className, ...props }: React.ComponentProps<typeof 
                     <ArrowLeft className="size-4" />
                     Back to Home
                 </Link>
-            </div>
+            </div> */}
             <Card className="shadow-lg">
                 <CardHeader>
                     <CardTitle className="text-2xl">Create an account</CardTitle>

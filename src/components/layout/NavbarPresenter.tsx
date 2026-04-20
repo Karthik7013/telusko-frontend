@@ -39,8 +39,8 @@ export function NavbarPresenter({
                 {/* --- LEFT SECTION: LOGO & NAVIGATION --- */}
                 <div className="flex items-center gap-8">
                     <Link to="/" className="flex items-center gap-2">
-                        <div className="bg-primary p-1.5 rounded-lg">
-                            <GraduationCap className="size-6 text-primary-foreground" />
+                        <div className="p-0.5 rounded-lg">
+                            <GraduationCap className=" size-8 text-primary" />
                         </div>
                         <span className="text-xl font-bold tracking-tight">Telusko</span>
                     </Link>
