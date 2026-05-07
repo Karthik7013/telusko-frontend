@@ -12,6 +12,15 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet";
+import {
+    Pagination,
+    PaginationContent,
+    PaginationEllipsis,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious,
+} from "@/components/ui/pagination";
 import CourseCard, { CourseCardSkeleton } from "@/components/common/CourseCard";
 import { useGetCoursesQuery } from "@/features/courses/coursesApi";
 import { ApiError } from "@/components/common/ApiError";
@@ -201,7 +210,7 @@ export default function SearchCoursesPage() {
                     </div>
 
                     <div className="flex items-center gap-2">
-                        <div className="relative flex-1 md:w-[300px]">
+                        <div className="relative flex-1 md:w-75">
                             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                             <Input
                                 placeholder="Search courses..."
@@ -233,7 +242,7 @@ export default function SearchCoursesPage() {
 
                 <div className="flex flex-col lg:flex-row gap-10">
                     {/* --- DESKTOP SIDEBAR --- */}
-                    <aside className="hidden lg:block w-[260px] shrink-0">
+                    <aside className="hidden lg:block w-65 shrink-0">
                         <div className="sticky top-24">
                             <div className="flex items-center gap-2 mb-6">
                                 <SlidersHorizontal className="h-4 w-4" />
@@ -269,7 +278,7 @@ export default function SearchCoursesPage() {
                                     <PackageOpen className="h-8 w-8" />
                                 </div>
                                 <h2 className="text-2xl font-bold mb-2">No courses found</h2>
-                                <p className="text-muted-foreground max-w-[400px]">
+                                <p className="text-muted-foreground max-w-100">
                                     We couldn't find any courses matching your search. Try adjusting your filters or search terms.
                                 </p>
                                 <Button
@@ -281,6 +290,32 @@ export default function SearchCoursesPage() {
                                 </Button>
                             </div>
                         )}
+                        <div className="mt-10">
+                            <Pagination>
+                                <PaginationContent>
+                                    <PaginationItem>
+                                        <PaginationPrevious href="#" />
+                                    </PaginationItem>
+                                    <PaginationItem>
+                                        <PaginationLink href="#">1</PaginationLink>
+                                    </PaginationItem>
+                                    <PaginationItem>
+                                        <PaginationLink href="#" isActive>
+                                            2
+                                        </PaginationLink>
+                                    </PaginationItem>
+                                    <PaginationItem>
+                                        <PaginationLink href="#">3</PaginationLink>
+                                    </PaginationItem>
+                                    <PaginationItem>
+                                        <PaginationEllipsis />
+                                    </PaginationItem>
+                                    <PaginationItem>
+                                        <PaginationNext href="#" />
+                                    </PaginationItem>
+                                </PaginationContent>
+                            </Pagination>
+                        </div>
                     </main>
                 </div>
             </div>
