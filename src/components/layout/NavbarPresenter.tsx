@@ -32,7 +32,7 @@ export function NavbarPresenter({
 
 
     return (
-        <header className="fixed flex flex-col top-0 z-50 w-full bg-background/95 backdrop-blur-md border-b">
+        <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-md border-b">
             <AnnouncementBanner />
             <div className="container flex h-16 items-center mx-auto justify-between px-4 shrink-0">
 
