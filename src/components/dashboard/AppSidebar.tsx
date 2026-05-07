@@ -1,10 +1,4 @@
-"use client"
-
 import * as React from "react"
-
-
-
-
 import NavMain from "@/components/dashboard/NavMain"
 import { NavUser } from "@/components/dashboard/NavUser"
 import RoleSwitcher from "@/components/dashboard/TeamSwitcher"
@@ -18,12 +12,11 @@ import {
 
 
 import { DASHBOARD_NAV as navData } from "@/data/navigation-data"
-import { Separator } from "../ui/separator"
 
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     return (
-        <Sidebar collapsible="icon" {...props}>
+        <Sidebar className="border-0 border-r-0 " style={{ borderRightWidth: 0 }} collapsible="icon" {...props}>
             <SidebarHeader>
                 <RoleSwitcher />
             </SidebarHeader>
@@ -31,7 +24,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <NavMain items={navData} />
             </SidebarContent>
             <SidebarFooter>
-                <Separator />
                 <NavUser />
             </SidebarFooter>
             <SidebarRail />
