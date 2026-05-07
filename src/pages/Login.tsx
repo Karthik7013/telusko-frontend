@@ -2,7 +2,6 @@
 import { LoginForm } from '@/components/features/LoginForm'
 import { GraduationCap } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { Globe } from "lucide-react";
 import { siGoogle } from "simple-icons";
 import { SimpleIcon } from "@/components/common/simple-icon";
 import { Button } from "@/components/ui/button";
@@ -84,30 +83,23 @@ export default function LoginV2() {
                             <h1 className="font-medium text-3xl">Welcome back</h1>
                             <p className="text-muted-foreground text-sm">Enter your credentials to access your learning dashboard.</p>
                         </div>
-                        <div className="space-y-4">
+                        <div className="space-y-4 flex flex-col">
                             <GoogleButton className="w-full" />
                             <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-border after:border-t">
                                 <span className="relative z-10 bg-background px-2 text-muted-foreground">or continue with email</span>
                             </div>
                             <LoginForm />
-                        </div>
-                    </div>
-
-                    <div className="absolute top-5 flex w-full justify-end px-10">
-                        <div className="text-muted-foreground text-sm">
-                            Don&apos;t have an account?{" "}
-                            <Link to="/signup" className="text-foreground font-medium hover:underline">
-                                Sign up free
-                            </Link>
+                            <div className="text-muted-foreground text-sm">
+                                Don&apos;t have an account?{" "}
+                                <Link to="/signup" className="text-foreground font-medium hover:underline">
+                                    Sign up free
+                                </Link>
+                            </div>
                         </div>
                     </div>
 
                     <div className="absolute bottom-5 flex w-full justify-between px-10">
                         <div className="text-sm text-muted-foreground">© 2026 Telusko Learning. All rights reserved.</div>
-                        <div className="flex items-center gap-1 text-sm">
-                            <Globe className="size-4 text-muted-foreground" />
-                            ENG
-                        </div>
                     </div>
                 </div>
             </div>

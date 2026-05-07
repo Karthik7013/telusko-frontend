@@ -32,9 +32,9 @@ export function NavbarPresenter({
 
 
     return (
-        <header className={`fixed flex flex-col border-b top-0 z-50 w-full py-1 p-4 bg-background ${openMobileMenu && 'h-screen'}`}>
+        <header className="fixed flex flex-col top-0 z-50 w-full bg-background/95 backdrop-blur-md border-b">
             <AnnouncementBanner />
-            <div className="container flex h-16 items-center mx-auto justify-between">
+            <div className="container flex h-16 items-center mx-auto justify-between px-4 shrink-0">
 
                 {/* --- LEFT SECTION: LOGO & NAVIGATION --- */}
                 <div className="flex items-center gap-8">
@@ -130,150 +130,13 @@ export function NavbarPresenter({
                     {isLogin && <UserProfile />}
                 </div>
             </div>
-            {/* <div className="flex-1 overflow-y-auto">block</div> */}
-            {!isLogin && <div className="lg:hidden flex-1">
+
+            {!isLogin &&
                 <MobileMenu open={openMobileMenu}
                     onClose={setOpenMobileMenu}
-                />
-            </div>}
-
-            {/* 
-            
-            
-            
-interface AddBookDto {
-
-}
-class Book {
-    private id
-    private title
-    private description
-    private price
-    private category
-    constructor(id: string, title: string, price: number, description: string, category: string[]) {
-        this.id = id
-        this.title = title
-        this.description = description
-        this.price = price
-        this.category = category
-    }
-}
-
-
-interface AddMemberDto {
-
-}
-type ROLE = 'member' | 'admin' | 'moderator'
-class Member {
-    private id
-    private name
-    private role
-    constructor(id: string, name: string, role: ROLE) {
-        this.id = id;
-        this.name = name;
-        this.role = role;
-    }
-}
-
-
-interface UniqueResponse<T> {
-    data: T;
-    message: string;
-    success: boolean;
-    timestamp: Date;
-}
-
-type PaginationDto = {
-    limit: number;
-    page: number
-}
-type FilterationDto = {
-    category: string[];
-}
-
-// base repository
-interface Repository<T> {
-    create: () => Promise<T>
-}
-
-class BookRepository implements Repository<Book> {
-    async create(): Promise<any> {
-        return {}
-    }
-}
-
-class BookService {
-    bookRepository
-    constructor(bookRepository: Repository<Book>) {
-        this.bookRepository = bookRepository;
-    }
-}
-class MemberService{
-    
-}
-
-class RentService {
-    bookService
-    memberService
-    constructor(bookService:BookService,memberService:MemberService){
-        this.bookService = bookService;
-        this.memberService = memberService
-    }
-}
-
-class LibraryManagement {
-    private books: Book[] = [] // normalize
-    private members: Member[] = [] // normalize
-
-    readonly bookService: BookService
-
-    constructor(bookService: BookService) {
-        this.bookService = bookService
-    }
-
-    // book behaviour
-    async addBook(book: AddBookDto): Promise<UniqueResponse<Book>> {
-        const newBook = this.bookService.bookRepository.create()
-        return {} as UniqueResponse<Book>
-    }
-
-    async deleteBook(bookId: string): Promise<UniqueResponse<null>> {
-        return {} as UniqueResponse<null>
-    }
-
-    async updateBook(bookId: string): Promise<UniqueResponse<Book>> {
-        return {} as UniqueResponse<Book>
-    }
-
-    async getBookById(id: string): Promise<UniqueResponse<Book | null>> {
-        return {} as UniqueResponse<Book>
-    }
-
-    async getBooks(options: PaginationDto = { limit: 10, page: 1 }): Promise<UniqueResponse<Book[]>> {
-        return {} as UniqueResponse<Book[]>
-    }
-
-    // member behaviour
-    async addMember(member: AddMemberDto): Promise<UniqueResponse<Member>> {
-        return {} as UniqueResponse<Member>
-    }
-
-    async deleteMember(memberId: string): Promise<UniqueResponse<null>> {
-        return {} as UniqueResponse<null>
-    }
-
-    async updateMember(id: string, options: Partial<Member>):  Promise<UniqueResponse<null>>{
-        return {} as UniqueResponse<null>
-    }
-
-
-}
-
-            
-            */}
+                />}
         </header>
     );
 }
 
 export default NavbarPresenter;
-
