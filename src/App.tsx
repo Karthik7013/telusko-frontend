@@ -9,6 +9,7 @@ import {
     AlertTriangle,
     X
 } from "lucide-react";
+import { ErrorBoundary } from "@/components/ui/error-boundary";
 
 import AppRouter from "@/router/app-router";
 import ContextProvider from "@/providers/ContextProvider";
@@ -46,6 +47,9 @@ export function App() {
         <ContextProvider>
             <ThemeProvider defaultTheme="light" storageKey="app-theme">
                 <AuthProvider>
+                    <ErrorBoundary>
+                        <AppRouter />
+                    </ErrorBoundary>
                     <Toaster
                         icons={{
                             success: <CheckCircle2 className="size-4" />,
@@ -57,7 +61,6 @@ export function App() {
                         }}
                         richColors
                     />
-                    <AppRouter />
                 </AuthProvider>
             </ThemeProvider>
         </ContextProvider>

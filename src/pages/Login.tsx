@@ -1,4 +1,3 @@
-// import { Separator } from '@/components/ui/separator'
 import { LoginForm } from '@/components/features/LoginForm'
 import { GraduationCap } from 'lucide-react'
 import { Link } from 'react-router-dom'
@@ -41,39 +40,17 @@ export default function LoginV2() {
                             <p className="text-primary-foreground/80 font-medium pl-1 italic">Learn. Grow. Succeed. Repeat.</p>
                         </div>
 
-                        {/* Hero Content */}
-                        <div className="flex-1 flex items-center justify-center p-8 lg:p-16 overflow-hidden">
-                            <div className="relative w-full max-w-lg max-h-[55vh] flex items-center justify-center">
-                                <img
-                                    src={LearningPana}
-                                    alt="Learning Illustration"
-                                    className="max-w-full max-h-full h-auto w-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.3)] select-none pointer-events-none transition-transform duration-700 hover:scale-105"
-                                />
-                            </div>
-                        </div>
-
-                        {/* Footer Features */}
-                        {/* <div className="pb-12 flex w-full justify-between px-10 gap-8">
-                            <div className="flex-1 space-y-2 text-primary-foreground">
-                                <div className="flex items-center gap-2">
-                                    <BookOpen className="size-5 text-primary-foreground/90" />
-                                    <h2 className="font-semibold text-lg">Start Learning</h2>
-                                </div>
-                                <p className="text-sm text-primary-foreground/70 leading-relaxed">
-                                    Access 500+ premium courses mentored by expert instructors.
-                                </p>
-                            </div>
-                            <Separator orientation="vertical" className="h-16 bg-primary-foreground/20" />
-                            <div className="flex-1 space-y-2 text-primary-foreground">
-                                <div className="flex items-center gap-2">
-                                    <HelpCircle className="size-5 text-primary-foreground/90" />
-                                    <h2 className="font-semibold text-lg">Support</h2>
-                                </div>
-                                <p className="text-sm text-primary-foreground/70 leading-relaxed">
-                                    Need help? Our community support is available 24/7 to guide you.
-                                </p>
-                            </div>
-                        </div> */}
+                         {/* Hero Content */}
+                         <div className="flex-1 flex items-center justify-center p-8 lg:p-16 overflow-hidden">
+                             <div className="relative w-full max-w-lg max-h-[55vh] flex items-center justify-center">
+                                 <img
+                                     src={LearningPana}
+                                     alt="Learning Illustration"
+                                     className="max-w-full max-h-full h-auto w-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.3)] select-none pointer-events-none transition-transform duration-700 hover:scale-105"
+                                     loading="lazy"
+                                 />
+                             </div>
+                         </div>
                     </div>
                 </div>
                 <div className="relative order-1 flex h-full">
@@ -84,7 +61,7 @@ export default function LoginV2() {
                             <p className="text-muted-foreground text-sm">Enter your credentials to access your learning dashboard.</p>
                         </div>
                         <div className="space-y-4 flex flex-col">
-                            <GoogleButton className="w-full" />
+                             <GoogleButton className="w-full" aria-label="Sign in with Google" />
                             <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-border after:border-t">
                                 <span className="relative z-10 bg-background px-2 text-muted-foreground">or continue with email</span>
                             </div>
