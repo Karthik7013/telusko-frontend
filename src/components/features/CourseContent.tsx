@@ -19,8 +19,9 @@ export default function CourseContent({
         }[]
     }
 }) {
-    // const loading = true;
     const [openSections, setOpenSections] = useState<string[]>([]);
+    
+    const totalLectures = content.sections?.reduce((acc, section) => acc + section.lectures?.length, 0) || 0;
 
     // Function to handle "Expand All" / "Collapse All" logic
     const toggleExpandAll = () => {
@@ -58,9 +59,14 @@ export default function CourseContent({
     }
 
     return <section className="border p-4 rounded-xl bg-muted/30">
-        <h2 className="text-2xl font-bold mb-8 flex items-center gap-2">
-            <ListVideo className="size-6" />Course content
-        </h2>
+        <div className="flex items-center justify-between mb-4">
+            <h2 className="text-2xl font-bold flex items-center gap-2">
+                <ListVideo className="size-6" />Course content
+            </h2>
+            <span className="text-sm text-muted-foreground">
+                {content.sections.length} sections • {totalLectures} lectures
+            </span>
+        </div>
         <div className="flex flex-col sm:flex-row justify-end text-sm mb-4 gap-2">
             <button
                 onClick={toggleExpandAll}
@@ -69,7 +75,6 @@ export default function CourseContent({
                 {openSections.length === content.sections.length ? "Collapse all sections" : "Expand all sections"}
             </button>
         </div>
-
         <Accordion
             type="multiple"
             value={openSections}
@@ -80,8 +85,8 @@ export default function CourseContent({
                 <AccordionItem key={section.id} value={section.id} className="border-b last:border-0">
                     <AccordionTrigger className="px-4 py-4 hover:bg-muted/50 transition-all text-left">
                         <div className="flex justify-between w-full pr-4">
-                            <span className="font-bold text-md">{section.orderIndex} {section.title}</span>
-                            <span className="text-xs font-normal text-muted-foreground">
+                            <span className="font-bold text-md">{section.title}</span>
+                            <span className="text-xs font-normal text-muted-foreground whitespace-nowrap">
                                 {section.lectures.length} lectures
                             </span>
                         </div>

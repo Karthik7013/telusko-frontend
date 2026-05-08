@@ -1,16 +1,18 @@
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
     Check,
-    // PlayCircle,
     Globe,
     Info,
     Star,
-    // Trophy,
-    Infinity,
     AlertCircle,
     Target,
     ClipboardList,
+    // PlayCircle,
+    Clock,
+    Award,
+    // Download,
+    ShieldCheck,
+    Infinity as InfinityIcon,
 } from 'lucide-react';
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -18,30 +20,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 import CourseContent from '@/components/features/CourseContent';
 import { useGetCourseBySlugQuery } from "@/features/courses/coursesApi";
 import { Demo } from "@/components/ui/video-player";
-
+import DescriptionCollapse from '@/components/common/DescriptionCollapse';
 
 export default function CourseDetailPage() {
     const { courseSlug } = useParams<{ courseSlug: string }>();
-    // console.log(courseSlug, "courseSlug")
 
-    useEffect(() => {
-        const meta = document.querySelector("meta[name='theme-color']");
-        if (meta) {
-            const oldColor = meta.getAttribute("content");
-            meta.setAttribute("content", "#d87757");
-            return () => {
-                if (oldColor) meta.setAttribute("content", oldColor);
-            };
-        } else {
-            const newMeta = document.createElement('meta');
-            newMeta.name = 'theme-color';
-            newMeta.content = '#d87757';
-            document.head.appendChild(newMeta);
-            return () => {
-                document.head.removeChild(newMeta);
-            };
-        }
-    }, []);
+    const { data: course, isLoading, error } = useGetCourseBySlugQuery(courseSlug || '', { skip: !courseSlug });
 
     // Guard: if courseSlug is undefined, show error
     if (!courseSlug) {
@@ -56,8 +40,6 @@ export default function CourseDetailPage() {
             </div>
         );
     }
-
-    const { data: course, isLoading, error } = useGetCourseBySlugQuery(courseSlug);
 
     if (isLoading) {
         return <CourseDetailSkeleton />;
@@ -76,27 +58,27 @@ export default function CourseDetailPage() {
         );
     }
 
-
-    // console.log(course, "cash-course");
+    // const totalLectures = course.data.sections?.reduce((acc: number, section: any) => acc + section.lectures?.length, 0) || 0;
 
     return (
         <div>
-            <div className="container mx-auto px-4 py-16 lg:py-24">
+            <div className="container mx-auto px-4 py-4 lg:py-10">
                 <div className="grid gap-8 lg:grid-cols-3">
                     <div className="lg:col-span-2 space-y-6">
-                        <div className="relative mt-3 lg:hidden">
+                        <div className="relative lg:hidden">
                             <Demo
                                 poster={course.data.thumbnailUrl}
                                 src={course.data.previewVideoUrl} />
+
                         </div>
+
                         {/* HERO SECTION */}
-                        <div className="space-y-3">
+                        <div className="space-y-4">
+
                             <h1 className="text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
                                 {course.data.title}
                             </h1>
-                            <p className="text-md text-muted-foreground leading-relaxed">
-                                {course.data.description}
-                            </p>
+                            <DescriptionCollapse description={course.data.description} maxHeight={150} />
                             <div className="flex flex-wrap gap-2">
                                 {course.data.tags?.map((tag: string) => (
                                     <Badge key={tag} variant="secondary" className="px-3 py-1">
@@ -106,16 +88,27 @@ export default function CourseDetailPage() {
                             </div>
 
                             <div className="flex flex-wrap items-center gap-6 text-sm">
-                                <div className="flex items-center gap-1.5 text-primary font-bold text-base">
-                                    <div className="flex">
-                                        <Star className="size-4 fill-current" /></div>
-                                    <span>{course.data.rating}</span>
+                                <div className="flex items-center gap-1.5">
+                                    <div className="flex text-yellow-500">
+                                        <Star className="size-4 fill-current" />
+                                        <Star className="size-4 fill-current" />
+                                        <Star className="size-4 fill-current" />
+                                        <Star className="size-4 fill-current" />
+                                        <Star className="size-4 fill-current" />
+                                    </div>
+                                    <span className="font-bold text-base">{course.data.rating}</span>
+                                    <span className="underline text-primary/80">({course.data.rating} ratings)</span>
+                                    <span className="font-medium">{course.data.enrollmentCount.toLocaleString()} students</span>
                                 </div>
-                                <span className="underline text-primary/80">({course.data.rating} ratings)</span>
-                                <span className="font-medium">{course.data.enrollmentCount.toLocaleString()} learners</span>
                             </div>
 
-                            <p className="text-base">Created by <span className="underline text-primary font-medium cursor-pointer">{course.data.instructor.fullName || "Instructor"}</span></p>
+                            <p className="text-base">Created by
+                                <Button className="underline pl-1" variant={'link'}>
+                                    <Link to={`/search?instructor=${course.data.instructor.id || "#"}`}>
+                                        {course.data.instructor.fullName || "Instructor"}
+                                    </Link>
+                                </Button>
+                            </p>
 
                             <div className="flex flex-wrap items-center gap-8 text-sm text-muted-foreground">
                                 <span className="flex items-center gap-1.5"><Info className="size-4" /> Last updated {course.data.updatedAt?.split("T")[0] || "N/A"}</span>
@@ -165,35 +158,47 @@ export default function CourseDetailPage() {
                     {/* SIDEBAR */}
                     <div className='relative hidden lg:block lg:col-span-1'>
                         <aside className="sticky top-24">
-                            <div className="border bg-card text-card-foreground shadow-2xl rounded-xl overflow-hidden p-0">
+                            <div className="border bg-card text-card-foreground shadow-xl rounded-xl overflow-hidden">
                                 <div className="relative">
                                     <Demo
                                         poster={course.data.thumbnailUrl}
                                         src={course.data.previewVideoUrl} />
                                 </div>
-                                <div className="p-8 space-y-6">
-                                    <div className="flex items-center gap-3">
-                                        {/* <span className="text-4xl font-bold">{course.price.currency || "$"}{course.price.current}</span> */}
-                                        {/* {course.price.original && (
-                                            <span className="text-muted-foreground line-through text-lg">{course.price.currency || "$"}{course.price.original}</span>
-                                        )} */}
-                                        {/* {course.price.original && (
-                                            <Badge variant="destructive" className="ml-auto">{(course.price.original - course.price.current) / course.price.original * 100}% off</Badge>
-                                        )} */}
+                                <div className="p-6 pt-4 space-y-4">
+                                    <div className="flex items-end gap-3 flex-wrap">
+                                        <span className="text-3xl font-bold text-primary">$49.99</span>
+                                        <span className="text-lg text-muted-foreground line-through">$199.99</span>
+                                        <Badge variant="destructive" className="ml-auto">75% off</Badge>
                                     </div>
 
                                     <div className="grid gap-3">
-                                        <Button className="w-full h-14 text-lg font-bold">Enroll now</Button>
+                                        <Button className="w-full h-12 text-base font-bold">Add to cart</Button>
+                                        <Button variant="outline" className="w-full h-12 text-base font-bold">Buy now</Button>
                                     </div>
 
                                     <p className="text-center text-xs text-muted-foreground font-medium uppercase tracking-wide">30-Day Money-Back Guarantee</p>
 
-                                    <div className="space-y-4 pt-6 border-t">
+                                    <div className="space-y-4 pt-2 border-t">
                                         <h3 className="font-bold text-sm tracking-wide uppercase">This course includes:</h3>
-                                        <div className="space-y-3 text-sm">
-                                            <div className="flex items-center gap-3 font-medium"><Infinity className="size-5 text-muted-foreground" /> Full lifetime access</div>
-                                            {/* {course.features.has_certificate && <div className="flex items-center gap-3 font-medium"><Trophy className="size-5 text-muted-foreground" /> Certificate of completion</div>} */}
-                                            {/* <div className="flex items-center gap-3 font-medium"><PlayCircle className="size-5 text-muted-foreground" /> {course.features.video_hours} hours on-demand video</div> */}
+                                        <div className="space-y-2 text-center text-xs text-muted-foreground font-medium uppercase tracking-wide">
+
+                                            <div className="flex items-center gap-3">
+                                                <Clock className="size-5 text-muted-foreground" />
+                                                <span>20 hours on-demand video</span>
+                                            </div>
+
+                                            <div className="flex items-center gap-3">
+                                                <InfinityIcon className="size-5 text-muted-foreground" />
+                                                <span>Full lifetime access</span>
+                                            </div>
+                                            <div className="flex items-center gap-3">
+                                                <Award className="size-5 text-muted-foreground" />
+                                                <span>Certificate of completion</span>
+                                            </div>
+                                            <div className="flex items-center gap-3">
+                                                <ShieldCheck className="size-5 text-muted-foreground" />
+                                                <span>Access on mobile and TV</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
