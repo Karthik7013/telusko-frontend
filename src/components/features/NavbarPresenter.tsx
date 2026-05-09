@@ -16,9 +16,10 @@ import { NAV_CATEGORIES as courseCategories } from "@/data/courses-data";
 import { type User } from "@/features/auth/authApi";
 import { AnnouncementBanner } from "@/components/common/AnnouncementBanner";
 import UserProfile from "@/components/common/UserProfile";
-import { MobileMenu } from "@/components/layout/MobileMenu";
-import { NavbarItem } from "@/components/layout/NavbarItem";
+import { MobileMenu } from "@/components/features/MobileMenu";
+import { NavbarItem } from "@/components/features/NavbarItem";
 import { useState } from "react";
+import { ToggleTheme } from "../common/ToggleTheme";
 
 
 export function NavbarPresenter({
@@ -48,9 +49,9 @@ export function NavbarPresenter({
                         <NavigationMenu viewport={false}>
                             <NavigationMenuList>
                                 <NavigationMenuItem>
-                                    <NavigationMenuTrigger className="hover:bg-transparent data-[active]:bg-transparent data-[state=open]:bg-transparent !bg-transparent">Learning Paths</NavigationMenuTrigger>
+                                    <NavigationMenuTrigger className="hover:bg-transparent data-active:bg-transparent data-[state=open]:bg-transparent bg-transparent!">Learning Paths</NavigationMenuTrigger>
                                     <NavigationMenuContent>
-                                        <ul className="grid gap-2 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                                        <ul className="grid gap-2 md:w-100 lg:w-125 lg:grid-cols-[.75fr_1fr]">
                                             <li className="row-span-3">
                                                 <NavigationMenuLink asChild>
                                                     <Link
@@ -76,9 +77,9 @@ export function NavbarPresenter({
                                     </NavigationMenuContent>
                                 </NavigationMenuItem>
                                 <NavigationMenuItem>
-                                    <NavigationMenuTrigger className="hover:bg-transparent data-[active]:bg-transparent data-[state=open]:bg-transparent !bg-transparent">Specializations</NavigationMenuTrigger>
+                                    <NavigationMenuTrigger className="hover:bg-transparent data-active:bg-transparent data-[state=open]:bg-transparent bg-transparent!">Specializations</NavigationMenuTrigger>
                                     <NavigationMenuContent>
-                                        <ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                                        <ul className="grid w-100 gap-2 md:w-125 md:grid-cols-2 lg:w-150">
                                             {courseCategories.map((course) => (
                                                 <NavbarItem key={course.title} title={course.title} icon={course.icon} to={course.to}>
                                                     {course.description}
@@ -99,6 +100,7 @@ export function NavbarPresenter({
 
                 {/* --- RIGHT SECTION: AUTH & MOBILE ICONS --- */}
                 <div className="flex items-center gap-2">
+                    <ToggleTheme />
                     <Button
                         variant="ghost"
                         size="icon"

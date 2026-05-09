@@ -23,7 +23,6 @@ import { SwitchTheme } from "@/components/common/ToggleTheme";
 
 const ProfileSettings = () => {
     const { data: user } = useGetUserQuery();
-    // console.log(user, "user-1");
     return <Card>
         <CardHeader>
             <CardTitle>Profile Information</CardTitle>
@@ -63,7 +62,7 @@ const ProfileSettings = () => {
                 <Textarea
                     id="bio"
                     placeholder="Tell us a little bit about yourself"
-                    className="resize-none min-h-[100px]"
+                    className="resize-none min-h-25"
                     defaultValue={user?.data?.bio}
                 />
                 <p className="text-[0.8rem] text-muted-foreground">

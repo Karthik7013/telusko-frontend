@@ -33,17 +33,6 @@ export default function CourseContent({
         }
     };
 
-    // if (loading) {
-    //     return <section>
-    //         <h2 className="text-2xl font-bold mb-4">Course content</h2>
-    //         <div className='space-y-3'>
-    //             <Skeleton className='w-full py-6'></Skeleton>
-    //             <Skeleton className='w-full py-6'></Skeleton>
-    //             <Skeleton className='w-full py-6'></Skeleton>
-    //         </div>
-    //     </section>
-    // }
-
     if (content.sections.length === 0) {
         return (
             <section>

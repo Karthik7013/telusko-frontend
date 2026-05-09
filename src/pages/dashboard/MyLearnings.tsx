@@ -7,7 +7,7 @@ export default function MyLearningsPage() {
             </div>
 
             <div className="grid gap-8 lg:grid-cols-2 xl:grid-cols-3">
-     
+                
             </div>
         </div>
     );

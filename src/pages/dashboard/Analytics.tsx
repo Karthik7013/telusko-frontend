@@ -71,7 +71,7 @@ export default function AnalyticsPage() {
                     <CardHeader>
                         <CardTitle>Learning Activity</CardTitle>
                     </CardHeader>
-                    <CardContent className="h-[300px] flex items-center justify-center border-t border-dashed mt-4">
+                    <CardContent className="h-75 flex items-center justify-center border-t border-dashed mt-4">
                         <div className="text-center space-y-2">
                             <TrendingUp className="h-12 w-12 text-muted-foreground/50 mx-auto" />
                             <p className="text-muted-foreground">Activity chart will be visible here.</p>
