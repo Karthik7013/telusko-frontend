@@ -196,7 +196,7 @@ export default function SearchCoursesPage() {
 
     // console.log(courses?.data?.courses, "courses")
     return (
-        <div className="py-32">
+        <div className="py-16">
             <div className="container mx-auto px-4">
                 {/* --- HEADER --- */}
                 <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between mb-10">
@@ -223,7 +223,7 @@ export default function SearchCoursesPage() {
                         <div className="lg:hidden">
                             <Sheet>
                                 <SheetTrigger asChild>
-                                    <Button variant="outline" size="icon" className="h-11 w-11">
+                                    <Button size="icon" className="h-11 w-11">
                                         <Filter className="h-4 w-4" />
                                     </Button>
                                 </SheetTrigger>

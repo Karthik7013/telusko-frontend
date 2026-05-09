@@ -6,8 +6,10 @@ type contextprops = {
 }
 
 const ContextProvider = (props: contextprops) => {
-    return <Provider store={store}>
-        {props.children}
-    </Provider>
+    return (
+        <Provider store={store}>
+            {props.children}
+        </Provider>
+    )
 }
 export default ContextProvider;

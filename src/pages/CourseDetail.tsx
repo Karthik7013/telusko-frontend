@@ -58,19 +58,31 @@ export default function CourseDetailPage() {
         );
     }
 
-    // const totalLectures = course.data.sections?.reduce((acc: number, section: any) => acc + section.lectures?.length, 0) || 0;
-
     return (
         <div>
             <div className="container mx-auto px-4 py-4 lg:py-10">
                 <div className="grid gap-8 lg:grid-cols-3">
                     <div className="lg:col-span-2 space-y-6">
-                        <div className="relative lg:hidden">
-                            <Demo
-                                poster={course.data.thumbnailUrl}
-                                src={course.data.previewVideoUrl} />
+                        {/* Mobile Video & Purchase Bar */}
+                        <div className="lg:hidden">
+                            <div className="relative">
+                                <Demo
+                                    poster={course.data.thumbnailUrl}
+                                    src={course.data.previewVideoUrl} />
+                            </div>
 
+                            {/* Mobile sticky purchase bar */}
+                            <div className="fixed bottom-0 left-0 right-0 bg-background border-t p-4 z-50 lg:hidden">
+                                <div className="container mx-auto flex items-center justify-between gap-3">
+                                    <div className="flex flex-col">
+                                        <span className="text-lg font-bold text-primary">${course.data.basePrice}</span>
+                                        <span className="text-sm text-muted-foreground line-through ml-2">${2999}</span>
+                                    </div>
+                                    <Button className="flex-1 font-bold">Buy now</Button>
+                                </div>
+                            </div>
                         </div>
+
 
                         {/* HERO SECTION */}
                         <div className="space-y-4">
@@ -155,7 +167,7 @@ export default function CourseDetailPage() {
                         </div>
                     </div>
 
-                    {/* SIDEBAR */}
+                    {/* SIDEBAR - Desktop */}
                     <div className='relative hidden lg:block lg:col-span-1'>
                         <aside className="sticky top-24">
                             <div className="border bg-card text-card-foreground shadow-xl rounded-xl overflow-hidden">
@@ -166,9 +178,8 @@ export default function CourseDetailPage() {
                                 </div>
                                 <div className="p-6 pt-4 space-y-4">
                                     <div className="flex items-end gap-3 flex-wrap">
-                                        <span className="text-3xl font-bold text-primary">$49.99</span>
-                                        <span className="text-lg text-muted-foreground line-through">$199.99</span>
-                                        <Badge variant="destructive" className="ml-auto">75% off</Badge>
+                                        <span className="text-3xl font-bold text-primary">${course.data.basePrice}</span>
+                                        <span className="text-lg text-muted-foreground line-through">${course.data.basePrice}</span>
                                     </div>
 
                                     <div className="grid gap-3">
@@ -180,8 +191,7 @@ export default function CourseDetailPage() {
 
                                     <div className="space-y-4 pt-2 border-t">
                                         <h3 className="font-bold text-sm tracking-wide uppercase">This course includes:</h3>
-                                        <div className="space-y-2 text-center text-xs text-muted-foreground font-medium uppercase tracking-wide">
-
+                                        <div className="space-y-2">
                                             <div className="flex items-center gap-3">
                                                 <Clock className="size-5 text-muted-foreground" />
                                                 <span>20 hours on-demand video</span>

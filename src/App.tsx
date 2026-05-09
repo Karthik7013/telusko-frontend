@@ -10,7 +10,6 @@ import {
     X
 } from "lucide-react";
 import { ErrorBoundary } from "@/components/ui/error-boundary";
-
 import AppRouter from "@/router/app-router";
 import ContextProvider from "@/providers/ContextProvider";
 import AuthProvider from "@/providers/AuthProvider";

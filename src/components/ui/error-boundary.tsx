@@ -1,4 +1,14 @@
 import React, { Component } from 'react';
+import { AlertCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 interface ErrorBoundaryProps {
   children: React.ReactNode;
@@ -36,15 +46,28 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
         return <FallbackComponent error={this.state.error} resetError={this.resetError} />;
       }
       return (
-        <div className="p-6 bg-red-50 border-l-4 border-red-500 text-red-700">
-          <h2 className="text-xl font-bold mb-4">Something went wrong.</h2>
-          <p className="mb-4">{this.state.error.message}</p>
-          <button
-            onClick={this.resetError}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-          >
-            Try again
-          </button>
+        <div className="flex items-center justify-center p-6 min-h-75">
+          <Card className="w-full max-w-lg border-destructive/50 shadow-sm">
+            <CardHeader className="flex flex-row items-center gap-4">
+              <div className="flex size-10 items-center justify-center rounded-full bg-destructive/10 text-destructive">
+                <AlertCircle className="size-6" />
+              </div>
+              <div className="grid gap-1">
+                <CardTitle>Something went wrong</CardTitle>
+                <CardDescription>The application encountered an unexpected error.</CardDescription>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="bg-muted text-muted-foreground rounded-md p-4 text-xs font-mono overflow-auto max-h-37.5">
+                {this.state.error.message}
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button variant="destructive" onClick={this.resetError} className="w-full">
+                Try again
+              </Button>
+            </CardFooter>
+          </Card>
         </div>
       );
     }
