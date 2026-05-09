@@ -1,47 +1,86 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { AlertCircle, RefreshCcw } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle
+} from '@/components/ui/card';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 interface ApiErrorProps {
   error: string;
   onRetry?: () => void;
   className?: string;
+  title?: string;
 }
 
-export const ApiError: React.FC<ApiErrorProps> = ({ error, onRetry, className }) => {
+export const ApiError: React.FC<ApiErrorProps> = ({ error, onRetry, className, title = "Error" }) => {
   return (
-    <div className={`p-6 bg-red-50 border border-red-200 rounded-lg ${className}`}>
-      <div className="mb-4">
-        <h3 className="text-red-600 font-semibold mb-2">Error</h3>
-        <p className="text-sm text-red-800">{error}</p>
+    <Alert variant="destructive" className={cn("shadow-sm", className)}>
+      <AlertCircle className="h-4 w-4" />
+      <div className="flex w-full items-start justify-between gap-4">
+        <div>
+          <AlertTitle>{title}</AlertTitle>
+          <AlertDescription className="mt-1 opacity-90">{error}</AlertDescription>
+        </div>
+        {onRetry && (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={onRetry}
+            className="h-8 shrink-0 bg-background/50 hover:bg-background"
+          >
+            <RefreshCcw className="mr-2 h-3.5 w-3.5" />
+            Retry
+          </Button>
+        )}
       </div>
-      {onRetry && (
-        <Button 
-          onClick={onRetry}
-          className="w-full"
-        >
-          Retry
-        </Button>
-      )}
-    </div>
+    </Alert>
   );
 };
 
-export const ApiErrorWithDetails: React.FC<ApiErrorProps> = ({ error, onRetry, className }) => {
+export const ApiErrorWithDetails: React.FC<ApiErrorProps> = ({ error, onRetry, className, title = "System Error" }) => {
   return (
-    <div className={`p-6 bg-red-50 border border-red-200 rounded-lg ${className}`}>
-      <div className="mb-4">
-        <h3 className="text-red-600 font-semibold mb-2">Error</h3>
-        <p className="text-sm text-red-800">{error}</p>
-      </div>
+    <Card className={cn("border-destructive/30 overflow-hidden", className)}>
+      <CardHeader className="bg-destructive/5 space-y-1">
+        <CardTitle className="text-destructive flex items-center gap-2 text-lg">
+          <AlertCircle className="h-5 w-5" />
+          {title}
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="pt-4">
+        <Accordion type="single" collapsible className="w-full">
+          <AccordionItem value="details" className="border-none">
+            <AccordionTrigger className="py-0 hover:no-underline font-medium text-sm text-muted-foreground">
+              Technical details
+            </AccordionTrigger>
+            <AccordionContent className="pt-3">
+              <div className="bg-muted text-muted-foreground font-mono text-xs p-3 rounded-md border">
+                {error}
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      </CardContent>
       {onRetry && (
-        <Button 
-          onClick={onRetry}
-          className="w-full"
-        >
-          Retry
-        </Button>
+        <CardFooter className="bg-muted/30 pt-4">
+          <Button onClick={onRetry} className="w-full" variant="destructive">
+            <RefreshCcw className="mr-2 h-4 w-4" />
+            Try Again
+          </Button>
+        </CardFooter>
       )}
-    </div>
+    </Card>
   );
 };
 
