@@ -18,7 +18,7 @@ export const useLogout = () => {
         dispatch(authApi.util.resetApiState());
 
         // 3. Redirect to login page
-        navigate('/login', { replace: true });
+        navigate('/auth/login', { replace: true });
     };
 
     return logout;

@@ -121,10 +121,10 @@ export function NavbarPresenter({
                     </div>}
                     {!isLogin && <div className="items-center gap-2 hidden lg:flex">
                         <Button variant="ghost" asChild>
-                            <Link to="/login">Log in</Link>
+                            <Link to="/auth/login">Log in</Link>
                         </Button>
                         <Button className="bg-primary" asChild>
-                            <Link to="/signup">Join for Free</Link>
+                            <Link to="/auth/signup">Join for Free</Link>
                         </Button>
                     </div>}
                     {isLogin && <UserProfile />}

@@ -7,10 +7,8 @@ import {
     AlertCircle,
     Target,
     ClipboardList,
-    // PlayCircle,
     Clock,
     Award,
-    // Download,
     ShieldCheck,
     Infinity as InfinityIcon,
 } from 'lucide-react';
@@ -24,7 +22,6 @@ import DescriptionCollapse from '@/components/common/DescriptionCollapse';
 
 export default function CourseDetailPage() {
     const { courseSlug } = useParams<{ courseSlug: string }>();
-
     const { data: course, isLoading, error } = useGetCourseBySlugQuery(courseSlug || '', { skip: !courseSlug });
 
     // Guard: if courseSlug is undefined, show error

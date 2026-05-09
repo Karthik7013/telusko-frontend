@@ -32,7 +32,7 @@ export function FinalCTAPresenter() {
                         </p>
                         <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
                             <Button size="lg" variant="secondary" className="w-full sm:w-auto px-8 py-6 text-lg font-bold" asChild>
-                                <Link to="/signup">Get Started for Free</Link>
+                                <Link to="/auth/signup">Get Started for Free</Link>
                             </Button>
                             <Button size="lg" variant="outline" className="w-full sm:w-auto border-white/30 bg-white/10 hover:bg-white/20 px-8 py-6 text-lg" asChild>
                                 <Link to="/courses">Browse Courses</Link>

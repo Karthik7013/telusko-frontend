@@ -42,7 +42,7 @@ const AppRouter = () => {
 
                     {/* Protected Dashboard Routes */}
                     <Route element={<ProtectedRoute />}>
-                        <Route path="/dashboard" element={<DashboardLayout />}>
+                        <Route path="dashboard" element={<DashboardLayout />}>
                             <Route index element={<AnalyticsPage />} />
                             <Route path="my-learnings" element={<MyLearningsPage />} />
                             <Route path="settings" element={<Settings />} />
@@ -52,10 +52,11 @@ const AppRouter = () => {
                     </Route>
 
                     {/* Public Auth Routes */}
-                    <Route element={<GuestRoute />}>
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/signup" element={<Signup />} />
-                        <Route path="/forgot-password" element={<ForgotPassword />} />
+                    <Route path="auth" element={<GuestRoute />}>
+                        <Route path="login" element={<Login />} />
+                        <Route path="signup" element={<Signup />} />
+                        <Route path="forgot-password" element={<ForgotPassword />} />
+                        <Route path="" element={<NotFound />} />
                     </Route>
                 </Routes>
             </Suspense>

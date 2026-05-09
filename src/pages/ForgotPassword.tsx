@@ -121,7 +121,7 @@ export default function ForgotPassword() {
                                 Try another email
                             </Button>
                             <Button asChild className="w-full" variant="secondary">
-                                <Link to="/login">
+                                <Link to="/auth/login">
                                     Return to Sign in
                                 </Link>
                             </Button>
@@ -147,7 +147,7 @@ export default function ForgotPassword() {
 
                 <div className="mb-6">
                     <Link
-                        to="/login"
+                        to="/auth/login"
                         className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors w-fit"
                     >
                         <ArrowLeft className="size-4" />

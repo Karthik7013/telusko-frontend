@@ -65,7 +65,7 @@ export function SignupForm() {
                 description: `Welcome! Please sign in to continue.`,
             })
 
-            navigate('/login');
+            navigate('/auth/login');
         } catch (error: any) {
             toast.error("Signup failed", {
                 description: error.data?.message || "Something went wrong during registration.",

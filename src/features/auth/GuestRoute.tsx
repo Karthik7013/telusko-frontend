@@ -10,7 +10,7 @@ export const GuestRoute = () => {
             <div className="flex items-center justify-center h-screen bg-background">
                 <div className="space-y-4 w-full max-w-md p-4">
                     <Skeleton className="h-12 w-3/4 mx-auto" />
-                    <Skeleton className="h-[200px] w-full" />
+                    <Skeleton className="h-50 w-full" />
                 </div>
             </div>
         );

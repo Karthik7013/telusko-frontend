@@ -50,7 +50,7 @@ export default function SignupV2() {
                             <SignupForm />
                             <div className="text-muted-foreground text-sm">
                                 Already have an account?{" "}
-                                <Link to="/login" className="text-foreground font-medium hover:underline">
+                                <Link to="/auth/login" className="text-foreground font-medium hover:underline">
                                     Sign in
                                 </Link>
                             </div>

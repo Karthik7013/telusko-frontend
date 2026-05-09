@@ -59,10 +59,10 @@ export function MobileMenu({
                     </div>
                     <div className="flex flex-col gap-3 pt-6 mt-auto border-t bg-background">
                         <Button variant="outline" className="w-full p-6" asChild>
-                            <Link to="/login" onClick={() => onClose(false)}>Log in</Link>
+                            <Link to="/auth/login" onClick={() => onClose(false)}>Log in</Link>
                         </Button>
                         <Button className="w-full bg-primary p-6" asChild>
-                            <Link to="/signup" onClick={() => onClose(false)}>Join for Free <ArrowRight className="ml-2 size-4" />
+                            <Link to="/auth/signup" onClick={() => onClose(false)}>Join for Free <ArrowRight className="ml-2 size-4" />
                             </Link>
                         </Button>
                     </div>

@@ -40,17 +40,17 @@ export default function LoginV2() {
                             <p className="text-primary-foreground/80 font-medium pl-1 italic">Learn. Grow. Succeed. Repeat.</p>
                         </div>
 
-                         {/* Hero Content */}
-                         <div className="flex-1 flex items-center justify-center p-8 lg:p-16 overflow-hidden">
-                             <div className="relative w-full max-w-lg max-h-[55vh] flex items-center justify-center">
-                                 <img
-                                     src={LearningPana}
-                                     alt="Learning Illustration"
-                                     className="max-w-full max-h-full h-auto w-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.3)] select-none pointer-events-none transition-transform duration-700 hover:scale-105"
-                                     loading="lazy"
-                                 />
-                             </div>
-                         </div>
+                        {/* Hero Content */}
+                        <div className="flex-1 flex items-center justify-center p-8 lg:p-16 overflow-hidden">
+                            <div className="relative w-full max-w-lg max-h-[55vh] flex items-center justify-center">
+                                <img
+                                    src={LearningPana}
+                                    alt="Learning Illustration"
+                                    className="max-w-full max-h-full h-auto w-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.3)] select-none pointer-events-none transition-transform duration-700 hover:scale-105"
+                                    loading="lazy"
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="relative order-1 flex h-full">
@@ -61,14 +61,14 @@ export default function LoginV2() {
                             <p className="text-muted-foreground text-sm">Enter your credentials to access your learning dashboard.</p>
                         </div>
                         <div className="space-y-4 flex flex-col">
-                             <GoogleButton className="w-full" aria-label="Sign in with Google" />
+                            <GoogleButton className="w-full" aria-label="Sign in with Google" />
                             <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-border after:border-t">
                                 <span className="relative z-10 bg-background px-2 text-muted-foreground">or continue with email</span>
                             </div>
                             <LoginForm />
                             <div className="text-muted-foreground text-sm">
                                 Don&apos;t have an account?{" "}
-                                <Link to="/signup" className="text-foreground font-medium hover:underline">
+                                <Link to="/auth/signup" className="text-foreground font-medium hover:underline">
                                     Sign up free
                                 </Link>
                             </div>

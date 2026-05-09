@@ -16,7 +16,7 @@ export const ProtectedRoute = ({ requiredRoles = [] }: ProtectedRouteProps) => {
             <div className="flex items-center justify-center h-screen bg-background">
                 <div className="space-y-4 w-full max-w-md p-4">
                     <Skeleton className="h-12 w-3/4 mx-auto" />
-                    <Skeleton className="h-[300px] w-full" />
+                    <Skeleton className="h-75 w-full" />
                     <Skeleton className="h-10 w-1/2 mx-auto" />
                 </div>
             </div>
