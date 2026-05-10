@@ -1,6 +1,6 @@
 
-import { Link, useNavigate } from "react-router-dom";
-import { GraduationCap, Menu, Search, X } from "lucide-react";
+import { Link } from "react-router-dom";
+import { GraduationCap, Menu, X } from "lucide-react";
 
 import {
     NavigationMenu,
@@ -29,8 +29,6 @@ export function NavbarPresenter({
     data?: User | undefined
 }) {
     const [openMobileMenu, setOpenMobileMenu] = useState(false)
-    const navigate = useNavigate();
-
 
     return (
         <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-md border-b">
@@ -101,14 +99,6 @@ export function NavbarPresenter({
                 {/* --- RIGHT SECTION: AUTH & MOBILE ICONS --- */}
                 <div className="flex items-center gap-2">
                     <ToggleTheme />
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        className="md:hidden text-muted-foreground"
-                        onClick={() => navigate("/search")}
-                    >
-                        <Search className="h-5 w-5" />
-                    </Button>
                     {!isLogin && <div className="lg:hidden flex-1">
                         <Button
                             variant="ghost"

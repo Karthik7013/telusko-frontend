@@ -1,10 +1,8 @@
 
-import { ArrowRight, PlayCircle, Users } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Users } from "lucide-react";
 import learning from '../../assets/Learning languages-pana.svg';
 import react from '../../assets/react.svg';
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
     Carousel,
     CarouselContent,
@@ -12,10 +10,11 @@ import {
     CarouselPrevious,
     CarouselNext
 } from "@/components/ui/carousel";
+import { ScrollingSearch } from "./ScrollingSearch";
 
 export default function HeroPresenter() {
     return (
-        <section className="h-screen flex lg:py-28">
+        <section className="min-h-screen flex items-center py-16 lg:py-28">
             <div className="container mx-auto px-4">
                 <div className="grid lg:items-center lg:gap-12 lg:grid-cols-2 h-full">
                     <div className="flex flex-col justify-center items-center text-center lg:items-start lg:text-left">
@@ -35,19 +34,7 @@ export default function HeroPresenter() {
                         </p>
 
                         <div className="flex w-full flex-col justify-center gap-3 sm:flex-row lg:justify-start">
-                            <Button asChild size="lg" className="w-full sm:w-auto px-8">
-                                <Link to="/search">
-                                    Explore Courses
-                                    <ArrowRight className="ml-2 size-4" />
-                                </Link>
-                            </Button>
-
-                            <Button asChild variant="secondary" size="lg" className="w-full sm:w-auto px-8">
-                                <Link to="/bootcamps" className="flex items-center">
-                                    <PlayCircle className="mr-2 size-4" />
-                                    Watch Free Demo
-                                </Link>
-                            </Button>
+                            <ScrollingSearch />
                         </div>
 
                         {/* Social Proof Mini-Section */}
