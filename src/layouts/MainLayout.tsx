@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom'
 
 const MainLayout = () => {
     return (
-        <div className='pt-10'>
+        <div>
             <NavbarContainer />
             <CookieBanner />
             <Outlet />
