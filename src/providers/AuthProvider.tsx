@@ -2,7 +2,7 @@ import { useGetUserQuery } from "@/features/auth/authApi"
 import { toast } from "sonner";
 import { AlertCircle } from "lucide-react";
 import { useEffect } from "react";
-import PageLoader from "@/components/common/PageLoader";
+import PageLoader from "@/components/common/Loader";
 
 export default function AuthProvider(props: {
     children: React.ReactNode

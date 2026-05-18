@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BookOpen, Trophy, Clock, TrendingUp } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
-export default function AnalyticsPage() {
+export default function Dashboard() {
     const stats = [
         {
             title: "Courses in Progress",

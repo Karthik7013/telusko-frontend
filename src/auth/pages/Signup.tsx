@@ -1,28 +1,10 @@
-import { LoginForm } from '@/components/features/LoginForm'
+import { SignupForm } from '@/auth/components/SignupForm'
 import { GraduationCap } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { siGoogle } from "simple-icons";
-import { SimpleIcon } from "@/components/common/simple-icon";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { GoogleButton } from '@/auth/components/google-button'
 import LearningPana from "@/assets/Learning-pana.svg";
 
-export function GoogleButton({ className, ...props }: React.ComponentProps<typeof Button>) {
-    return (
-        <Button variant="secondary" className={cn(className)} {...props}>
-            <SimpleIcon icon={siGoogle} className="size-4" />
-            Continue with Google
-        </Button>
-    );
-}
-
-
-
-
-
-
-
-export default function LoginV2() {
+export default function SignupV2() {
     return (
         <main>
             <div className="grid h-dvh justify-center p-2 lg:grid-cols-2">
@@ -54,22 +36,21 @@ export default function LoginV2() {
                     </div>
                 </div>
                 <div className="relative order-1 flex h-full">
-
                     <div className="mx-auto flex w-full flex-col justify-center space-y-8 sm:w-87.5">
                         <div className="space-y-2 text-center">
-                            <h1 className="font-medium text-3xl">Welcome back</h1>
-                            <p className="text-muted-foreground text-sm">Enter your credentials to access your learning dashboard.</p>
+                            <h1 className="font-medium text-3xl">Create Account</h1>
+                            <p className="text-muted-foreground text-sm">Create your account to access your learning dashboard.</p>
                         </div>
                         <div className="space-y-4 flex flex-col">
                             <GoogleButton className="w-full" aria-label="Sign in with Google" />
                             <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-border after:border-t">
                                 <span className="relative z-10 bg-background px-2 text-muted-foreground">or continue with email</span>
                             </div>
-                            <LoginForm />
+                            <SignupForm />
                             <div className="text-muted-foreground text-sm">
-                                Don&apos;t have an account?{" "}
-                                <Link to="/auth/signup" className="text-foreground font-medium hover:underline">
-                                    Sign up free
+                                Already have an account?{" "}
+                                <Link to="/auth/login" className="text-foreground font-medium hover:underline">
+                                    Sign in
                                 </Link>
                             </div>
                         </div>

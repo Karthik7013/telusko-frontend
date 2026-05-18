@@ -1,7 +1,7 @@
 
 import { Users } from "lucide-react";
-import learning from '../../assets/Learning languages-pana.svg';
-import react from '../../assets/react.svg';
+import learning from '@/assets/Learning languages-pana.svg';
+import react from '@/assets/react.svg';
 import { Badge } from "@/components/ui/badge";
 import {
     Carousel,
@@ -10,7 +10,7 @@ import {
     CarouselPrevious,
     CarouselNext
 } from "@/components/ui/carousel";
-import { ScrollingSearch } from "./ScrollingSearch";
+import { ScrollingSearch } from "@/components/features/ScrollingSearch";
 
 export default function HeroPresenter() {
     return (

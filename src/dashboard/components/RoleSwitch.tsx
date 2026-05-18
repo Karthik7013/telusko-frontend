@@ -32,7 +32,7 @@ const modes = [
     },
 ]
 
-export  default function RoleSwitcher() {
+export default function RoleSwitch() {
     const { isMobile } = useSidebar()
     const [activeMode, setActiveMode] = React.useState(modes[0])
 

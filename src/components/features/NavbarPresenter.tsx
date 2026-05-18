@@ -15,11 +15,10 @@ import { Button } from "@/components/ui/button";
 import { NAV_CATEGORIES as courseCategories } from "@/data/courses-data";
 import { type User } from "@/features/auth/authApi";
 import { AnnouncementBanner } from "@/components/common/AnnouncementBanner";
-import UserProfile from "@/components/common/UserProfile";
+import UserProfile from "@/dashboard/components/UserProfile";
 import { MobileMenu } from "@/components/features/MobileMenu";
 import { NavbarItem } from "@/components/features/NavbarItem";
 import { useState } from "react";
-import { ToggleTheme } from "../common/ToggleTheme";
 
 
 export function NavbarPresenter({
@@ -53,8 +52,9 @@ export function NavbarPresenter({
                                             <li className="row-span-3">
                                                 <NavigationMenuLink asChild>
                                                     <Link
-                                                        className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-6 no-underline outline-hidden select-none focus:shadow-md"
+                                                        className="bg-primary from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-6 no-underline outline-hidden select-none focus:shadow-md"
                                                         to="/paths/beginner">
+
                                                         <div className="mt-4 mb-2 text-lg font-medium">Beginner to Pro</div>
                                                         <p className="text-muted-foreground text-sm leading-tight">
                                                             Guided roadmaps for those starting their journey from absolute zero.
@@ -62,13 +62,13 @@ export function NavbarPresenter({
                                                     </Link>
                                                 </NavigationMenuLink>
                                             </li>
-                                            <NavbarItem to="/paths/backend" title="Backend Architect">
+                                            <NavbarItem icon="https://www.svgrepo.com/show/452234/java.svg" to="/course/backend" title="Backend Architect">
                                                 Master System Design, Scalability, and Server logic.
                                             </NavbarItem>
-                                            <NavbarItem to="/paths/frontend" title="Frontend Specialist">
+                                            <NavbarItem icon="https://www.svgrepo.com/show/452091/python.svg" to="/course/frontend" title="Frontend Specialist">
                                                 Design stunning user interfaces with modern frameworks.
                                             </NavbarItem>
-                                            <NavbarItem to="/paths/mobile" title="Mobile Dev">
+                                            <NavbarItem icon="https://www.svgrepo.com/show/353715/ethereum.svg" to="/course/mobile" title="Mobile Dev">
                                                 Build cross-platform apps with Flutter and React Native.
                                             </NavbarItem>
                                         </ul>
@@ -98,7 +98,6 @@ export function NavbarPresenter({
 
                 {/* --- RIGHT SECTION: AUTH & MOBILE ICONS --- */}
                 <div className="flex items-center gap-2">
-                    <ToggleTheme />
                     {!isLogin && <div className="lg:hidden flex-1">
                         <Button
                             variant="ghost"

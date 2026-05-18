@@ -1,7 +1,7 @@
 import * as React from "react"
-import NavMain from "@/components/dashboard/NavMain"
-import { NavUser } from "@/components/dashboard/NavUser"
-import RoleSwitcher from "@/components/dashboard/TeamSwitcher"
+import NavMain from "@/dashboard/components/NavMain"
+import { NavUser } from "@/dashboard/components/NavUser"
+import RoleSwitcher from "@/dashboard/components/RoleSwitch"
 import {
     Sidebar,
     SidebarContent,

@@ -15,7 +15,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import CourseContent from '@/components/features/CourseContent';
+import CourseContent from '@/course/components/CourseContent';
 import { useGetCourseBySlugQuery } from "@/features/courses/coursesApi";
 import { Demo } from "@/components/ui/video-player";
 import DescriptionCollapse from '@/components/common/DescriptionCollapse';

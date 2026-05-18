@@ -18,6 +18,16 @@ import {
     SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
 
+export type NavItem = {
+    title: string;
+    url: string;
+    icon?: LucideIcon;
+    isActive?: boolean;
+    items?: NavItem[];
+    visible: string[];
+}
+
+
 export default function NavMain({
     items,
 }: {
@@ -33,7 +43,6 @@ export default function NavMain({
     }[]
 }) {
     const location = useLocation();
-
     const isActive = (url: string) => {
         return location.pathname === url || location.pathname.startsWith(url + '/');
     };
@@ -41,6 +50,7 @@ export default function NavMain({
     const isExactMatch = (url: string) => {
         return location.pathname === url;
     };
+  
 
     return (
         <SidebarGroup>
@@ -78,12 +88,12 @@ export default function NavMain({
                                                 {item.items!.map((subItem) => (
                                                     <SidebarMenuSubItem key={subItem.title}>
                                                         <SidebarMenuSubButton asChild>
-                                                                <Link
-                                                                    to={subItem.url}
-                                                                    className={isExactMatch(subItem.url) ? 'bg-primary/10 hover:bg-primary/20 transition-colors' : ''}
-                                                                >
-                                                                    <span>{subItem.title}</span>
-                                                                </Link>
+                                                            <Link
+                                                                to={subItem.url}
+                                                                className={isExactMatch(subItem.url) ? 'bg-primary/10 hover:bg-primary/20 transition-colors' : ''}
+                                                            >
+                                                                <span>{subItem.title}</span>
+                                                            </Link>
                                                         </SidebarMenuSubButton>
                                                     </SidebarMenuSubItem>
                                                 ))}

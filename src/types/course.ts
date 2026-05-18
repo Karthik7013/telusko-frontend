@@ -60,24 +60,5 @@ export type CourseDetailsProps = {
 };
 
 
-// src/types/course.ts
-// export type CourseCardProps = {
-//     id: string;
-//     title: string;
-//     sub_title: string;
-//     description: string;
-//     instructor: string;
-//     author: {
-//         name: string;
-//         profile_url?: string;
-//     };
-//     rating: {
-//         average: number;
-//         count: number;
-//     };
-//     imageSrc: string; // For backward compatibility with CourseCardProps
-// };
-
-
 
 export type Course = CourseDetailsProps;

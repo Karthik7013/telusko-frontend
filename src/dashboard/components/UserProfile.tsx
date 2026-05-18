@@ -26,8 +26,9 @@ export default function UserProfile() {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-                    <Avatar className="h-10 w-10 border">
+                <Button size='icon-lg'
+                    variant="ghost" className="relative rounded-full">
+                    <Avatar className="h-8 w-8 border">
                         <AvatarImage src={user.data?.profilePictureUrl || "https://github.com/shadcn.png"} alt={user.data?.fullName} />
                         <AvatarFallback>{user?.data?.fullName?.substring(0, 2).toUpperCase() || "US"}</AvatarFallback>
                     </Avatar>

@@ -1,4 +1,4 @@
-import { AppSidebar } from "@/components/dashboard/AppSidebar"
+import { AppSidebar } from "@/dashboard/components/AppSidebar"
 import {
     SidebarInset,
     SidebarProvider,
@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/sidebar"
 
 import { Outlet } from "react-router-dom";
-import { DashboardFooter } from "@/components/dashboard/DashboardFooter";
+import { DashboardFooter } from "@/dashboard/components/DashboardFooter";
 
 export default function Dashboard() {
     return (

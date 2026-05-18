@@ -1,4 +1,4 @@
-import FooterPresenter from '@/components/features/Footer'
+import FooterPresenter from '@/components/common/Footer'
 import NavbarContainer from '@/components/features/NavbarContainer'
 import CookieBanner from '@/components/common/CookieBanner'
 import { Outlet } from 'react-router-dom'

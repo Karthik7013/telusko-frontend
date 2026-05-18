@@ -21,7 +21,7 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination";
-import CourseCard, { CourseCardSkeleton } from "@/components/common/CourseCard";
+import CourseCard, { CourseCardSkeleton } from "@/course/components/CourseCard";
 import { useGetCoursesQuery } from "@/features/courses/coursesApi";
 import { ApiError } from "@/components/common/ApiError";
 import { CATEGORIES, LEVELS } from "@/data/courses-data";

@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 // Auth guard components
 import { ProtectedRoute } from "@/features/auth/ProtectedRoute"
 import { GuestRoute } from "@/features/auth/GuestRoute"
-import PageLoader from "@/components/common/PageLoader"
+import PageLoader from "@/components/common/Loader"
 
 // Lazy load layouts
 const MainLayout = lazy(() => import("@/layouts/MainLayout"))
@@ -12,20 +12,19 @@ const DashboardLayout = lazy(() => import("@/layouts/DashboardLayout"))
 
 // Lazy load pages
 const Home = lazy(() => import("@/pages/Home"))
-const Login = lazy(() => import("@/pages/Login"))
-const Signup = lazy(() => import("@/pages/Signup"))
-const ForgotPassword = lazy(() => import("@/pages/ForgotPassword"))
-const NotFound = lazy(() => import("@/pages/NotFound"))
-const Settings = lazy(() => import("@/pages/dashboard/Settings"))
+const Login = lazy(() => import("@/auth/pages/Login"))
+const Signup = lazy(() => import("@/auth/pages/Signup"))
+const NotFound = lazy(() => import("@/components/common/NotFound"))
+const Settings = lazy(() => import("@/dashboard/pages/Settings"))
 
 // Lazy load course-related pages
-const CourseDetailPage = lazy(() => import("@/pages/CourseDetail"))
-const SearchCoursesPage = lazy(() => import("@/pages/SearchCourses"))
+const CourseDetailPage = lazy(() => import("@/course/pages/CourseDetail"))
+const SearchCoursesPage = lazy(() => import("@/course/pages/SearchCourses"))
 
 // Dashboard pages
-const AnalyticsPage = lazy(() => import("@/pages/dashboard/Analytics"))
-const MyLearningsPage = lazy(() => import("@/pages/dashboard/MyLearnings"))
-const CoursePlayer = lazy(() => import("@/pages/dashboard/CoursePlayer"))
+const AnalyticsPage = lazy(() => import("@/dashboard/pages/Dashboard"))
+const MyLearningsPage = lazy(() => import("@/dashboard/pages/MyLearnings"))
+const CoursePlayer = lazy(() => import("@/dashboard/pages/CoursePlayer"))
 
 const AppRouter = () => {
     return (
@@ -55,7 +54,6 @@ const AppRouter = () => {
                     <Route path="auth" element={<GuestRoute />}>
                         <Route path="login" element={<Login />} />
                         <Route path="signup" element={<Signup />} />
-                        <Route path="forgot-password" element={<ForgotPassword />} />
                         <Route path="" element={<NotFound />} />
                     </Route>
                 </Routes>
