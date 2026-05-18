@@ -24,7 +24,7 @@ export function MobileMenu({
             className="w-full"
         >
             <CollapsibleContent className="data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down overflow-hidden bg-background">
-                <div className="container mx-auto flex flex-col justify-between py-6 h-[calc(100vh-8rem)] px-4">
+                <div className="container mx-auto flex flex-col justify-between py-6 h-[calc(100vh-4rem)] px-4">
                     <div className="flex flex-col gap-2 overflow-y-auto flex-1 pr-2">
                         <Accordion type="single" collapsible className="w-full mb-4">
                             <AccordionItem value="courses">
