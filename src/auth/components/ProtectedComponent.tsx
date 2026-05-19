@@ -1,15 +1,27 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useGetUserQuery } from "@/features/auth/authApi";
-import { useGetRolesQuery } from "@/features/admin/adminApi";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface ProtectedRouteProps {
     requiredRoles?: string[];
 }
-
-export const ProtectedRoute = ({ requiredRoles = [] }: ProtectedRouteProps) => {
+const ROLES = [
+    {
+        "id": 14,
+        "name": "admin"
+    },
+    {
+        "id": 15,
+        "name": "instructor"
+    },
+    {
+        "id": 16,
+        "name": "student"
+    }
+]
+export const ProtectedComponent = ({ requiredRoles = [] }: ProtectedRouteProps) => {
     const { data: user, isLoading, isError } = useGetUserQuery();
-    const { data: rolesData } = useGetRolesQuery(undefined, { skip: !user });
+
 
     if (isLoading) {
         return (
@@ -28,8 +40,8 @@ export const ProtectedRoute = ({ requiredRoles = [] }: ProtectedRouteProps) => {
     }
 
     // Check role-based access if requiredRoles are specified
-    if (requiredRoles.length > 0 && rolesData) {
-        const userHasRole = rolesData.some(role => requiredRoles.includes(role.name));
+    if (requiredRoles.length > 0 && ROLES) {
+        const userHasRole = ROLES.some(role => requiredRoles.includes(role.name));
         if (!userHasRole) {
             return <Navigate to="/dashboard" replace />;
         }

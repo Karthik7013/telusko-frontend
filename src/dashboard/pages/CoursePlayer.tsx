@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import CourseContent from '@/course/components/SectionList';
+import SectionList from '@/course/components/SectionList';
 import {
     VideoPlayer,
     VideoPlayerControlBar,
@@ -147,13 +147,11 @@ export default function CoursePlayer({
                         "lg:col-span-1 overflow-hidden transition-opacity duration-500 lg:sticky lg:top-16 lg:max-h-[calc(100vh-6rem)]",
                         isPlaylistOpen ? "opacity-100" : "opacity-0"
                     )}>
-                        <div className="border rounded-xl bg-card shadow-sm overflow-hidden flex flex-col h-full min-w-[350px]">
+                        <div className="border rounded-xl bg-card shadow-sm overflow-hidden flex flex-col h-full min-w-87.5">
 
                             <div className="flex-1 overflow-y-auto p-2">
                                 {/* Reusing the CourseContent component */}
-                                <CourseContent content={{
-                                    sections: [] // In a real app, this would be populated
-                                }} />
+                                <SectionList sections={[]}/>
                             </div>
                         </div>
                     </div>

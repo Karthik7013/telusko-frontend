@@ -208,6 +208,8 @@ export default function CourseDetailPage() {
                                         >
                                             Buy now
                                         </Button>
+
+
                                     </div>
 
                                     <p className="text-center text-xs text-muted-foreground font-medium uppercase tracking-wide">30-Day Money-Back Guarantee</p>

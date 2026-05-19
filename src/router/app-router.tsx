@@ -1,9 +1,8 @@
 import { lazy, Suspense } from "react"
-import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom"
 
 // Auth guard components
-import { ProtectedRoute } from "@/features/auth/ProtectedRoute"
-import { GuestRoute } from "@/features/auth/GuestRoute"
+import { ProtectedComponent } from "@/auth/components/ProtectedComponent"
 import PageLoader from "@/components/common/Loader"
 
 // Lazy load layouts
@@ -50,7 +49,7 @@ const AppRouter = () => {
                     </Route>
 
                     {/* Protected Dashboard Routes */}
-                    <Route element={<ProtectedRoute />}>
+                    <Route element={<ProtectedComponent requiredRoles={['student']} />}>
                         <Route path="dashboard" element={<DashboardLayout />}>
                             <Route index element={<AnalyticsPage />} />
                             <Route path="my-learnings" element={<MyLearningsPage />} />
@@ -61,7 +60,7 @@ const AppRouter = () => {
                     </Route>
 
                     {/* Public Auth Routes */}
-                    <Route path="auth" element={<GuestRoute />}>
+                    <Route path="auth" element={<Outlet />}>
                         <Route path="login" element={<Login />} />
                         <Route path="signup" element={<Signup />} />
                         <Route path="" element={<NotFound />} />
