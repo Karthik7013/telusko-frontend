@@ -4,6 +4,7 @@ import { Clock, Star, BookOpen, BadgeCheck, PersonStanding } from "lucide-react"
 import type { CourseCardProps } from "@/types"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Link } from "react-router-dom"
+import { Separator } from "@/components/ui/separator"
 
 export default function CourseCard({
     course
@@ -66,16 +67,12 @@ export default function CourseCard({
                         <span className="text-xs text-muted-foreground">({course.totalReviews || 0} reviews)</span>
                     </div>
 
-                    <div className="mt-1.5 flex flex-wrap items-center gap-x-2 text-[11px] text-muted-foreground">
+                    <div className="mt-1.5 justify-between flex flex-wrap items-center gap-x-2 text-[11px] text-muted-foreground">
                         <span className="inline-flex items-center gap-1"><Clock className="h-3 w-3" />{course.durationInHours || '00 '}h</span>
-                        <span>·</span>
+                        <Separator orientation="vertical" />
                         <span className="inline-flex items-center gap-1"><BookOpen className="h-3 w-3" />{course.totalLessons || 10} sections</span>
-                        <span>·</span>
+                        <Separator orientation="vertical" />
                         <span className="inline-flex bitems-center gap-1"><PersonStanding className="h-3 w-3" />{course.level}</span>
-                        <span>·</span>
-                        <span className="inline-flex items-center gap-1 truncate">Updated {course.lastUpdated || 'now'}</span>
-
-
                     </div>
 
                     {/* Price block */}

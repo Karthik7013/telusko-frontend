@@ -15,7 +15,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import CourseContent from '@/course/components/CourseContent';
+import SectionList from '@/course/components/SectionList';
 import { useGetCourseBySlugQuery } from "@/features/courses/coursesApi";
 import { Demo } from "@/components/ui/video-player";
 import DescriptionCollapse from '@/components/common/DescriptionCollapse';
@@ -143,10 +143,7 @@ export default function CourseDetailPage() {
                             </section>
 
                             {/* COURSE CONTENT */}
-                            <CourseContent content={{
-                                sections: []
-                                // sections: course?.data?.sections || []
-                            }} />
+                            <SectionList sections={course.data.sections} />
 
                             {/* REQUIREMENTS */}
                             <section className="border p-4 rounded-xl bg-muted/30">
