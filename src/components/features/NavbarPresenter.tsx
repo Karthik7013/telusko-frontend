@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { NAV_CATEGORIES as courseCategories } from "@/data/courses-data";
 import { type User } from "@/features/auth/authApi";
 import { AnnouncementBanner } from "@/components/common/AnnouncementBanner";
+import CartIcon from "@/components/common/CartIcon";
 import UserProfile from "@/dashboard/components/UserProfile";
 import { MobileMenu } from "@/components/features/MobileMenu";
 import { NavbarItem } from "@/components/features/NavbarItem";
@@ -98,6 +99,7 @@ export function NavbarPresenter({
 
                 {/* --- RIGHT SECTION: AUTH & MOBILE ICONS --- */}
                 <div className="flex items-center gap-2">
+                    <CartIcon />
                     {!isLogin && <div className="lg:hidden flex-1">
                         <Button
                             variant="ghost"
