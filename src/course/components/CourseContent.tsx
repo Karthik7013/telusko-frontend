@@ -3,7 +3,7 @@ import { AccordionContent, AccordionItem, AccordionTrigger, Accordion } from "@/
 import { ListVideo, FileVideo, File } from "lucide-react";
 import { Empty, EmptyDescription, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
 
-export default function CourseContent({
+export default function SectionList({
     content
 }: {
     content: {

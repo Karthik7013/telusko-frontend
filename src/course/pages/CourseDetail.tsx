@@ -72,8 +72,8 @@ export default function CourseDetailPage() {
                             <div className="fixed bottom-0 left-0 right-0 bg-background border-t p-4 z-50 lg:hidden">
                                 <div className="container mx-auto flex items-center justify-between gap-3">
                                     <div className="flex flex-col">
-                                        <span className="text-lg font-bold text-primary">${course.data.basePrice}</span>
-                                        <span className="text-sm text-muted-foreground line-through ml-2">${2999}</span>
+                                        <span className="text-lg font-bold text-primary">${course.data.discountedPrice || course.data.basePrice}</span>
+                                        <span className="text-sm text-muted-foreground line-through ml-2">${course.data.basePrice}</span>
                                     </div>
                                     <Button className="flex-1 font-bold">Buy now</Button>
                                 </div>
@@ -107,7 +107,7 @@ export default function CourseDetailPage() {
                                     </div>
                                     <span className="font-bold text-base">{course.data.rating}</span>
                                     <span className="underline text-primary/80">({course.data.rating} ratings)</span>
-                                    <span className="font-medium">{course.data.enrollmentCount.toLocaleString()} students</span>
+                                    <span className="font-medium">{course.data.totalStudents} students</span>
                                 </div>
                             </div>
 
@@ -120,15 +120,15 @@ export default function CourseDetailPage() {
                             </p>
 
                             <div className="flex flex-wrap items-center gap-8 text-sm text-muted-foreground">
-                                <span className="flex items-center gap-1.5"><Info className="size-4" /> Last updated {course.data.updatedAt?.split("T")[0] || "N/A"}</span>
-                                <span className="flex items-center gap-1.5"><Globe className="size-4" /> {course.language || "English"}</span>
+                                <span className="flex items-center gap-1.5"><Info className="size-4" /> Last updated {course.data.lastUpdated?.split("T")[0] || "N/A"}</span>
+                                <span className="flex items-center gap-1.5"><Globe className="size-4" /> {course.data.language || "English"}</span>
                             </div>
                         </div>
 
                         {/* MAIN CONTENT AREA */}
                         <div className="space-y-16">
                             {/* WHAT YOU'LL LEARN */}
-                            <section className="border p-4 rounded-xl bg-muted/30">
+                            <section id="what-you-learn" className="border p-4 rounded-xl bg-muted/30">
                                 <h2 className="text-2xl font-bold mb-8 flex items-center gap-2">
                                     <Target className="size-6" />What you'll learn
                                 </h2>
@@ -144,7 +144,8 @@ export default function CourseDetailPage() {
 
                             {/* COURSE CONTENT */}
                             <CourseContent content={{
-                                sections: course?.data?.sections || []
+                                sections: []
+                                // sections: course?.data?.sections || []
                             }} />
 
                             {/* REQUIREMENTS */}

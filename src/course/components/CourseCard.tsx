@@ -1,6 +1,6 @@
 import { Card, CardContent, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Clock, Star, BookOpen, BadgeCheck } from "lucide-react"
+import { Clock, Star, BookOpen, BadgeCheck, PersonStanding } from "lucide-react"
 import type { CourseCardProps } from "@/types"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Link } from "react-router-dom"
@@ -20,18 +20,20 @@ export default function CourseCard({
                         loading="lazy"
                         className='h-full w-full object-cover transition-transform duration-500 group-hover:scale-105'
                     />
-                    <div className="absolute inset-0 bg-linear-to-t from-black/55 via-transparent to-transparent" />
-                    <div className="absolute inset-0 shadow-[inset_0_0_40px_rgba(0,0,0,0.2)] pointer-events-none" />
+                    <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent" />
+
                     <div className="absolute top-3 left-3">
-                        <Badge className="bg-primary text-white backdrop-blur-md border border-white/10 shadow-none font-medium text-xs gap-1 px-2.5 py-1 rounded-full">
+                        {!course.isBestseller && <Badge className="bg-primary text-white backdrop-blur-md border border-white/10 shadow-none font-medium text-xs gap-1 px-2.5 py-1 rounded-full">
                             <BadgeCheck className="size-3" />
                             Bestseller
-                        </Badge>
+                        </Badge>}
                     </div>
-
                 </div>
 
                 <CardContent className='flex flex-col flex-1 px-5 py-4 gap-2'>
+
+                    <span className="text-[8px] font-bold uppercase tracking-wider bg-primary/90 shadow-2xl text-primary-foreground w-fit py-1  px-2 rounded-sm"># {"DEVELOPMENT"}</span>
+
                     <CardTitle className="text-base font-bold leading-snug tracking-tight group-hover:text-primary transition-colors line-clamp-2">
                         {course.title}
                     </CardTitle>
@@ -39,17 +41,17 @@ export default function CourseCard({
                     {/* Author */}
                     <div className="flex items-center gap-2">
                         <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-primary text-[10px] font-bold text-primary-foreground">
-                            <img className="rounded-full" src={course.instructor.profilePictureUrl || "https://github.com/shadcn.png"} alt={ course.instructor.fullName.split("")[0] } />
+                            <img className="rounded-full" src={course.instructor.profilePictureUrl || "https://github.com/shadcn.png"} alt={course.instructor.fullName.charAt(0)} />
 
                         </div>
                         <div className="flex flex-col leading-tight">
                             <span className="text-xs font-medium text-foreground">{course.instructor.fullName}</span>
-                            <span className="text-[10px] text-muted-foreground">Instructor</span>
+                            <span className="text-[10px] text-muted-foreground">{course.instructor.email}</span>
                         </div>
                     </div>
 
                     <div className="flex items-center gap-1.5">
-                        <span className="text-sm font-bold text-[#b4690e] dark:text-amber-400">{5}</span>
+                        <span className="text-sm font-bold text-amber-600 dark:text-amber-400">{course.rating}</span>
                         <div className="flex items-center">
                             {[0, 1, 2, 3, 4].map((i) => (
                                 <Star
@@ -61,27 +63,31 @@ export default function CourseCard({
                                 />
                             ))}
                         </div>
-                        <span className="text-xs text-muted-foreground">({500})</span>
+                        <span className="text-xs text-muted-foreground">({course.totalReviews || 0} reviews)</span>
                     </div>
 
                     <div className="mt-1.5 flex flex-wrap items-center gap-x-2 text-[11px] text-muted-foreground">
-                        <span className="inline-flex items-center gap-1"><Clock className="h-3 w-3" />{course.durationHours}h</span>
+                        <span className="inline-flex items-center gap-1"><Clock className="h-3 w-3" />{course.durationInHours || '00 '}h</span>
                         <span>·</span>
-                        <span className="inline-flex items-center gap-1"><BookOpen className="h-3 w-3" />12 lessons</span>
+                        <span className="inline-flex items-center gap-1"><BookOpen className="h-3 w-3" />{course.totalLessons || 10} sections</span>
                         <span>·</span>
-                        <span>beginner</span>
+                        <span className="inline-flex bitems-center gap-1"><PersonStanding className="h-3 w-3" />{course.level}</span>
+                        <span>·</span>
+                        <span className="inline-flex items-center gap-1 truncate">Updated {course.lastUpdated || 'now'}</span>
+
+
                     </div>
 
                     {/* Price block */}
                     <div className="flex items-end justify-between border-t border-border/60 pt-3">
                         <div className="flex flex-col">
                             <div className="flex items-baseline gap-2">
-                                <span className="text-xl font-extrabold text-foreground">${25}</span>
-                                <span className="text-xs text-muted-foreground line-through">${12}</span>
+                                <span className="text-xl font-extrabold text-foreground">${course.discountedPrice || course.basePrice}</span>
+                                {!course.discountedPrice && <span className="text-xs text-muted-foreground line-through">${course.basePrice}</span>}
                             </div>
-                            <span className="text-[10px] font-semibold uppercase tracking-wide text-emerald-600 dark:text-emerald-400">
-                                {Math.round((1 - Number(25) / Number(25)) * 100)}% off
-                            </span>
+                            {!course.discountedPrice && <span className="text-[10px] font-semibold uppercase tracking-wide text-primary">
+                                {course.discountPercentage || 0}% off
+                            </span>}
                         </div>
 
                     </div>
