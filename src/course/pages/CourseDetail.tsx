@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import {
     Check,
     Globe,
@@ -19,8 +19,13 @@ import CourseContent from '@/course/components/CourseContent';
 import { useGetCourseBySlugQuery } from "@/features/courses/coursesApi";
 import { Demo } from "@/components/ui/video-player";
 import DescriptionCollapse from '@/components/common/DescriptionCollapse';
+import { toast } from 'sonner'
+import { addToCart } from '@/features/cart/cartSlice'
+import { useAppDispatch } from '@/hooks/use-redux'
 
 export default function CourseDetailPage() {
+    const navigate = useNavigate()
+    const dispatch = useAppDispatch()
     const { courseSlug } = useParams<{ courseSlug: string }>();
     const { data: course, isLoading, error } = useGetCourseBySlugQuery(courseSlug || '', { skip: !courseSlug });
 
@@ -75,7 +80,7 @@ export default function CourseDetailPage() {
                                         <span className="text-lg font-bold text-primary">${course.data.discountedPrice || course.data.basePrice}</span>
                                         <span className="text-sm text-muted-foreground line-through ml-2">${course.data.basePrice}</span>
                                     </div>
-                                    <Button className="flex-1 font-bold">Buy now</Button>
+                                    <Button className="flex-1 font-bold" onClick={() => navigate(`/checkout?course=${course.data.slug}`)}>Buy now</Button>
                                 </div>
                             </div>
                         </div>
@@ -181,8 +186,31 @@ export default function CourseDetailPage() {
                                     </div>
 
                                     <div className="grid gap-3">
-                                        <Button className="w-full h-12 text-base font-bold">Add to cart</Button>
-                                        <Button variant="outline" className="w-full h-12 text-base font-bold">Buy now</Button>
+                                        <Button
+                                            className="w-full h-12 text-base font-bold"
+                                            onClick={() => {
+                                                dispatch(addToCart({
+                                                    courseId: course.data.id,
+                                                    slug: course.data.slug,
+                                                    title: course.data.title,
+                                                    thumbnailUrl: course.data.thumbnailUrl,
+                                                    instructorName: course.data.instructor.fullName,
+                                                    basePrice: course.data.basePrice,
+                                                    discountPercentage: course.data.discountPercentage,
+                                                    discountedPrice: course.data.discountedPrice,
+                                                }))
+                                                toast.success('Added to cart')
+                                            }}
+                                        >
+                                            Add to cart
+                                        </Button>
+                                        <Button
+                                            variant="outline"
+                                            className="w-full h-12 text-base font-bold"
+                                            onClick={() => navigate(`/checkout?course=${course.data.slug}`)}
+                                        >
+                                            Buy now
+                                        </Button>
                                     </div>
 
                                     <p className="text-center text-xs text-muted-foreground font-medium uppercase tracking-wide">30-Day Money-Back Guarantee</p>
