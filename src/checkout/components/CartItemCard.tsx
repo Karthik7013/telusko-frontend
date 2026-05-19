@@ -1,4 +1,4 @@
-import { X } from 'lucide-react'
+import { Delete, Trash2, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import type { CartItem } from '@/features/cart/cartSlice'
 
@@ -11,7 +11,7 @@ const CartItemCard = ({ item, onRemove }: CartItemCardProps) => {
   const displayPrice = item.discountedPrice ?? item.basePrice
 
   return (
-    <div className="flex gap-4 p-4 border rounded-xl bg-card">
+    <div className="flex gap-4 p-4 border rounded-xl bg-sidebar-accent">
       <img
         src={item.thumbnailUrl}
         alt={item.title}
@@ -33,7 +33,7 @@ const CartItemCard = ({ item, onRemove }: CartItemCardProps) => {
         className="shrink-0 text-muted-foreground hover:text-destructive"
         onClick={() => onRemove(item.courseId)}
       >
-        <X className="size-5" />
+        <Trash2 className="size-5" />
       </Button>
     </div>
   )

@@ -9,7 +9,7 @@ const PriceBreakdown = ({ subtotal, discountAmount, total }: PriceBreakdownProps
     <div className="space-y-2 text-sm">
       <div className="flex justify-between">
         <span className="text-muted-foreground">Subtotal</span>
-        <span>${subtotal.toFixed(2)}</span>
+        <span>${subtotal}</span>
       </div>
       {discountAmount > 0 && (
         <div className="flex justify-between text-green-600">

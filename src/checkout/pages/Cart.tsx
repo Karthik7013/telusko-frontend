@@ -45,7 +45,7 @@ const CartPage = () => {
       <div className="mt-8 flex items-center justify-between p-4 border rounded-xl bg-muted/30">
         <div>
           <span className="text-sm text-muted-foreground">Total:</span>
-          <span className="text-2xl font-bold ml-2">${subtotal.toFixed(2)}</span>
+          <span className="text-2xl font-bold ml-2">${subtotal}</span>
         </div>
         <Button size="lg" className="font-bold px-8" onClick={() => navigate('/checkout')}>
           Proceed to Checkout
