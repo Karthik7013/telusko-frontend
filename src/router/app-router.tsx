@@ -21,6 +21,12 @@ const Settings = lazy(() => import("@/dashboard/pages/Settings"))
 const CourseDetailPage = lazy(() => import("@/course/pages/CourseDetail"))
 const SearchCoursesPage = lazy(() => import("@/course/pages/SearchCourses"))
 
+// Lazy load checkout pages
+const CartPage = lazy(() => import("@/checkout/pages/Cart"))
+const CheckoutPage = lazy(() => import("@/checkout/pages/Checkout"))
+const OrderSuccessPage = lazy(() => import("@/checkout/pages/OrderSuccess"))
+const OrderFailurePage = lazy(() => import("@/checkout/pages/OrderFailure"))
+
 // Dashboard pages
 const AnalyticsPage = lazy(() => import("@/dashboard/pages/Dashboard"))
 const MyLearningsPage = lazy(() => import("@/dashboard/pages/MyLearnings"))
@@ -36,6 +42,10 @@ const AppRouter = () => {
                         <Route index element={<Home />} />
                         <Route path="course/:courseSlug" element={<CourseDetailPage />} />
                         <Route path="search" element={<SearchCoursesPage />} />
+                        <Route path="cart" element={<CartPage />} />
+                        <Route path="checkout" element={<CheckoutPage />} />
+                        <Route path="order/success" element={<OrderSuccessPage />} />
+                        <Route path="order/failure" element={<OrderFailurePage />} />
                         <Route path="*" element={<NotFound />} />
                     </Route>
 
