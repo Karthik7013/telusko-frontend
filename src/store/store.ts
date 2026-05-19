@@ -3,10 +3,12 @@ import authApi from '@/features/auth/authApi';
 import authReducer from '@/features/auth/authSlice';
 import { adminApi } from '@/features/admin/adminApi';
 import { coursesApi } from '@/features/courses/coursesApi';
+import cartReducer, { type CartState } from '@/features/cart/cartSlice';
 
 export const store = configureStore({
     reducer: {
         auth: authReducer,
+        cart: cartReducer,
         [authApi.reducerPath]: authApi.reducer,
         [adminApi.reducerPath]: adminApi.reducer,
         [coursesApi.reducerPath]: coursesApi.reducer,
@@ -16,6 +18,17 @@ export const store = configureStore({
             .concat(authApi.middleware)
             .concat(adminApi.middleware)
             .concat(coursesApi.middleware)
+})
+
+let currentCart: CartState | undefined
+store.subscribe(() => {
+  const prev = currentCart
+  currentCart = store.getState().cart
+  if (prev !== currentCart) {
+    try {
+      localStorage.setItem('telusko-cart', JSON.stringify(currentCart))
+    } catch {}
+  }
 })
 
 export type RootState = ReturnType<typeof store.getState>
