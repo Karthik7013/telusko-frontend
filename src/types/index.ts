@@ -23,8 +23,11 @@ export type CourseCardProps = {
   description: string,
   rating: string,
   durationHours: string,
-  instructor: string,
-  thumbnailUrl: string
+  instructor: {
+    fullName: string,
+    profilePictureUrl: string,
+  },
+  thumbnailUrl: string,
 }
 
 // Wishlist Types
