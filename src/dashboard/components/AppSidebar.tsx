@@ -14,7 +14,7 @@ import { DASHBOARD_NAV as navData } from "@/data/navigation-data"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     return (
-        <Sidebar className="border-0 border-r-0"
+        <Sidebar className="border-0 border-r-0 py-2"
             style={{ borderRightWidth: 0, "--sidebar-width-icon": "4rem" } as React.CSSProperties}
             collapsible="icon" {...props}>
             <SidebarHeader className="group-data-[collapsible=icon]:p-4">
