@@ -63,7 +63,7 @@ const AppRouter = () => {
                     </Route>
 
                     {/* Protected Onboarding Route */}
-                    <Route element={<ProtectedComponent requiredRoles={['student']} />}>
+                    <Route element={<Outlet />}>
                         <Route path="onboarding" element={<OnboardingPage />} />
                     </Route>
 

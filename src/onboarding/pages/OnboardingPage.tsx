@@ -15,8 +15,7 @@ import type { OnboardingData, UserRole, InterestTopic, Goal, ExperienceLevel, Ti
 const TOTAL_STEPS = 4
 const STORAGE_KEY = "telusko-onboarding"
 
-type Action =
-  | { type: "SET_ROLE"; payload: UserRole }
+type Action = { type: "SET_ROLE"; payload: UserRole }
   | { type: "SET_INTERESTS"; payload: InterestTopic[] }
   | { type: "SET_GOAL"; payload: Goal }
   | { type: "SET_EXPERIENCE_LEVEL"; payload: ExperienceLevel }
@@ -55,20 +54,20 @@ function loadFromStorage(): { step: number; data: OnboardingData } | null {
   try {
     const saved = sessionStorage.getItem(STORAGE_KEY)
     if (saved) return JSON.parse(saved)
-  } catch {}
+  } catch { }
   return null
 }
 
 function saveToStorage(step: number, data: OnboardingData) {
   try {
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ step, data }))
-  } catch {}
+  } catch { }
 }
 
 function clearStorage() {
   try {
     sessionStorage.removeItem(STORAGE_KEY)
-  } catch {}
+  } catch { }
 }
 
 export default function OnboardingPage() {
@@ -132,7 +131,7 @@ export default function OnboardingPage() {
   const progress = ((step + 1) / TOTAL_STEPS) * 100
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-background/80 flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-linear-to-b from-background to-background/80 flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-2xl mx-auto">
         <div className="mb-8 text-center">
           <motion.h1

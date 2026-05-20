@@ -60,7 +60,7 @@ export function StepGoals({ value, onChange }: StepGoalsProps) {
               onClick={() => onChange(goal.value)}
               className={`relative flex items-center gap-4 w-full p-4 rounded-xl border-2 text-left transition-all duration-200 ${
                 isSelected
-                  ? "border-primary bg-primary/5 shadow-[0_0_20px_-5px] shadow-primary/30"
+                  ? "border-primary bg-primary/5"
                   : "border-border bg-card hover:border-primary/50 hover:bg-accent/50"
               }`}
             >

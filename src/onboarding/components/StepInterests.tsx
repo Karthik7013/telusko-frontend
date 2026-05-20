@@ -57,7 +57,7 @@ export function StepInterests({ value, onChange }: StepInterestsProps) {
               onClick={() => toggleInterest(topic)}
               className={`px-5 py-2.5 rounded-full text-sm font-medium border-2 transition-all duration-200 ${
                 isSelected
-                  ? "bg-primary text-primary-foreground border-primary shadow-[0_0_15px_-3px] shadow-primary/40"
+                  ? "bg-primary/5 text-primary-foreground border-primary "
                   : "bg-card text-muted-foreground border-border hover:border-primary/50 hover:text-foreground"
               }`}
             >
@@ -67,15 +67,7 @@ export function StepInterests({ value, onChange }: StepInterestsProps) {
         })}
       </motion.div>
 
-      {value.length > 0 && (
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="text-xs text-muted-foreground"
-        >
-          {value.length} selected
-        </motion.p>
-      )}
+      
     </div>
   )
 }

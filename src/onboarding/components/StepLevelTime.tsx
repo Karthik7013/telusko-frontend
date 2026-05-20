@@ -59,7 +59,7 @@ export function StepLevelTime({
                 onClick={() => onExperienceChange(level)}
                 className={`px-6 py-3 rounded-xl text-sm font-medium border-2 transition-all duration-200 ${
                   isSelected
-                    ? "bg-primary text-primary-foreground border-primary shadow-[0_0_15px_-3px] shadow-primary/40"
+                    ? "bg-primary text-primary-foreground border-primary"
                     : "bg-card text-muted-foreground border-border hover:border-primary/50 hover:text-foreground"
                 }`}
               >
@@ -92,7 +92,7 @@ export function StepLevelTime({
                 onClick={() => onTimeChange(option.value)}
                 className={`px-6 py-3 rounded-xl text-sm font-medium border-2 transition-all duration-200 ${
                   isSelected
-                    ? "bg-primary text-primary-foreground border-primary shadow-[0_0_15px_-3px] shadow-primary/40"
+                    ? "bg-primary text-primary-foreground border-primary"
                     : "bg-card text-muted-foreground border-border hover:border-primary/50 hover:text-foreground"
                 }`}
               >
