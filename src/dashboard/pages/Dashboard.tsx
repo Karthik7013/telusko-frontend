@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BookOpen, Trophy, Clock, TrendingUp } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { RecommendedCourses } from "@/dashboard/components/RecommendedCourses";
 
 export default function Dashboard() {
     const stats = [
@@ -65,6 +66,8 @@ export default function Dashboard() {
                     </Card>
                 ))}
             </div>
+
+            <RecommendedCourses />
 
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
                 <Card className="col-span-4">

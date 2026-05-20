@@ -3,12 +3,9 @@ import {
     Globe,
     Info,
     Star,
-    Share2,
-    MoreHorizontal,
     PanelRightClose,
     PanelRightOpen
 } from 'lucide-react';
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import SectionList from '@/course/components/SectionList';
 import { VideoPlayer } from "@/components/ui/video-player";
