@@ -19,12 +19,14 @@ export default defineConfig({
             if (id.includes("lucide-react")) {
               return "ui-icons"
             }
-            if (
-              id.includes("framer-motion") ||
-              id.includes("@radix-ui") ||
-              id.includes("@base-ui")
-            ) {
-              return "ui-framework"
+            if (id.includes("framer-motion")) {
+              return "framer-motion"
+            }
+            if (id.includes("@radix-ui")) {
+              return "radix-ui"
+            }
+            if (id.includes("@base-ui")) {
+              return "base-ui"
             }
             if (
               id.includes("react-router-dom") ||
