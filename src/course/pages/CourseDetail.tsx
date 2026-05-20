@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import SectionList from '@/course/components/SectionList';
 import { useGetCourseBySlugQuery } from "@/features/courses/coursesApi";
-import { Demo } from "@/components/ui/video-player";
+import { VideoPlayer } from "@/components/ui/video-player";
 import DescriptionCollapse from '@/components/common/DescriptionCollapse';
 import { toast } from 'sonner'
 import { addToCart } from '@/features/cart/cartSlice'
@@ -68,7 +68,7 @@ export default function CourseDetailPage() {
                         {/* Mobile Video & Purchase Bar */}
                         <div className="lg:hidden">
                             <div className="relative">
-                                <Demo
+                                <VideoPlayer
                                     poster={course.data.thumbnailUrl}
                                     src={course.data.previewVideoUrl} />
                             </div>
@@ -172,7 +172,7 @@ export default function CourseDetailPage() {
                         <aside className="sticky top-24">
                             <div className="border bg-card text-card-foreground shadow-xl rounded-xl overflow-hidden">
                                 <div className="relative">
-                                    <Demo
+                                    <VideoPlayer
                                         poster={course.data.thumbnailUrl}
                                         src={course.data.previewVideoUrl} />
                                 </div>

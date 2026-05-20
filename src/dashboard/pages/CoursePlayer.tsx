@@ -11,17 +11,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import SectionList from '@/course/components/SectionList';
-import {
-    VideoPlayer,
-    VideoPlayerControlBar,
-    VideoPlayerPlayButton,
-    VideoPlayerSeekBackwardButton,
-    VideoPlayerSeekForwardButton,
-    VideoPlayerTimeRange,
-    VideoPlayerTimeDisplay,
-    VideoPlayerMuteButton,
-    VideoPlayerVolumeRange
-} from "@/components/ui/video-player";
+import { VideoPlayer } from "@/components/ui/video-player";
 import { cn } from "@/lib/utils";
 
 export default function CoursePlayer({
@@ -40,25 +30,11 @@ export default function CoursePlayer({
                     <div className="space-y-6 min-w-0">
                         {/* Video Player Wrapper */}
                         <div className="relative aspect-video rounded-xl overflow-hidden bg-black shadow-sm">
-                            <VideoPlayer className="w-full h-full">
-                                <video
-                                    slot="media"
-                                    src="https://archive.org/download/a-beginners-guide-to-python-programming/%5BTutsNode.com%5D%20-%20A%20Beginners%20Guide%20to%20Python%20Programming%2F01%20Introduction%2F001%20Introduction.mp4"
-                                    poster="https://cdn.pixabay.com/photo/2023/12/16/00/06/mountain-8451604_1920__1b578b3c0b.jpg"
-                                    className="w-full h-full object-cover"
-                                    crossOrigin=""
-                                    playsInline
-                                />
-                                <VideoPlayerControlBar>
-                                    <VideoPlayerPlayButton />
-                                    <VideoPlayerSeekBackwardButton />
-                                    <VideoPlayerSeekForwardButton />
-                                    <VideoPlayerTimeRange />
-                                    <VideoPlayerTimeDisplay showDuration />
-                                    <VideoPlayerMuteButton />
-                                    <VideoPlayerVolumeRange />
-                                </VideoPlayerControlBar>
-                            </VideoPlayer>
+                            <VideoPlayer
+                                src="https://archive.org/download/a-beginners-guide-to-python-programming/%5BTutsNode.com%5D%20-%20A%20Beginners%20Guide%20to%20Python%20Programming%2F01%20Introduction%2F001%20Introduction.mp4"
+                                poster="https://cdn.pixabay.com/photo/2023/12/16/00/06/mountain-8451604_1920__1b578b3c0b.jpg"
+                                className="w-full h-full"
+                            />
                         </div>
 
                         {/* Video Info */}

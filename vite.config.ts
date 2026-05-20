@@ -28,9 +28,6 @@ export default defineConfig({
             if (id.includes("@base-ui")) {
               return "base-ui"
             }
-            if (id.includes("media-chrome")) {
-              return "media-chrome"
-            }
             if (
               id.includes("react-router-dom") ||
               id.includes("react-router") ||
