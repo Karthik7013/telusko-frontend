@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { authApi } from "@/features/auth/authApi";
-import { logout as logoutAction } from "@/features/auth/authSlice";
 import { useDispatch } from "react-redux";
 
 export const useLogout = () => {
@@ -14,7 +13,6 @@ export const useLogout = () => {
         localStorage.removeItem('user');
 
         // 2. Clear Redux state
-        dispatch(logoutAction());
         dispatch(authApi.util.resetApiState());
 
         // 3. Redirect to login page

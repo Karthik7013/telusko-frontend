@@ -1,7 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
 import authApi from '@/features/auth/authApi';
-import authReducer from '@/features/auth/authSlice';
-import { adminApi } from '@/features/admin/adminApi';
 import { coursesApi } from '@/features/courses/coursesApi';
 import { ordersApi } from '@/features/orders/ordersApi';
 import { couponsApi } from '@/features/coupons/couponsApi';
@@ -10,10 +8,8 @@ import cartReducer, { type CartState } from '@/features/cart/cartSlice';
 
 export const store = configureStore({
     reducer: {
-        auth: authReducer,
         cart: cartReducer,
         [authApi.reducerPath]: authApi.reducer,
-        [adminApi.reducerPath]: adminApi.reducer,
         [coursesApi.reducerPath]: coursesApi.reducer,
         [ordersApi.reducerPath]: ordersApi.reducer,
         [couponsApi.reducerPath]: couponsApi.reducer,
@@ -22,7 +18,6 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()
             .concat(authApi.middleware)
-            .concat(adminApi.middleware)
             .concat(coursesApi.middleware)
             .concat(ordersApi.middleware)
             .concat(couponsApi.middleware)
