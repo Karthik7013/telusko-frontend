@@ -71,28 +71,11 @@ export default function CoursePlayer({
                                     <span>•</span>
                                     <span>1,234 Learners</span>
                                 </div>
-
-                                <div className="flex items-center gap-2">
-                                    <Button variant="outline" size="sm" className="gap-2">
-                                        <Share2 className="size-4" /> Share
-                                    </Button>
-                                    <Button variant="ghost" size="icon">
-                                        <MoreHorizontal className="size-4" />
-                                    </Button>
-                                </div>
                             </div>
-
-                            <div className="h-px bg-border" />
 
                             {/* Description & Meta */}
                             <div className="space-y-4">
-                                <div className="flex flex-wrap gap-2">
-                                    {['web', 'react', 'frontend'].map((tag) => (
-                                        <Badge key={tag} variant="secondary">
-                                            {tag}
-                                        </Badge>
-                                    ))}
-                                </div>
+
 
                                 <p className="text-muted-foreground leading-relaxed">
                                     This is the subtitle or short description of the course. It gives a brief overview of what the current video or course is about.
@@ -127,7 +110,7 @@ export default function CoursePlayer({
 
                             <div className="flex-1 overflow-y-auto p-2">
                                 {/* Reusing the CourseContent component */}
-                                <SectionList sections={[]}/>
+                                <SectionList sections={[]} />
                             </div>
                         </div>
                     </div>
