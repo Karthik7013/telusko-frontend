@@ -31,6 +31,9 @@ const AnalyticsPage = lazy(() => import("@/dashboard/pages/Dashboard"))
 const MyLearningsPage = lazy(() => import("@/dashboard/pages/MyLearnings"))
 const CoursePlayer = lazy(() => import("@/dashboard/pages/CoursePlayer"))
 
+// Onboarding
+const OnboardingPage = lazy(() => import("@/onboarding/pages/OnboardingPage"))
+
 const AppRouter = () => {
     return (
         <BrowserRouter>
@@ -57,6 +60,11 @@ const AppRouter = () => {
                             <Route path="course-player" element={<CoursePlayer />} />
                             <Route path="*" element={<NotFound />} />
                         </Route>
+                    </Route>
+
+                    {/* Protected Onboarding Route */}
+                    <Route element={<ProtectedComponent requiredRoles={['student']} />}>
+                        <Route path="onboarding" element={<OnboardingPage />} />
                     </Route>
 
                     {/* Public Auth Routes */}

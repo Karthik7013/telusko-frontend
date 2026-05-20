@@ -1,3 +1,4 @@
+import * as React from "react"
 import { AppSidebar } from "@/dashboard/components/AppSidebar"
 import {
     SidebarInset,
@@ -5,11 +6,27 @@ import {
     SidebarTrigger,
 } from "@/components/ui/sidebar"
 
-import { Outlet } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
 import { DashboardFooter } from "@/dashboard/components/DashboardFooter";
+import { useGetPreferencesQuery } from "@/features/preferences/preferencesApi";
+
+function OnboardingGuard({ children }: { children: React.ReactNode }) {
+    const { data, error, isLoading } = useGetPreferencesQuery()
+
+    if (isLoading) return null
+
+    const isNotFound = error && 'status' in error && error.status === 404
+
+    if (!isNotFound && data?.data === null) {
+        return <Navigate to="/onboarding" replace />
+    }
+
+    return <>{children}</>
+}
 
 export default function Dashboard() {
     return (
+        <OnboardingGuard>
         <SidebarProvider className="flex bg-sidebar">
             <AppSidebar />
             <div className="lg:py-4 min-h-svh flex-1 min-w-0 bg-sidebar md:peer-data-[state=collapsed]:ml-4 transition-all duration-300">
@@ -29,5 +46,6 @@ export default function Dashboard() {
                 </SidebarInset>
             </div>
         </SidebarProvider>
+        </OnboardingGuard>
     )
 }

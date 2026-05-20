@@ -4,6 +4,7 @@ import { coursesApi } from '@/features/courses/coursesApi';
 import { ordersApi } from '@/features/orders/ordersApi';
 import { couponsApi } from '@/features/coupons/couponsApi';
 import { enrollmentsApi } from '@/features/enrollments/enrollmentsApi';
+import { preferencesApi } from '@/features/preferences/preferencesApi';
 import cartReducer, { type CartState } from '@/features/cart/cartSlice';
 
 export const store = configureStore({
@@ -14,6 +15,7 @@ export const store = configureStore({
         [ordersApi.reducerPath]: ordersApi.reducer,
         [couponsApi.reducerPath]: couponsApi.reducer,
         [enrollmentsApi.reducerPath]: enrollmentsApi.reducer,
+        [preferencesApi.reducerPath]: preferencesApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()
@@ -22,6 +24,7 @@ export const store = configureStore({
             .concat(ordersApi.middleware)
             .concat(couponsApi.middleware)
             .concat(enrollmentsApi.middleware)
+            .concat(preferencesApi.middleware)
 })
 
 let currentCart: CartState | undefined
