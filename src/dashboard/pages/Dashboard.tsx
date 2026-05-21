@@ -46,16 +46,18 @@ export default function Dashboard() {
                 <p className="text-muted-foreground">Welcome back! Here's what's happening with your learning journey.</p>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-12">
                 {stats.map((stat) => (
-                    <StatsCard key={stat.title} {...stat} />
+                    <div key={stat.title} className="lg:col-span-3">
+                        <StatsCard {...stat} />
+                    </div>
                 ))}
             </div>
 
 
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-                <AchievementsLog />
                 <ActivityLog />
+                <AchievementsLog />
             </div>
         </div>
     );

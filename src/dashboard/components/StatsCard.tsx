@@ -12,36 +12,45 @@ interface StatsCardProps {
 
 export default function StatsCard({ title, value, icon: Icon, description, color, bg }: StatsCardProps) {
     return (
-        <Card className="relative overflow-hidden transition-all duration-500 hover:shadow-2xl group border-muted/50">
-            {/* Subtly patterned background layer */}
-            <div
-                className="absolute inset-0 opacity-[0.03] group-hover:opacity-[0.05] transition-opacity duration-500"
+        <Card className="relative overflow-hidden transition-all duration-500 hover:shadow-2xl group border-muted/40 bg-card/60 backdrop-blur-md">
+            {/* Background Pattern: Modern Grid Layer */}
+            <div className={`absolute inset-0 opacity-[0.02] group-hover:opacity-[0.04] transition-opacity duration-500 pointer-events-none ${color}`}
                 style={{
-                    backgroundImage: `radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0)`,
+                    backgroundImage: `linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)`,
                     backgroundSize: '24px 24px'
                 }}
             />
 
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
-                <CardTitle className="text-sm font-semibold text-muted-foreground group-hover:text-foreground transition-colors tracking-tight">
+            {/* Geometric Accent: Large Skewed Square Frame (Replacement for circle) */}
+            <div className={`absolute -right-10 -top-10 h-32 w-32 rounded-3xl border border-current opacity-[0.03] group-hover:opacity-[0.08] group-hover:rotate-45 group-hover:scale-150 transition-all duration-700 ${color}`} />
+
+            <CardHeader className="flex flex-row items-start justify-between space-y-0 relative z-10 pb-2">
+                <CardTitle className="text-[10px] font-bold text-muted-foreground/80 group-hover:text-foreground transition-colors tracking-[0.15em] uppercase pt-1">
                     {title}
                 </CardTitle>
-                <div className={`${bg} ${color} p-2.5 rounded-xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-12 shadow-sm`}>
-                    <Icon className="h-5 w-5" />
+                <div className={`${bg} ${color} p-2.5 rounded-xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 shadow-lg shadow-black/5 ring-1 ring-white/10`}>
+                    <Icon className="h-4 w-4" />
                 </div>
             </CardHeader>
 
-            <CardContent className="relative z-10">
-                <div className="text-3xl font-extrabold tracking-tight mb-1">{value}</div>
-                <div className="flex items-center justify-between">
-                    <p className="text-xs font-medium text-muted-foreground">
+            <CardContent className="relative z-10 pt-0">
+                <div className="text-4xl font-black tracking-tighter mb-1">
+                    {value}
+                </div>
+                <div className="flex items-center gap-1.5">
+                    {/* Status pulse dot indicating activity/trend */}
+                    <div className={`h-1.5 w-1.5 rounded-full bg-current ${color} animate-pulse shadow-sm`} />
+                    <p className="text-xs font-bold text-muted-foreground/60">
                         {description}
                     </p>
                 </div>
             </CardContent>
 
-            {/* Enhanced dynamic background glow */}
-            <div className={`absolute -right-12 -bottom-12 h-48 w-48 rounded-3xl ${bg} opacity-60 group-hover:opacity-60 group-hover:scale-125 group-hover:rotate-90 transition-all duration-1000 blur-xl z-0`} />
+            {/* Mesh Glow Blob (Replacing original glow shape) */}
+            <div className={`absolute -right-20 -bottom-20 h-64 w-64 ${bg} opacity-30 group-hover:opacity-50 blur-[100px] rounded-full transition-all duration-1000 -z-0`} />
+
+            {/* Surface Highlight for depth */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent pointer-events-none" />
         </Card>
     );
 }

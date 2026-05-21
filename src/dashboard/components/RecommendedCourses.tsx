@@ -52,18 +52,19 @@ export function RecommendedCourses() {
   }
 
   if (recommended.length === 0) return null
-
-  return (
-    <div className="space-y-4">
-      <div>
-        <h2 className="text-xl font-bold tracking-tight">Recommended for you</h2>
-        <p className="text-sm text-muted-foreground">Based on your preferences</p>
-      </div>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {recommended.map((course) => (
-          <CourseCard key={course.id} course={course} />
-        ))}
+  return <section className="flex items-center py-16 lg:py-28">
+    <div className="container mx-auto px-4">
+      <div className="space-y-4">
+        <div>
+          <h2 className="text-xl font-bold tracking-tight">Recommended for you</h2>
+          <p className="text-sm text-muted-foreground">Based on your preferences</p>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {recommended.map((course) => (
+            <CourseCard key={course.id} course={course} />
+          ))}
+        </div>
       </div>
     </div>
-  )
+  </section>
 }
