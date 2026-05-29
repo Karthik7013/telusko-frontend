@@ -2,14 +2,10 @@
 import { Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { useGetUserQuery } from "@/features/auth/authApi";
 
 export function FinalCTAPresenter() {
-    const { data } = useGetUserQuery();
-    const isAuthenticated = !!data;
-    if (isAuthenticated) return null
     return (
-        <section className="">
+        <section id="cta">
             <div className="container mx-auto px-4">
                 <div className="relative overflow-hidden rounded-3xl bg-primary px-6 py-16 text-center text-primary-foreground shadow-2xl sm:px-12 sm:py-24">
                     {/* Decorative Background Circles */}

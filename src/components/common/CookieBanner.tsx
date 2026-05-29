@@ -21,17 +21,16 @@ export default function CookieBanner() {
     if (!isVisible) return null;
 
     return (
-        <div className="fixed bottom-4 left-4 right-4 z-[100] md:left-auto md:right-8 md:max-w-sm animate-in slide-in-from-bottom-10 duration-500">
-            <div className="bg-card border shadow-2xl rounded-2xl p-6 relative overflow-hidden">
+        <div className="fixed max-w-96 bottom-4 right-4 z-100 md:left-auto md:right-8 md:max-w-sm animate-in slide-in-from-bottom-10 duration-500">
+            <div className="bg-card border shadow-2xl rounded-2xl p-4 relative overflow-hidden">
                 {/* Subtle background decoration */}
-                <div className="absolute -top-10 -right-10 size-24 bg-primary/5 rounded-full blur-2xl" />
 
                 <div className="flex items-start gap-4">
-                    <div className="bg-primary/10 p-2 rounded-lg shrink-0">
+                    <div className="bg-primary/10 p-1 rounded-lg shrink-0">
                         <Cookie className="size-6 text-primary" />
                     </div>
 
-                    <div className="space-y-2">
+                    <div className="space-y-1">
                         <h4 className="font-bold text-sm">We use cookies</h4>
                         <p className="text-xs text-muted-foreground leading-relaxed">
                             We use cookies to enhance your learning experience, analyze site traffic,
@@ -48,15 +47,14 @@ export default function CookieBanner() {
                     </button>
                 </div>
 
-                <div className="mt-6 flex flex-col lg:flex-col gap-2">
-                    <Button onClick={() => { }} className="w-full h-9 text-xs">
+                <div className="mt-2 flex flex-col lg:flex-col gap-1">
+                    <Button onClick={() => { }} className="w-full text-xs">
                         Accept All
                     </Button>
                     <Button
-
                         onClick={declineCookies}
                         variant="destructive"
-                        className="w-full h-9 text-xs"
+                        className="w-full text-xs"
                     >
                         Reject
                     </Button>

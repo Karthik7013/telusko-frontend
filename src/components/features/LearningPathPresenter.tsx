@@ -38,9 +38,6 @@ const steps = [
 ];
 
 export default function LearningPathPresenter() {
-    const { data } = useGetUserQuery();
-    const isAuthenticated = !!data;
-    if (isAuthenticated) return null
     return (
         <section className="py-20 bg-background overflow-hidden">
             <div className="container mx-auto px-4">
@@ -148,14 +145,10 @@ import {
     CarouselItem,
 } from "@/components/ui/carousel";
 import AutoScroll from "embla-carousel-auto-scroll";
-import { useGetUserQuery } from "@/features/auth/authApi";
 
 export function TrustBar() {
-    const { data } = useGetUserQuery();
-    const isAuthenticated = !!data;
-    if (isAuthenticated) return null
     return (
-        <div className="py-12 bg-muted/10">
+        <section id="mastry-path" className="py-12 bg-muted/10">
             <div className="container mx-auto px-4">
                 <p className="text-center text-sm font-medium text-muted-foreground mb-8 uppercase tracking-widest">
                     Our Alumni Work At
@@ -195,6 +188,6 @@ export function TrustBar() {
                     </CarouselContent>
                 </Carousel>
             </div>
-        </div>
+        </section>
     );
 }

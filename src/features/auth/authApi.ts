@@ -1,21 +1,17 @@
 import { ApiResponse } from '@/lib/api-utils';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
+import { baseQueryWithReauth, RefreshResponse } from './authBaseQuery';
+import { setCredentials, logOut } from './authSlice';
 
+type ROLES = 'admin' | 'student' | 'instructor';
 // --- Interfaces ---
 export interface User {
-    // id: number;
-    // email: string;
-    // fullName: string;
-    // isInstructor: boolean;
     id: string,
     email: string,
     fullName: string;
-    roles: string[];
-    isInstructor: true;
-    profilePictureUrl: string;
-    bio: string;
-
+    roles: ROLES[]
+    profilePictureUrl: null | string;
+    bio: string | null;
 }
 
 export interface LoginRequest {
@@ -25,81 +21,17 @@ export interface LoginRequest {
 
 export interface LoginResponse {
     accessToken: string;
-    refreshToken: string;
-    user: User;
 }
 
-export interface RefreshResponse {
-    accessToken: string;
-    refreshToken: string;
+export interface LogoutResponse {
+    message: string;
 }
 
 export interface SignUpRequest {
+    displayName: string;
     email: string;
     password: string;
-    fullName: string;
-    isInstructor: boolean;
 }
-
-const BASE_URL = 'http://localhost:3000';
-
-// --- 1. The Standard Base Query ---
-const rawBaseQuery = fetchBaseQuery({
-    baseUrl: BASE_URL,
-    prepareHeaders: (headers) => {
-        const token = localStorage.getItem('accessToken');
-        if (token) {
-            headers.set('Authorization', `Bearer ${token}`);
-        }
-        return headers;
-    },
-});
-
-// --- 2. The Interceptor (Refresh Logic) ---
-const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
-    args,
-    api,
-    extraOptions
-) => {
-    // Attempt the actual request
-    let result = await rawBaseQuery(args, api, extraOptions);
-
-    // If request fails with 401, try to refresh
-    if (result.error && result.error.status === 401) {
-        const refreshToken = localStorage.getItem('refreshToken');
-
-        if (refreshToken) {
-            // Call the refresh endpoint
-            const refreshResult = await rawBaseQuery(
-                {
-                    url: '/auth/refresh-token',
-                    method: 'POST',
-                    body: { refreshToken },
-                },
-                api,
-                extraOptions
-            );
-
-            if (refreshResult.data) {
-                const data = refreshResult.data as RefreshResponse;
-
-                // Save new tokens
-                localStorage.setItem('accessToken', data.accessToken);
-                localStorage.setItem('refreshToken', data.refreshToken);
-
-                // Retry the original request
-                result = await rawBaseQuery(args, api, extraOptions);
-            } else {
-                // Refresh failed: Clear storage and force login
-                localStorage.removeItem('accessToken');
-                localStorage.removeItem('refreshToken');
-                window.location.href = '/auth/login';
-            }
-        }
-    }
-    return result;
-};
-
 // --- 3. The API Definition ---
 export const authApi = createApi({
     reducerPath: 'authApi',
@@ -111,41 +43,83 @@ export const authApi = createApi({
                 method: 'POST',
                 body: payload,
             }),
+            async onQueryStarted(_, { queryFulfilled, dispatch }) {
+                try {
+                    const { data: response } = await queryFulfilled;
+                    if (response.data?.accessToken) {
+                        dispatch(setCredentials({
+                            accessToken: response.data?.accessToken,
+                        }));
+                        localStorage.setItem('auth_active', 'true');
+                    }
+                } catch (err) {
+                    localStorage.removeItem('auth_active');
+                }
+            }
         }),
-        signUp: builder.mutation<ApiResponse<User>, SignUpRequest>({
+        signUp: builder.mutation<ApiResponse<LoginResponse>, SignUpRequest>({
             query: (payload) => ({
                 url: '/auth/register',
                 method: 'POST',
                 body: payload,
             }),
+            async onQueryStarted(_, { queryFulfilled, dispatch }) {
+                try {
+                    const { data: response } = await queryFulfilled;
+                    if (response.data?.accessToken) {
+                        dispatch(setCredentials({
+                            accessToken: response.data?.accessToken,
+                        }));
+                        localStorage.setItem('auth_active', 'true');
+                    }
+                } catch (err) {
+                    localStorage.removeItem('auth_active');
+                }
+            }
         }),
-        getUser: builder.query<ApiResponse<User>, void>({
-            query: () => '/auth/profile',
-        }),
-        refreshToken: builder.mutation<RefreshResponse, { refreshToken: string }>({
-            query: (payload) => ({
-                url: '/auth/refresh-token',
+        refreshToken: builder.query<ApiResponse<RefreshResponse>, void>({
+            query: () => ({
+                url: '/auth/refresh',
                 method: 'POST',
-                body: payload,
             }),
+            async onQueryStarted(_, { queryFulfilled, dispatch }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    if (data.data?.accessToken) {
+                        dispatch(setCredentials({ accessToken: data.data.accessToken }));
+                        localStorage.setItem('auth_active', 'true');
+                    }
+                } catch (err) {
+                    localStorage.removeItem('auth_active');
+                }
+            }
         }),
-        forgotPassword: builder.mutation<{ message: string }, { email: string }>({
-            query: (payload) => ({
-                url: '/auth/forgot-password',
-                method: 'POST',
-                body: payload,
+        logout: builder.mutation<ApiResponse<LogoutResponse>, void>({
+            query: () => ({
+                url: '/auth/logout',
+                method: 'POST'
             }),
-        })
+            async onQueryStarted(_, { queryFulfilled, dispatch }) {
+                try {
+                    const { data: response } = await queryFulfilled;
+                    if (response.success) {
+                        dispatch(logOut());
+                        localStorage.removeItem('auth_active');
+                        window.location.href = '/auth/login';
+                    }
+                } catch {
+                    // failed to logout 
+                }
+            }
+        }),
     })
 });
 
 export const {
     useLoginMutation,
     useSignUpMutation,
-    useGetUserQuery,
-    useLazyGetUserQuery,
-    useRefreshTokenMutation,
-    useForgotPasswordMutation,
+    useRefreshTokenQuery,
+    useLogoutMutation
 } = authApi;
 
 export default authApi;

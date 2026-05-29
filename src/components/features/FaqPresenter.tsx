@@ -5,7 +5,6 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
-import { useGetUserQuery } from "@/features/auth/authApi";
 import { HelpCircle } from "lucide-react";
 
 const faqs = [
@@ -32,11 +31,9 @@ const faqs = [
 ];
 
 export default function FAQPresenter() {
-    const { data } = useGetUserQuery();
-    const isAuthenticated = !!data;
-    if (isAuthenticated) return null
+
     return (
-        <section className="py-20 lg:py-32">
+        <section id="faq" className="py-20 lg:py-32">
             <div className="container mx-auto px-4 max-w-4xl">
                 <div className="flex flex-col items-center text-center mb-12">
                     <Badge variant="outline" className="mb-4 gap-2 px-4 py-1">

@@ -29,16 +29,19 @@ import {
     useSidebar,
 } from "@/components/ui/sidebar"
 
-import { useLogout } from "@/hooks/use-logout"
 import { Link } from "react-router-dom"
-import { useGetUserQuery } from "@/features/auth/authApi"
+import { useMeQuery } from "@/features/identity/identityApi"
+import { useLogoutMutation } from "@/features/auth/authApi"
 
 
 const ProfileMenu = () => {
-    const { data: user } = useGetUserQuery()
+    const { data: user } = useMeQuery(undefined);
+    const [logout] = useLogoutMutation();
+    const handleLogout = () => {
+        logout();
+    };
 
     const { isMobile } = useSidebar()
-    const logout = useLogout()
     return <DropdownMenuContent
         className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
         side={isMobile ? "bottom" : "right"}
@@ -81,7 +84,7 @@ const ProfileMenu = () => {
             </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem variant="destructive" onClick={logout}>
+        <DropdownMenuItem variant="destructive" onClick={handleLogout}>
             <LogOut />
             Log out
         </DropdownMenuItem>
@@ -89,7 +92,7 @@ const ProfileMenu = () => {
 }
 
 export function NavUser() {
-    const { data: user } = useGetUserQuery()
+    const { data: user } = useMeQuery(undefined)
     return (
         <SidebarMenu>
             <SidebarMenuItem>

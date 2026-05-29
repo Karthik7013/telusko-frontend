@@ -57,8 +57,23 @@
 
 export interface ApiResponse<T> {
   success: boolean;
-  message?: string;
-  data?: T;
+  data: T | null;
   meta?: any;
   errors?: any[];
+}
+
+export const mockApi = <T>(data: T | null = null, duration: number = 1000,): Promise<{ data: ApiResponse<T> }> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        data: {
+          success: true,
+          message: "success",
+          data,
+          meta: {},
+          errors: [],
+        } as ApiResponse<T>
+      });
+    }, duration);
+  })
 }

@@ -1,8 +1,8 @@
-import { useGetUserQuery } from "@/features/auth/authApi";
+import { useMeQuery } from "@/features/identity/identityApi";
 import NavbarPresenter from "@/components/features/NavbarPresenter";
 
 const NavbarContainer = () => {
-    const { data } = useGetUserQuery()
+    const { data } = useMeQuery(undefined)
     const isAuthenticated = !!data;
     return (
         <NavbarPresenter isLogin={isAuthenticated} />

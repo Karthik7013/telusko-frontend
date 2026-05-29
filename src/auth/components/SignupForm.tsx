@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom"
+import { useSignUpMutation } from "@/features/auth/authApi"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -15,7 +17,7 @@ import { Input } from "@/components/ui/input"
 
 // 1. Enhanced Validation Schema
 const formSchema = z.object({
-    full_name: z
+    displayName: z
         .string()
         .min(2, "Name must be at least 2 characters")
         .max(50),
@@ -27,14 +29,12 @@ const formSchema = z.object({
         .min(8, "Password must be at least 8 characters")
         .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
         .regex(/[0-9]/, "Password must contain at least one number"),
-    confirm_password: z.string(),
+    confirm_password: z.string().min(1, "Please confirm your password")
 }).refine((data) => data.password === data.confirm_password, {
     message: "Passwords do not match",
-    path: ["confirm_password"], // Sets the error to this specific field
-})
+    path: ["confirm_password"],
+});
 
-import { useNavigate } from "react-router-dom"
-import { useSignUpMutation } from "@/features/auth/authApi"
 
 export function SignupForm() {
     const navigate = useNavigate()
@@ -43,7 +43,7 @@ export function SignupForm() {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            full_name: "",
+            displayName: "",
             email: "",
             password: "",
             confirm_password: ""
@@ -55,17 +55,13 @@ export function SignupForm() {
     async function onSubmit(data: z.infer<typeof formSchema>) {
         try {
             await signUp({
-                fullName: data.full_name,
+                displayName: data.displayName,
                 email: data.email,
-                password: data.password,
-                isInstructor: false // Default to student, can be changed later
+                password: data.password
             }).unwrap();
 
-            toast.success("Account created successfully!", {
-                description: `Welcome! Please sign in to continue.`,
-            })
-
-            navigate('/auth/login');
+            toast.success("Account created successfully!")
+            navigate('/');
         } catch (error: any) {
             toast.error("Signup failed", {
                 description: error.data?.message || "Something went wrong during registration.",
@@ -85,10 +81,10 @@ export function SignupForm() {
                         <FieldLabel>Full Name</FieldLabel>
                         <Input
                             placeholder="John Doe"
-                            {...register("full_name")}
-                            aria-invalid={!!errors.full_name}
+                            {...register("displayName")}
+                            aria-invalid={!!errors.displayName}
                         />
-                        {errors.full_name && <FieldError>{errors.full_name.message}</FieldError>}
+                        {errors.displayName && <FieldError>{errors.displayName.message}</FieldError>}
                     </Field>
 
                     {/* Email */}

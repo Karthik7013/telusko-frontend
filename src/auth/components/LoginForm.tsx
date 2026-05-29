@@ -1,5 +1,6 @@
 import * as React from "react"
 import { Link, useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -15,6 +16,7 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { useLoginMutation } from "@/features/auth/authApi"
+import { setCredentials } from "@/features/auth/authSlice"
 
 // 1. Login Validation Schema
 const loginSchema = z.object({
@@ -35,20 +37,25 @@ export function LoginForm({
     })
     const [login, { isLoading }] = useLoginMutation();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const { register, handleSubmit, formState: { errors, isSubmitting } } = form
 
     const isLoggingIn = isSubmitting || isLoading;
 
     async function onSubmit(userData: LoginFormValues) {
         try {
-            const response = await login(userData).unwrap();
-            if (response.data?.accessToken && response.data?.refreshToken) {
+            const res = await login(userData).unwrap();
+
+            if (res.data?.accessToken) {
                 toast.success("Welcome back!", {
                     description: "You have successfully logged in."
                 })
-                localStorage.setItem('accessToken', response.data.accessToken)
-                localStorage.setItem('refreshToken', response.data.refreshToken)
-                navigate('/dashboard');
+
+                dispatch(setCredentials({
+                    accessToken: res.data.accessToken,
+                    user: res.data.user // Assuming your API returns user info
+                }));
+                navigate('/');
             } else {
                 toast.error("Login Failed", {
                     description: "Authentication tokens were not provided.",

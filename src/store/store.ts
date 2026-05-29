@@ -6,25 +6,31 @@ import { couponsApi } from '@/features/coupons/couponsApi';
 import { enrollmentsApi } from '@/features/enrollments/enrollmentsApi';
 import { preferencesApi } from '@/features/preferences/preferencesApi';
 import cartReducer, { type CartState } from '@/features/cart/cartSlice';
+import authReducer from '@/features/auth/authSlice';
+import { identityApi } from '@/features/identity/identityApi';
 
 export const store = configureStore({
-    reducer: {
-        cart: cartReducer,
-        [authApi.reducerPath]: authApi.reducer,
-        [coursesApi.reducerPath]: coursesApi.reducer,
-        [ordersApi.reducerPath]: ordersApi.reducer,
-        [couponsApi.reducerPath]: couponsApi.reducer,
-        [enrollmentsApi.reducerPath]: enrollmentsApi.reducer,
-        [preferencesApi.reducerPath]: preferencesApi.reducer,
-    },
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware()
-            .concat(authApi.middleware)
-            .concat(coursesApi.middleware)
-            .concat(ordersApi.middleware)
-            .concat(couponsApi.middleware)
-            .concat(enrollmentsApi.middleware)
-            .concat(preferencesApi.middleware)
+  reducer: {
+    cart: cartReducer,
+    auth: authReducer,
+    [authApi.reducerPath]: authApi.reducer,
+    [identityApi.reducerPath]: identityApi.reducer,
+    [coursesApi.reducerPath]: coursesApi.reducer,
+    [ordersApi.reducerPath]: ordersApi.reducer,
+    [couponsApi.reducerPath]: couponsApi.reducer,
+    [enrollmentsApi.reducerPath]: enrollmentsApi.reducer,
+    [preferencesApi.reducerPath]: preferencesApi.reducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware()
+      .concat(authApi.middleware)
+      .concat(coursesApi.middleware)
+      .concat(ordersApi.middleware)
+      .concat(couponsApi.middleware)
+      .concat(enrollmentsApi.middleware)
+      .concat(preferencesApi.middleware)
+      .concat(identityApi.middleware),
+  devTools: true,
 })
 
 let currentCart: CartState | undefined
@@ -34,7 +40,7 @@ store.subscribe(() => {
   if (prev !== currentCart) {
     try {
       localStorage.setItem('telusko-cart', JSON.stringify(currentCart))
-    } catch {}
+    } catch { }
   }
 })
 

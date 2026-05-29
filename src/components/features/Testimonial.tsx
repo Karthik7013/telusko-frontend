@@ -9,7 +9,6 @@ import {
     CarouselPrevious,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
-import { useGetUserQuery } from "@/features/auth/authApi";
 
 const testimonials = [
     {
@@ -39,11 +38,8 @@ const testimonials = [
 ];
 
 export default function TestimonialsPresenter() {
-    const { data } = useGetUserQuery();
-    const isAuthenticated = !!data;
-    if (isAuthenticated) return null
     return (
-        <section className="py-20 lg:py-32">
+        <section id="testimonials" className="py-20 lg:py-32">
             <div className="container mx-auto px-4">
                 <div className="text-center max-w-2xl mx-auto mb-16">
                     <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">

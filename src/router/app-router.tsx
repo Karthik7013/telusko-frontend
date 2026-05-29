@@ -51,8 +51,11 @@ const AppRouter = () => {
                         <Route path="*" element={<NotFound />} />
                     </Route>
 
+
+                    
+
                     {/* Protected Dashboard Routes */}
-                    <Route element={<ProtectedComponent requiredRoles={['student']} />}>
+                    {/* <Route element={<ProtectedComponent requiredRoles={['student']} />}>
                         <Route path="dashboard" element={<DashboardLayout />}>
                             <Route index element={<AnalyticsPage />} />
                             <Route path="my-learnings" element={<MyLearningsPage />} />
@@ -60,12 +63,7 @@ const AppRouter = () => {
                             <Route path="course-player" element={<CoursePlayer />} />
                             <Route path="*" element={<NotFound />} />
                         </Route>
-                    </Route>
-
-                    {/* Protected Onboarding Route */}
-                    <Route element={<Outlet />}>
-                        <Route path="onboarding" element={<OnboardingPage />} />
-                    </Route>
+                    </Route> */}
 
                     {/* Public Auth Routes */}
                     <Route path="auth" element={<Outlet />}>

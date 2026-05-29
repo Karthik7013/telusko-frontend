@@ -1,4 +1,4 @@
-import { useGetUserQuery } from "@/features/auth/authApi";
+import { useMeQuery } from "@/features/identity/identityApi";
 import {
     User,
     CreditCard,
@@ -9,19 +9,16 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem,
 import { Button } from "@/components/ui/button";
 import { AvatarFallback, AvatarImage, Avatar } from "@/components/ui/avatar";
 import { Link } from "react-router-dom";
-import { useLogout } from "@/hooks/use-logout";
+import { useLogoutMutation } from "@/features/auth/authApi";
 
 export default function UserProfile() {
-    const { error, data: user } = useGetUserQuery();
-    const logout = useLogout();
+    const { data: user } = useMeQuery(undefined);
+    const [logout] = useLogoutMutation();
+
 
     const handleLogout = () => {
         logout();
     };
-
-    if (error || !user) {
-        return 'failed to load profile'
-    }
 
     return (
         <DropdownMenu>
