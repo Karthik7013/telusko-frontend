@@ -1,6 +1,6 @@
 import * as React from "react"
 import NavMain from "@/dashboard/components/NavMain"
-import { NavUser } from "@/dashboard/components/NavUser"
+// import { NavUser } from "@/dashboard/components/NavUser"
 import RoleSwitcher from "@/dashboard/components/RoleSwitch"
 import {
     Sidebar,

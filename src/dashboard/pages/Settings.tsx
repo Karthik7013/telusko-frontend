@@ -34,7 +34,7 @@ const ProfileSettings = () => {
             <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
                 <div className="relative h-24 w-24 rounded-full overflow-hidden border-2 border-muted">
                     <img
-                        src={user?.data?.profilePictureUrl || "https://github.com/shadcn.png"}
+                        src={user?.data?.avatarUrl}
                         alt="Profile"
                         className="h-full w-full object-cover"
                     />
@@ -50,7 +50,7 @@ const ProfileSettings = () => {
             <div className="grid gap-4 md:grid-cols-2">
                 <div className="space-y-2">
                     <Label htmlFor="full-name">Full Name</Label>
-                    <Input id="full-name" defaultValue={user?.data?.fullName} placeholder="Your full name" />
+                    <Input id="full-name" defaultValue={user?.data?.displayName} placeholder="Your full name" />
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="email">Email</Label>
@@ -63,7 +63,7 @@ const ProfileSettings = () => {
                     id="bio"
                     placeholder="Tell us a little bit about yourself"
                     className="resize-none min-h-25"
-                    defaultValue={user?.data?.bio}
+                    defaultValue={user?.data?.displayName}
                 />
                 <p className="text-[0.8rem] text-muted-foreground">
                     Brief description for your profile. URLs are hyperlinked.

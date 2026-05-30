@@ -52,8 +52,7 @@ export function LoginForm({
                 })
 
                 dispatch(setCredentials({
-                    accessToken: res.data.accessToken,
-                    user: res.data.user // Assuming your API returns user info
+                    accessToken: res.data.accessToken
                 }));
                 navigate('/');
             } else {
