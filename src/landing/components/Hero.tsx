@@ -10,7 +10,7 @@ import {
     CarouselPrevious,
     CarouselNext
 } from "@/components/ui/carousel";
-import { ScrollingSearch } from "@/components/features/ScrollingSearch";
+import { ScrollingSearch } from "@/components/layout/ScrollingSearch";
 
 export default function Hero() {
     return (

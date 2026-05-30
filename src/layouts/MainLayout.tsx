@@ -1,5 +1,5 @@
 import Footer from '@/components/common/Footer'
-import { AppNavbar } from '@/components/features/AppNavbar'
+import { AppNavbar } from '@/components/layout/AppNavbar'
 import CookieBanner from '@/components/common/CookieBanner'
 import { Outlet } from 'react-router-dom'
 

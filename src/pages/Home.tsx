@@ -1,9 +1,9 @@
-import { FinalCTA } from "@/components/features/FinalCTA"
-import Faq from "@/components/features/Faq"
-import Hero from "@/components/features/Hero"
-import LearningPath, { TrustBar } from "@/components/features/LearningPath"
+import { FinalCTA } from "@/landing/components/FinalCTA"
+import Faq from "@/landing/components/Faq"
+import Hero from "@/landing/components/Hero"
+import LearningPath, { TrustBar } from "@/landing/components/LearningPath"
 import { ScrollReveal } from "@/components/common/ScrollReveal"
-import Testimonials from "@/components/features/Testimonials"
+import Testimonials from "@/landing/components/Testimonials"
 
 const Home = () => {
     return (
