@@ -18,7 +18,7 @@ import { ApiError } from "@/components/common/ApiError";
 import { CATEGORIES, LEVELS } from "@/data/courses-data";
 import { CourseCardProps } from "@/types";
 
-export default function SearchCoursesPage() {
+export default function SearchCourses() {
     const [searchParams, setSearchParams] = useSearchParams();
     const queryParam = searchParams.get("q") || "";
 

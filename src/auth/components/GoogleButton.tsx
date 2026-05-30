@@ -1,6 +1,6 @@
 import { siGoogle } from "simple-icons";
 
-import { SimpleIcon } from "@/components/common/simple-icon";
+import { SimpleIcon } from "@/components/common/SimpleIcon";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 

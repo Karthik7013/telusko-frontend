@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useRefreshTokenMutation } from "@/features/auth/authApi"
 import { useSelector } from "react-redux";
-import PageLoader from "@/components/common/Loader";
+import PageLoader from "@/components/common/PageLoader";
 import { RootState } from "@/store/store";
 
 export default function AuthProvider(props: {

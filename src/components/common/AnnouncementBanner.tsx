@@ -57,3 +57,5 @@ export function AnnouncementBanner() {
         </AnimatePresence>
     )
 }
+
+export default AnnouncementBanner

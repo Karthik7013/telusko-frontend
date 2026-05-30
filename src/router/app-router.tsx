@@ -2,8 +2,8 @@ import { lazy, Suspense } from "react"
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom"
 
 // Auth guard components
-import { ProtectedRoute } from "@/auth/components/ProtectedRoutes"
-import PageLoader from "@/components/common/Loader"
+import { ProtectedRoute } from "@/auth/components/ProtectedRoute"
+import PageLoader from "@/components/common/PageLoader"
 // import { useSelector } from "react-redux"
 // import { RootState } from "@/store/store"
 
@@ -15,7 +15,7 @@ const DashboardLayout = lazy(() => import("@/layouts/DashboardLayout"))
 const Home = lazy(() => import("@/pages/Home"))
 const Login = lazy(() => import("@/auth/pages/Login"))
 const Signup = lazy(() => import("@/auth/pages/Signup"))
-const NotFound = lazy(() => import("@/components/common/NotFound"))
+const NotFound = lazy(() => import("@/components/common/NoRouteMatch"))
 const Settings = lazy(() => import("@/dashboard/pages/Settings"))
 
 // Lazy load course-related pages

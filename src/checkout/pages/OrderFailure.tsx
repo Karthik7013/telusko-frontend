@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { XCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
-const OrderFailurePage = () => {
+const OrderFailure = () => {
   const navigate = useNavigate()
 
   return (
@@ -24,4 +24,4 @@ const OrderFailurePage = () => {
   )
 }
 
-export default OrderFailurePage
+export default OrderFailure

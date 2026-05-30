@@ -1,7 +1,7 @@
 import { SignupForm } from '@/auth/components/SignupForm'
 import { GraduationCap } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { GoogleButton } from '@/auth/components/google-button'
+import { GoogleButton } from '@/auth/components/GoogleButton'
 import LearningPana from "@/assets/Learning-pana.svg";
 
 export default function Signup() {

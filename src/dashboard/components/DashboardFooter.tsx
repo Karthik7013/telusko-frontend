@@ -15,3 +15,5 @@ export function DashboardFooter() {
         </footer>
     );
 }
+
+export default DashboardFooter

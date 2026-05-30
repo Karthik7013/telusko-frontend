@@ -40,3 +40,5 @@ export function FinalCTA() {
         </section>
     );
 }
+
+export default FinalCTA

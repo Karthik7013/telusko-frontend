@@ -24,7 +24,7 @@ import { addToCart } from '@/features/cart/cartSlice'
 import { useAppDispatch } from '@/hooks/useRedux'
 import { ApiError, NotFoundError } from '@/components/common/ApiError'
 
-export default function CourseDetailPage() {
+export default function CourseDetail() {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const { courseSlug } = useParams<{ courseSlug: string }>();

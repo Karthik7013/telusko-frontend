@@ -14,7 +14,7 @@ import type { Coupon } from '@/features/coupons/couponsApi'
 import { ApiError } from '@/components/common/ApiError';
 import { Skeleton } from '@/components/ui/skeleton';
 
-const CheckoutPage = () => {
+const Checkout = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const [searchParams] = useSearchParams()
@@ -175,4 +175,4 @@ function CheckoutSkeleton() {
   )
 }
 
-export default CheckoutPage
+export default Checkout

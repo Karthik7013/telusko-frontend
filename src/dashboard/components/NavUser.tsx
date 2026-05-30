@@ -45,7 +45,7 @@ export function NavUser() {
                 </SidebarMenuItem>
             </SidebarMenu>
         )
-    }
+}
 
     if (!user?.data) return null
 
@@ -117,3 +117,5 @@ export function NavUser() {
         </SidebarMenu>
     )
 }
+
+export default NavUser

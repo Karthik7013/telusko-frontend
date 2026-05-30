@@ -19,7 +19,7 @@ import UserProfile from "@/dashboard/components/UserProfile";
 import { MobileMenu } from "@/components/features/MobileMenu";
 import { NavbarItem } from "@/components/features/NavbarItem";
 import { useState } from "react";
-import { useIsMobile } from "@/hooks/useMobile";
+import { useIsMobile } from "@/hooks/useIsMobile";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 

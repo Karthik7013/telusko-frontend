@@ -11,7 +11,7 @@ const statusConfig: Record<string, { label: string; icon: typeof BookOpen; varia
     completed: { label: "Completed", icon: CheckCircle2, variant: "outline" },
 };
 
-export default function MyLearningsPage() {
+export default function MyLearnings() {
     const { data, isLoading, error } = useGetMyEnrollmentsQuery();
 
     return (

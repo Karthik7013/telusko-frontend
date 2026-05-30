@@ -5,7 +5,7 @@ import CartItemCard from '@/checkout/components/CartItemCard'
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux'
 import { removeFromCart } from '@/features/cart/cartSlice'
 
-const CartPage = () => {
+const Cart = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const items = useAppSelector(state => state.cart.items)
@@ -55,4 +55,4 @@ const CartPage = () => {
   )
 }
 
-export default CartPage
+export default Cart

@@ -1,20 +1,8 @@
 import { LoginForm } from '@/auth/components/LoginForm'
 import { GraduationCap } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { siGoogle } from "simple-icons";
-import { SimpleIcon } from "@/components/common/simple-icon";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { GoogleButton } from '@/auth/components/GoogleButton'
 import LearningPana from "@/assets/Learning-pana.svg";
-
-export function GoogleButton({ className, ...props }: React.ComponentProps<typeof Button>) {
-    return (
-        <Button variant="secondary" className={cn(className)} {...props}>
-            <SimpleIcon icon={siGoogle} className="size-4" />
-            Continue with Google
-        </Button>
-    );
-}
 
 
 

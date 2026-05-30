@@ -2,7 +2,7 @@ import { useSearchParams, Link } from 'react-router-dom'
 import { CheckCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
-const OrderSuccessPage = () => {
+const OrderSuccess = () => {
   const [searchParams] = useSearchParams()
   const orderNumber = searchParams.get('orderNumber')
 
@@ -30,4 +30,4 @@ const OrderSuccessPage = () => {
   )
 }
 
-export default OrderSuccessPage
+export default OrderSuccess

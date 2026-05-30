@@ -24,7 +24,7 @@ function OnboardingGuard({ children }: { children: React.ReactNode }) {
     return <>{children}</>
 }
 
-export default function Dashboard() {
+export default function DashboardLayout() {
     return (
         <OnboardingGuard>
         <SidebarProvider className="flex bg-sidebar">
