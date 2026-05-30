@@ -10,7 +10,6 @@ import { Input } from "@/components/ui/input";
 
 export default function FooterPresenter() {
     const currentYear = new Date().getFullYear();
-
     return (
         <footer className="bg-background">
             <div className="container mx-auto px-4">

@@ -13,28 +13,25 @@ import {
 import { Button } from "@/components/ui/button";
 
 import { NAV_CATEGORIES as courseCategories } from "@/data/courses-data";
-import { type User } from "@/features/auth/authApi";
 import { AnnouncementBanner } from "@/components/common/AnnouncementBanner";
-import CartIcon from "@/components/common/CartIcon";
+// import CartIcon from "@/components/common/CartIcon";
 import UserProfile from "@/dashboard/components/UserProfile";
 import { MobileMenu } from "@/components/features/MobileMenu";
 import { NavbarItem } from "@/components/features/NavbarItem";
 import { useState } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 
-export function NavbarPresenter({
-    isLogin
-}: {
-    isLogin: boolean,
-    data?: User | undefined
-}) {
+export function AppNavbar() {
+    const isMobile = useIsMobile();
+    const isLogin = !!useSelector((state: RootState) => state.auth.accessToken);
     const [openMobileMenu, setOpenMobileMenu] = useState(false)
-
     return (
         <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-md border-b">
             <AnnouncementBanner />
             <div className="container flex h-16 items-center mx-auto justify-between px-4 shrink-0">
-
                 {/* --- LEFT SECTION: LOGO & NAVIGATION --- */}
                 <div className="flex items-center gap-8">
                     <Link to="/" className="flex items-center gap-2">
@@ -43,7 +40,7 @@ export function NavbarPresenter({
                         </div>
                         <span className="text-xl font-bold tracking-tight">Telusko</span>
                     </Link>
-                    {!isLogin && <div className="hidden lg:block">
+                    <div className="hidden lg:block">
                         <NavigationMenu viewport={false}>
                             <NavigationMenuList>
                                 <NavigationMenuItem>
@@ -89,7 +86,7 @@ export function NavbarPresenter({
                                 </NavigationMenuItem>
                             </NavigationMenuList>
                         </NavigationMenu>
-                    </div>}
+                    </div>
                 </div>
 
                 {/* --- CENTER SECTION: DESKTOP SEARCH --- */}
@@ -99,7 +96,6 @@ export function NavbarPresenter({
 
                 {/* --- RIGHT SECTION: AUTH & MOBILE ICONS --- */}
                 <div className="flex items-center gap-2">
-                    <CartIcon />
                     {!isLogin && <div className="lg:hidden flex-1">
                         <Button
                             variant="ghost"
@@ -112,6 +108,7 @@ export function NavbarPresenter({
                             <span className="sr-only">Toggle Menu</span>
                         </Button>
                     </div>}
+                    {/* visible = logout lg or above hide = loggedin or below lg */}
                     {!isLogin && <div className="items-center gap-2 hidden lg:flex">
                         <Button variant="ghost" asChild>
                             <Link to="/auth/login">Log in</Link>
@@ -124,12 +121,12 @@ export function NavbarPresenter({
                 </div>
             </div>
 
-            {!isLogin &&
-                <MobileMenu open={openMobileMenu}
-                    onClose={setOpenMobileMenu}
-                />}
+
+            {isMobile && < MobileMenu open={openMobileMenu}
+                onClose={setOpenMobileMenu}
+            />}
         </header>
     );
 }
 
-export default NavbarPresenter;
+export default AppNavbar;

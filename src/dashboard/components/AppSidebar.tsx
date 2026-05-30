@@ -24,7 +24,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <NavMain items={navData} />
             </SidebarContent>
             <SidebarFooter className="group-data-[collapsible=icon]:p-4">
-                <NavUser />
+                {/* <NavUser /> */}
             </SidebarFooter>
             <SidebarRail />
         </Sidebar>

@@ -19,16 +19,16 @@ export default function AuthProvider(props: {
     });
 
     // if error show alert and dispatch logout()
-    useEffect(() => {
-        if (isError) {
-            dispatch(logOut());
-            localStorage.removeItem('auth_active');
-            toast.error('Session Expired', {
-                description: 'Please log in again.',
-                icon: <AlertCircle />
-            });
-        }
-    }, [isError, dispatch]);
+    // useEffect(() => {
+    //     if (isError) {
+    //         dispatch(logOut());
+    //         localStorage.removeItem('auth_active');
+    //         toast.error('Session Expired', {
+    //             description: 'Please log in again.',
+    //             icon: <AlertCircle />
+    //         });
+    //     }
+    // }, [isError, dispatch]);
 
     if (isLoading) {
         return <PageLoader />

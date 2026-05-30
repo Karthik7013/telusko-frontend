@@ -1,6 +1,6 @@
 import { FinalCTAPresenter } from "@/components/features/CtaPresenter"
 import FaqPresenter from "@/components/features/FaqPresenter"
-import HeroContainer from "@/components/features/HeroContainer"
+import Hero from "@/components/features/HeroContainer"
 import LearningPathPresenter, { TrustBar } from "@/components/features/LearningPathPresenter"
 import { ScrollReveal } from "@/components/common/ScrollReview"
 import TestimonialsPresenter from "@/components/features/Testimonial"
@@ -8,7 +8,7 @@ import TestimonialsPresenter from "@/components/features/Testimonial"
 const Home = () => {
     return (
         <div>
-            <HeroContainer />
+            <Hero />
             <ScrollReveal>
                 <LearningPathPresenter />
             </ScrollReveal>

@@ -2,8 +2,10 @@ import { lazy, Suspense } from "react"
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom"
 
 // Auth guard components
-import { ProtectedComponent } from "@/auth/components/ProtectedComponent"
+import { ProtectedRoute } from "@/auth/components/ProtectedRoutes"
 import PageLoader from "@/components/common/Loader"
+import { useSelector } from "react-redux"
+import { RootState } from "@/store/store"
 
 // Lazy load layouts
 const MainLayout = lazy(() => import("@/layouts/MainLayout"))
@@ -34,7 +36,12 @@ const CoursePlayer = lazy(() => import("@/dashboard/pages/CoursePlayer"))
 // Onboarding
 const OnboardingPage = lazy(() => import("@/onboarding/pages/OnboardingPage"))
 
+const ISenable = () => {
+    return <Route path="/onboarding" element={<OnboardingPage />} />
+}
+
 const AppRouter = () => {
+    const isLogin = !!useSelector((state: RootState) => state.auth.accessToken); // get access token from store
     return (
         <BrowserRouter>
             <Suspense fallback={<PageLoader />}>
@@ -51,11 +58,8 @@ const AppRouter = () => {
                         <Route path="*" element={<NotFound />} />
                     </Route>
 
-
-                    
-
                     {/* Protected Dashboard Routes */}
-                    {/* <Route element={<ProtectedComponent requiredRoles={['student']} />}>
+                    <Route element={<ProtectedRoute requiredRole={'student'} />}>
                         <Route path="dashboard" element={<DashboardLayout />}>
                             <Route index element={<AnalyticsPage />} />
                             <Route path="my-learnings" element={<MyLearningsPage />} />
@@ -63,7 +67,7 @@ const AppRouter = () => {
                             <Route path="course-player" element={<CoursePlayer />} />
                             <Route path="*" element={<NotFound />} />
                         </Route>
-                    </Route> */}
+                    </Route>
 
                     {/* Public Auth Routes */}
                     <Route path="auth" element={<Outlet />}>
@@ -73,7 +77,7 @@ const AppRouter = () => {
                     </Route>
                 </Routes>
             </Suspense>
-        </BrowserRouter>
+        </BrowserRouter >
     )
 }
 

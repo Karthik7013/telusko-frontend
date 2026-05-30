@@ -104,14 +104,14 @@ export const authApi = createApi({
                     const { data: response } = await queryFulfilled;
                     if (response.success) {
                         dispatch(logOut());
+                        authApi.util.resetApiState()
                         localStorage.removeItem('auth_active');
-                        window.location.href = '/auth/login';
                     }
                 } catch {
                     // failed to logout 
                 }
             }
-        }),
+        })
     })
 });
 

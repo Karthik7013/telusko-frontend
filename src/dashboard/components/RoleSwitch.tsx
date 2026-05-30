@@ -17,6 +17,7 @@ import {
     SidebarMenuItem,
     useSidebar,
 } from "@/components/ui/sidebar"
+import { useMeQuery } from "@/features/identity/identityApi"
 
 // Define the modes specifically for your app
 const modes = [
@@ -33,8 +34,35 @@ const modes = [
 ]
 
 export default function RoleSwitch() {
+    const { data } = useMeQuery();
     const { isMobile } = useSidebar()
-    const [activeMode, setActiveMode] = React.useState(modes[0])
+
+    const availableModes = React.useMemo(() => {
+        const userRoles = data?.data?.roles || [];
+        return modes.filter((mode) => {
+            if (mode.name === "Learning Mode") {
+                return userRoles.some((r: any) => r.role === "student" && r.status === "active");
+            }
+            if (mode.name === "Instructor Mode") {
+                return userRoles.some((r: any) => r.role === "instructor" && r.status === "active");
+            }
+            return false;
+        });
+    }, [data]);
+
+    const [activeMode, setActiveMode] = React.useState(modes[0]);
+
+    // Synchronize activeMode with the user's available roles
+    React.useEffect(() => {
+        if (availableModes.length > 0) {
+            const isValid = availableModes.some((m) => m.name === activeMode.name);
+            if (!isValid) {
+                setActiveMode(availableModes[0]);
+            }
+        }
+    }, [availableModes, activeMode.name]);
+
+    if (availableModes.length === 0) return null;
 
     return (
         <SidebarMenu>
@@ -50,7 +78,9 @@ export default function RoleSwitch() {
                             </div>
                             <div className="grid flex-1 text-left text-sm leading-tight">
                                 <span className="truncate font-semibold">{activeMode.name}</span>
-                                <span className="truncate text-xs text-muted-foreground">Switch Perspective</span>
+                                <span className="truncate text-xs text-muted-foreground">
+                                    {availableModes.length > 1 ? "Switch Perspective" : "Current View"}
+                                </span>
                             </div>
                             <ChevronsUpDown className="ml-auto size-4 opacity-50" />
                         </SidebarMenuButton>
@@ -64,7 +94,7 @@ export default function RoleSwitch() {
                         <DropdownMenuLabel className="text-muted-foreground text-xs px-2 py-1.5">
                             Account View
                         </DropdownMenuLabel>
-                        {modes.map((mode) => (
+                        {availableModes.map((mode) => (
                             <DropdownMenuItem
                                 key={mode.name}
                                 onClick={() => setActiveMode(mode)}

@@ -1,4 +1,4 @@
-import HeroPresenter from '@/components/features/HeroPresenter'
+import HeroPresenter from '@/components/features/Hero'
 
 const HeroContainer = () => {
     return (

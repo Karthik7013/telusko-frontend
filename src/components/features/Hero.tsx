@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/carousel";
 import { ScrollingSearch } from "@/components/features/ScrollingSearch";
 
-export default function HeroPresenter() {
+export default function Hero() {
     return (
         <section className="min-h-screen flex items-center py-16 lg:py-28">
             <div className="container mx-auto px-4">
