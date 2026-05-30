@@ -61,7 +61,7 @@ export function SignupForm() {
             }).unwrap();
 
             toast.success("Account created successfully!")
-            navigate('/');
+            navigate('/dashboard');
         } catch (error: any) {
             toast.error("Signup failed", {
                 description: error.data?.message || "Something went wrong during registration.",

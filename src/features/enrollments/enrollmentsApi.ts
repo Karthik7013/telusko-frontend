@@ -25,15 +25,21 @@ export interface Enrollment {
 export const enrollmentsApi = createApi({
   reducerPath: 'enrollmentsApi',
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  tagTypes: ['Enrollments'],
   endpoints: (builder) => ({
+    getMyEnrollments: builder.query<ApiResponse<Enrollment[]>, void>({
+      query: () => '/enrollments',
+      providesTags: ['Enrollments'],
+    }),
     createEnrollment: builder.mutation<ApiResponse<Enrollment>, CreateEnrollmentRequest>({
       query: (body) => ({
         url: '/enrollments',
         method: 'POST',
         body,
       }),
+      invalidatesTags: ['Enrollments'],
     }),
   }),
 })
 
-export const { useCreateEnrollmentMutation } = enrollmentsApi
+export const { useGetMyEnrollmentsQuery, useCreateEnrollmentMutation } = enrollmentsApi

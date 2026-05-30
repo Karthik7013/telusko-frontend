@@ -1,7 +1,13 @@
 import { NavItem } from "@/dashboard/components/NavMain";
-import { LayoutDashboard, BookOpen, Heart, ReceiptText, Settings } from "lucide-react";
+import { LayoutDashboard, BookOpen, Heart, ReceiptText, Settings, Search } from "lucide-react";
 
 export const DASHBOARD_NAV: NavItem[] = [
+    {
+        title: "Browse Courses",
+        url: "/search",
+        icon: Search,
+        visible: ["student"]
+    },
     {
         title: "Dashboard",
         url: "/dashboard",

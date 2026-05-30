@@ -48,7 +48,7 @@ export function LoginForm({
                     description: "You have successfully logged in."
                 })
 
-                navigate('/');
+                navigate('/dashboard');
             } else {
                 toast.error("Login Failed", {
                     description: "Authentication tokens were not provided.",
