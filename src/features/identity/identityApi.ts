@@ -20,10 +20,18 @@ export const identityApi = createApi({
     endpoints: (builder) => ({
         me: builder.query<ApiResponse<UserProfile>, void>({
             query: () => '/identity/me'
-        })
+        }),
+        changePassword: builder.mutation<ApiResponse<{ message: string }>, { currentPassword: string; newPassword: string }>({
+            query: (body) => ({
+                url: '/identity/change-password',
+                method: 'POST',
+                body,
+            }),
+        }),
     }),
 });
 
 export const {
-    useMeQuery
+    useMeQuery,
+    useChangePasswordMutation
 } = identityApi;

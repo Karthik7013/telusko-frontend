@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -16,10 +17,12 @@ import {
     TabsList,
     TabsTrigger,
 } from "@/components/ui/tabs";
-import { useMeQuery } from "@/features/identity/identityApi";
+import { useMeQuery, useChangePasswordMutation } from "@/features/identity/identityApi";
 import { SwitchTheme } from "@/components/common/ToggleTheme";
 import { ApiError } from "@/components/common/ApiError";
 import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 const ProfileSettings = () => {
     const { data: user, isLoading, error, refetch } = useMeQuery(undefined);
@@ -134,6 +137,68 @@ const AppearanceSettings = () => {
     )
 }
 
+const PasswordSettings = () => {
+    const [currentPassword, setCurrentPassword] = useState("");
+    const [newPassword, setNewPassword] = useState("");
+    const [changePassword, { isLoading: isPending }] = useChangePasswordMutation();
+
+    const handleSubmit = async () => {
+        if (!currentPassword || !newPassword) {
+            toast.error("Both fields are required");
+            return;
+        }
+        if (newPassword.length < 8) {
+            toast.error("New password must be at least 8 characters");
+            return;
+        }
+        try {
+            await changePassword({ currentPassword, newPassword }).unwrap();
+            toast.success("Password changed successfully");
+            setCurrentPassword("");
+            setNewPassword("");
+        } catch (error: any) {
+            toast.error(error.data?.message || "Failed to change password");
+        }
+    };
+
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle>Password</CardTitle>
+                <CardDescription>
+                    Change your password here. After saving, you'll be logged out.
+                </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-2">
+                <div className="space-y-1">
+                    <Label htmlFor="current">Current password</Label>
+                    <Input
+                        id="current"
+                        type="password"
+                        value={currentPassword}
+                        onChange={(e) => setCurrentPassword(e.target.value)}
+                    />
+                </div>
+                <div className="space-y-1">
+                    <Label htmlFor="new">New password</Label>
+                    <Input
+                        id="new"
+                        type="password"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                    />
+                </div>
+            </CardContent>
+            <CardFooter>
+                <Button onClick={handleSubmit} disabled={isPending}>
+                    {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    {isPending ? "Updating..." : "Update Password"}
+                </Button>
+            </CardFooter>
+        </Card>
+    );
+};
+
 export default function SettingsPage() {
     return (
         <div className="space-y-6">
@@ -156,27 +221,7 @@ export default function SettingsPage() {
                     <AppearanceSettings />
                 </TabsContent>
                 <TabsContent value="password">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Password</CardTitle>
-                            <CardDescription>
-                                Change your password here. After saving, you'll be logged out.
-                            </CardDescription>
-                        </CardHeader>
-                        <CardContent className="space-y-2">
-                            <div className="space-y-1">
-                                <Label htmlFor="current">Current password</Label>
-                                <Input id="current" type="password" />
-                            </div>
-                            <div className="space-y-1">
-                                <Label htmlFor="new">New password</Label>
-                                <Input id="new" type="password" />
-                            </div>
-                        </CardContent>
-                        <CardFooter>
-                            <Button>Update Password</Button>
-                        </CardFooter>
-                    </Card>
+                    <PasswordSettings />
                 </TabsContent>
             </Tabs>
         </div>
