@@ -1,7 +1,7 @@
-import { FinalCTA } from "@/components/features/CtaPresenter"
-import Faq from "@/components/features/FaqPresenter"
+import { FinalCTA } from "@/components/features/FinalCTA"
+import Faq from "@/components/features/Faq"
 import Hero from "@/components/features/Hero"
-import LearningPath, { TrustBar } from "@/components/features/LearningPathPresenter"
+import LearningPath, { TrustBar } from "@/components/features/LearningPath"
 import { ScrollReveal } from "@/components/common/ScrollReview"
 import Testimonials from "@/components/features/Testimonial"
 
