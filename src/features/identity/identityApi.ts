@@ -17,9 +17,11 @@ export type UserProfile = {
 export const identityApi = createApi({
     reducerPath: 'identityApi',
     baseQuery: baseQueryWithReauth,
+    tagTypes: ['UserProfile'],
     endpoints: (builder) => ({
         me: builder.query<ApiResponse<UserProfile>, void>({
-            query: () => '/identity/me'
+            query: () => '/identity/me',
+            providesTags: ['UserProfile'],
         }),
         changePassword: builder.mutation<ApiResponse<{ message: string }>, { currentPassword: string; newPassword: string }>({
             query: (body) => ({
@@ -28,10 +30,19 @@ export const identityApi = createApi({
                 body,
             }),
         }),
+        updateProfile: builder.mutation<ApiResponse<UserProfile>, { displayName?: string; avatarUrl?: string }>({
+            query: (body) => ({
+                url: '/identity/me',
+                method: 'PATCH',
+                body,
+            }),
+            invalidatesTags: ['UserProfile'],
+        }),
     }),
 });
 
 export const {
     useMeQuery,
-    useChangePasswordMutation
+    useChangePasswordMutation,
+    useUpdateProfileMutation,
 } = identityApi;

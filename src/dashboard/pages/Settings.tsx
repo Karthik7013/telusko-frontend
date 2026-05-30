@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -17,7 +17,7 @@ import {
     TabsList,
     TabsTrigger,
 } from "@/components/ui/tabs";
-import { useMeQuery, useChangePasswordMutation } from "@/features/identity/identityApi";
+import { useMeQuery, useChangePasswordMutation, useUpdateProfileMutation } from "@/features/identity/identityApi";
 import { SwitchTheme } from "@/components/common/ToggleTheme";
 import { ApiError } from "@/components/common/ApiError";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -26,10 +26,29 @@ import { Loader2 } from "lucide-react";
 
 const ProfileSettings = () => {
     const { data: user, isLoading, error, refetch } = useMeQuery(undefined);
-    
+    const [updateProfile, { isLoading: isSaving }] = useUpdateProfileMutation();
+    const [displayName, setDisplayName] = useState("");
+    const [avatarUrl, setAvatarUrl] = useState("");
+
+    useEffect(() => {
+        if (user?.data) {
+            setDisplayName(user.data.displayName || "");
+            setAvatarUrl(user.data.avatarUrl || "");
+        }
+    }, [user]);
+
     if (isLoading) return <ProfileSettingsSkeleton />;
     if (error) return <ApiError error="Failed to load profile" onRetry={refetch} />;
-    
+
+    const handleSave = async () => {
+        try {
+            await updateProfile({ displayName, avatarUrl }).unwrap();
+            toast.success("Profile updated successfully");
+        } catch (error: any) {
+            toast.error(error.data?.message || "Failed to update profile");
+        }
+    };
+
     return <Card>
         <CardHeader>
             <CardTitle>Profile Information</CardTitle>
@@ -41,23 +60,33 @@ const ProfileSettings = () => {
             <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
                 <div className="relative h-24 w-24 rounded-full overflow-hidden border-2 border-muted">
                     <img
-                        src={user?.data?.avatarUrl}
+                        src={avatarUrl}
                         alt="Profile"
                         className="h-full w-full object-cover"
                     />
                 </div>
                 <div className="space-y-2 flex-1">
-                    <Label htmlFor="picture">Profile Picture</Label>
-                    <Input id="picture" type="file" accept="image/*" className="cursor-pointer" />
+                    <Label htmlFor="avatarUrl">Profile Picture URL</Label>
+                    <Input
+                        id="avatarUrl"
+                        placeholder="https://example.com/avatar.jpg"
+                        value={avatarUrl}
+                        onChange={(e) => setAvatarUrl(e.target.value)}
+                    />
                     <p className="text-[0.8rem] text-muted-foreground">
-                        Recommended: Square JPG, PNG, or GIF, at least 1000x1000 pixels.
+                        Paste a URL to your profile image.
                     </p>
                 </div>
             </div>
             <div className="grid gap-4 md:grid-cols-2">
                 <div className="space-y-2">
                     <Label htmlFor="full-name">Full Name</Label>
-                    <Input id="full-name" defaultValue={user?.data?.displayName} placeholder="Your full name" />
+                    <Input
+                        id="full-name"
+                        placeholder="Your full name"
+                        value={displayName}
+                        onChange={(e) => setDisplayName(e.target.value)}
+                    />
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="email">Email</Label>
@@ -78,7 +107,10 @@ const ProfileSettings = () => {
             </div>
         </CardContent>
         <CardFooter>
-            <Button>Save Changes</Button>
+            <Button onClick={handleSave} disabled={isSaving}>
+                {isSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                {isSaving ? "Saving..." : "Save Changes"}
+            </Button>
         </CardFooter>
     </Card>
 };
