@@ -1,6 +1,6 @@
 import * as React from "react"
 import NavMain from "@/dashboard/components/NavMain"
-// import { NavUser } from "@/dashboard/components/NavUser"
+import { NavUser } from "@/dashboard/components/NavUser"
 import RoleSwitcher from "@/dashboard/components/RoleSwitch"
 import {
     Sidebar,
@@ -10,7 +10,6 @@ import {
     SidebarRail,
 } from "@/components/ui/sidebar"
 import { DASHBOARD_NAV as navData } from "@/data/navigation-data"
-
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     return (
@@ -24,7 +23,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <NavMain items={navData} />
             </SidebarContent>
             <SidebarFooter className="group-data-[collapsible=icon]:p-4">
-                {/* <NavUser /> */}
+                <NavUser />
             </SidebarFooter>
             <SidebarRail />
         </Sidebar>
