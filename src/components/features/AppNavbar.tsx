@@ -96,7 +96,7 @@ export function AppNavbar() {
 
                 {/* --- RIGHT SECTION: AUTH & MOBILE ICONS --- */}
                 <div className="flex items-center gap-2">
-                    {!isLogin && <div className="lg:hidden flex-1">
+                    <div className="lg:hidden">
                         <Button
                             variant="ghost"
                             size="icon"
@@ -107,7 +107,7 @@ export function AppNavbar() {
                             <X className={`absolute h-5 w-5 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ${openMobileMenu ? "scale-100 rotate-0 opacity-100" : "scale-0 -rotate-90 opacity-0"}`} />
                             <span className="sr-only">Toggle Menu</span>
                         </Button>
-                    </div>}
+                    </div>
                     {/* visible = logout lg or above hide = loggedin or below lg */}
                     {!isLogin && <div className="items-center gap-2 hidden lg:flex">
                         <Button variant="ghost" asChild>

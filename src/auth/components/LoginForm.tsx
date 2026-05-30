@@ -1,6 +1,5 @@
 import * as React from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { useDispatch } from "react-redux"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -16,7 +15,6 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { useLoginMutation } from "@/features/auth/authApi"
-import { setCredentials } from "@/features/auth/authSlice"
 
 // 1. Login Validation Schema
 const loginSchema = z.object({
@@ -37,7 +35,6 @@ export function LoginForm({
     })
     const [login, { isLoading }] = useLoginMutation();
     const navigate = useNavigate();
-    const dispatch = useDispatch();
     const { register, handleSubmit, formState: { errors, isSubmitting } } = form
 
     const isLoggingIn = isSubmitting || isLoading;
@@ -51,9 +48,6 @@ export function LoginForm({
                     description: "You have successfully logged in."
                 })
 
-                dispatch(setCredentials({
-                    accessToken: res.data.accessToken
-                }));
                 navigate('/');
             } else {
                 toast.error("Login Failed", {

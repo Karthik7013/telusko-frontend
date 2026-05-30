@@ -77,7 +77,7 @@ export const authApi = createApi({
                 }
             }
         }),
-        refreshToken: builder.query<ApiResponse<RefreshResponse>, void>({
+        refreshToken: builder.mutation<ApiResponse<RefreshResponse>, void>({
             query: () => ({
                 url: '/auth/refresh',
                 method: 'POST',
@@ -101,14 +101,13 @@ export const authApi = createApi({
             }),
             async onQueryStarted(_, { queryFulfilled, dispatch }) {
                 try {
-                    const { data: response } = await queryFulfilled;
-                    if (response.success) {
-                        dispatch(logOut());
-                        authApi.util.resetApiState()
-                        localStorage.removeItem('auth_active');
-                    }
+                    await queryFulfilled;
                 } catch {
-                    // failed to logout 
+                    // Logout API failed — still clear local state
+                } finally {
+                    dispatch(logOut());
+                    authApi.util.resetApiState();
+                    localStorage.removeItem('auth_active');
                 }
             }
         })
@@ -118,7 +117,7 @@ export const authApi = createApi({
 export const {
     useLoginMutation,
     useSignUpMutation,
-    useRefreshTokenQuery,
+    useRefreshTokenMutation,
     useLogoutMutation
 } = authApi;
 
