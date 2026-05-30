@@ -12,7 +12,7 @@ const MainLayout = lazy(() => import("@/layouts/MainLayout"))
 const DashboardLayout = lazy(() => import("@/layouts/DashboardLayout"))
 
 // Lazy load pages
-const Home = lazy(() => import("@/pages/Home"))
+const Home = lazy(() => import("@/landing/pages/Home"))
 const Login = lazy(() => import("@/auth/pages/Login"))
 const Signup = lazy(() => import("@/auth/pages/Signup"))
 const NotFound = lazy(() => import("@/components/common/NoRouteMatch"))
