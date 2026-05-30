@@ -35,6 +35,13 @@ export default defineConfig({
             ) {
               return "vendor-router"
             }
+            if (
+              id.includes("node_modules/react-dom/") ||
+              id.includes("node_modules/react/") ||
+              id.includes("node_modules/scheduler/")
+            ) {
+              return "vendor-react"
+            }
             return "vendor"
           }
         },
