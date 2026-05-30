@@ -3,7 +3,7 @@ import { Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
-export function FinalCTAPresenter() {
+export function FinalCTA() {
     return (
         <section id="cta">
             <div className="container mx-auto px-4">

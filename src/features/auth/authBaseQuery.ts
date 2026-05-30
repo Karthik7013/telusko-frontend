@@ -2,12 +2,11 @@ import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 import { RootState } from '@/store/store';
 import { setCredentials, logOut } from './authSlice';
+import { BASE_URL } from '@/lib/constants';
 
 export interface RefreshResponse {
     accessToken: string;
 }
-
-export const BASE_URL = 'http://localhost:3000';
 
 const rawBaseQuery = fetchBaseQuery({
     baseUrl: BASE_URL,

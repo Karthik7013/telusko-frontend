@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { ShoppingCart } from 'lucide-react'
-import { useAppSelector } from '@/hooks/use-redux'
+import { useAppSelector } from '@/hooks/useRedux'
 import { Button } from '@/components/ui/button'
 
 const CartIcon = () => {

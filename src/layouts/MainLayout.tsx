@@ -1,4 +1,4 @@
-import FooterPresenter from '@/components/common/Footer'
+import Footer from '@/components/common/Footer'
 import { AppNavbar } from '@/components/features/AppNavbar'
 import CookieBanner from '@/components/common/CookieBanner'
 import { Outlet } from 'react-router-dom'
@@ -9,7 +9,7 @@ const MainLayout = () => {
             <AppNavbar />
             <CookieBanner />
             <Outlet />
-            <FooterPresenter />
+            <Footer />
         </div>
     )
 }

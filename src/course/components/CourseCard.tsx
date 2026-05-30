@@ -24,7 +24,7 @@ export default function CourseCard({
                     <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent" />
 
                     <div className="absolute top-3 left-3">
-                        {!course.isBestseller && <Badge className="bg-primary text-white backdrop-blur-md border border-white/10 shadow-none font-medium text-xs gap-1 px-2.5 py-1 rounded-full">
+                        {course.isBestseller && <Badge className="bg-primary text-white backdrop-blur-md border border-white/10 shadow-none font-medium text-xs gap-1 px-2.5 py-1 rounded-full">
                             <BadgeCheck className="size-3" />
                             Bestseller
                         </Badge>}
@@ -57,7 +57,7 @@ export default function CourseCard({
                             {[0, 1, 2, 3, 4].map((i) => (
                                 <Star
                                     key={i}
-                                    className={`h-3.5 w-3.5 ${i < Math.round(5)
+                                    className={`h-3.5 w-3.5 ${i < Math.round(course.rating)
                                         ? "fill-[#e59819] text-[#e59819] dark:fill-amber-400 dark:text-amber-400"
                                         : "fill-muted text-muted"
                                         }`}

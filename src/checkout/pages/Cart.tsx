@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { ShoppingCart, ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import CartItemCard from '@/checkout/components/CartItemCard'
-import { useAppDispatch, useAppSelector } from '@/hooks/use-redux'
+import { useAppDispatch, useAppSelector } from '@/hooks/useRedux'
 import { removeFromCart } from '@/features/cart/cartSlice'
 
 const CartPage = () => {

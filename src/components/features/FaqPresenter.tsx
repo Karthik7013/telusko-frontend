@@ -30,7 +30,7 @@ const faqs = [
     }
 ];
 
-export default function FAQPresenter() {
+export default function Faq() {
 
     return (
         <section id="faq" className="py-20 lg:py-32">

@@ -21,13 +21,14 @@ import { VideoPlayer } from "@/components/ui/video-player";
 import DescriptionCollapse from '@/components/common/DescriptionCollapse';
 import { toast } from 'sonner'
 import { addToCart } from '@/features/cart/cartSlice'
-import { useAppDispatch } from '@/hooks/use-redux'
+import { useAppDispatch } from '@/hooks/useRedux'
+import { ApiError, NotFoundError } from '@/components/common/ApiError'
 
 export default function CourseDetailPage() {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const { courseSlug } = useParams<{ courseSlug: string }>();
-    const { data: course, isLoading, error } = useGetCourseBySlugQuery(courseSlug || '', { skip: !courseSlug });
+    const { data: course, isLoading, error, refetch } = useGetCourseBySlugQuery(courseSlug || '', { skip: !courseSlug });
 
     // Guard: if courseSlug is undefined, show error
     if (!courseSlug) {
@@ -47,18 +48,8 @@ export default function CourseDetailPage() {
         return <CourseDetailSkeleton />;
     }
 
-    if (error || !course) {
-        return (
-            <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
-                <AlertCircle className="size-16 text-destructive mb-4" />
-                <h2 className="text-2xl font-bold mb-2">Course not found</h2>
-                <p className="text-muted-foreground mb-6">The course you are looking for doesn't exist or has been removed.</p>
-                <Button asChild>
-                    <a href="/search">Browse all courses</a>
-                </Button>
-            </div>
-        );
-    }
+    if (error) return <ApiError error="Failed to load course" onRetry={refetch} />;
+    if (!course?.data) return <NotFoundError />;
 
     return (
         <div>

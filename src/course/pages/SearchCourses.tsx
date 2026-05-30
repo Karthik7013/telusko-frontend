@@ -47,7 +47,7 @@ export default function SearchCoursesPage() {
         return () => clearTimeout(handler);
     }, [searchQuery, setSearchParams]);
 
-    const { data: courses, isLoading: isFetching, error: fetchError } = useGetCoursesQuery({
+    const { data: courses, isLoading, error, refetch } = useGetCoursesQuery({
         search: queryParam,
         category: selectedCategories.length > 0 ? selectedCategories[0] : undefined,
         level: selectedLevels.length > 0 ? selectedLevels[0].toLowerCase() : undefined,
@@ -196,7 +196,7 @@ export default function SearchCoursesPage() {
                             {queryParam ? `Search results for "${queryParam}"` : "Explore Courses"}
                         </h1>
                         <p className="text-muted-foreground">
-                            {isFetching ? "Finding courses..." : `${courses?.data?.courses?.length || 0} courses found`}
+                            {isLoading ? "Finding courses..." : `${courses?.data?.courses?.length || 0} courses found`}
                         </p>
                     </div>
 
@@ -245,16 +245,17 @@ export default function SearchCoursesPage() {
 
                     {/* --- COURSE GRID --- */}
                     <main className="flex-1">
-                        {isFetching ? (
+                        {isLoading ? (
                             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
                                 {Array.from({ length: 6 }).map((_, i) => (
                                     <CourseCardSkeleton key={i} />
                                 ))}
                             </div>
-                        ) : fetchError ? (
+                        ) : error ? (
                             <div className="max-w-2xl mx-auto">
                                 <ApiError
                                     error="Failed to load courses. Please try again."
+                                    onRetry={refetch}
                                 />
                             </div>
                         ) : courses?.data?.courses && courses?.data?.courses?.length > 0 ? (

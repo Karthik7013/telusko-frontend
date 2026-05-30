@@ -37,7 +37,7 @@ const steps = [
     },
 ];
 
-export default function LearningPathPresenter() {
+export default function LearningPath() {
     return (
         <section className="py-20 bg-background overflow-hidden">
             <div className="container mx-auto px-4">

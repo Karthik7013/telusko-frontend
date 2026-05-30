@@ -18,11 +18,15 @@ import {
 } from "@/components/ui/tabs";
 import { useMeQuery } from "@/features/identity/identityApi";
 import { SwitchTheme } from "@/components/common/ToggleTheme";
-
-
+import { ApiError } from "@/components/common/ApiError";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const ProfileSettings = () => {
-    const { data: user } = useMeQuery(undefined);
+    const { data: user, isLoading, error, refetch } = useMeQuery(undefined);
+    
+    if (isLoading) return <ProfileSettingsSkeleton />;
+    if (error) return <ApiError error="Failed to load profile" onRetry={refetch} />;
+    
     return <Card>
         <CardHeader>
             <CardTitle>Profile Information</CardTitle>
@@ -74,6 +78,43 @@ const ProfileSettings = () => {
             <Button>Save Changes</Button>
         </CardFooter>
     </Card>
+};
+
+function ProfileSettingsSkeleton() {
+    return (
+        <Card>
+            <CardHeader>
+                <Skeleton className="h-6 w-48" />
+                <Skeleton className="h-4 w-72" />
+            </CardHeader>
+            <CardContent className="space-y-6">
+                <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
+                    <Skeleton className="h-24 w-24 rounded-full" />
+                    <div className="space-y-2 flex-1">
+                        <Skeleton className="h-4 w-32" />
+                        <Skeleton className="h-10 w-full" />
+                    </div>
+                </div>
+                <div className="grid gap-4 md:grid-cols-2">
+                    <div className="space-y-2">
+                        <Skeleton className="h-4 w-20" />
+                        <Skeleton className="h-10 w-full" />
+                    </div>
+                    <div className="space-y-2">
+                        <Skeleton className="h-4 w-16" />
+                        <Skeleton className="h-10 w-full" />
+                    </div>
+                </div>
+                <div className="space-y-2">
+                    <Skeleton className="h-4 w-12" />
+                    <Skeleton className="h-25 w-full" />
+                </div>
+            </CardContent>
+            <CardFooter>
+                <Skeleton className="h-10 w-32" />
+            </CardFooter>
+        </Card>
+    );
 }
 
 const AppearanceSettings = () => {

@@ -2,12 +2,13 @@ import { useGetCoursesQuery } from "@/features/courses/coursesApi"
 import { useGetPreferencesQuery } from "@/features/preferences/preferencesApi"
 import CourseCard from "@/course/components/CourseCard"
 import type { CourseCardProps } from "@/types"
+import { ApiError } from "@/components/common/ApiError"
 
 export function RecommendedCourses() {
-  const { data: coursesData, isLoading: coursesLoading } = useGetCoursesQuery(undefined as any)
-  const { data: prefsData } = useGetPreferencesQuery()
+  const { data: coursesData, isLoading: coursesLoading, error: coursesError, refetch: refetchCourses } = useGetCoursesQuery(undefined as any)
+  const { data: prefsData, isLoading: prefsLoading } = useGetPreferencesQuery()
 
-  if (coursesLoading) {
+  if (coursesLoading || prefsLoading) {
     return (
       <div className="space-y-4">
         <h2 className="text-xl font-bold tracking-tight">Recommended for you</h2>
@@ -19,6 +20,8 @@ export function RecommendedCourses() {
       </div>
     )
   }
+
+  if (coursesError) return <ApiError error="Failed to load recommendations" onRetry={refetchCourses} />;
 
   if (!coursesData?.data?.courses) return null
 

@@ -37,7 +37,7 @@ const testimonials = [
     }
 ];
 
-export default function TestimonialsPresenter() {
+export default function Testimonials() {
     return (
         <section id="testimonials" className="py-20 lg:py-32">
             <div className="container mx-auto px-4">

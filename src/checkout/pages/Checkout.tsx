@@ -6,11 +6,13 @@ import { Button } from '@/components/ui/button'
 import OrderSummaryCard from '@/checkout/components/OrderSummaryCard'
 import CouponInput from '@/checkout/components/CouponInput'
 import PriceBreakdown from '@/checkout/components/PriceBreakdown'
-import { useAppDispatch, useAppSelector } from '@/hooks/use-redux'
+import { useAppDispatch, useAppSelector } from '@/hooks/useRedux'
 import { clearCart } from '@/features/cart/cartSlice'
 import { useCreateOrderMutation } from '@/features/orders/ordersApi'
 import { useGetCourseBySlugQuery } from '@/features/courses/coursesApi'
 import type { Coupon } from '@/features/coupons/couponsApi'
+import { ApiError } from '@/components/common/ApiError';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const CheckoutPage = () => {
   const navigate = useNavigate()
@@ -23,7 +25,7 @@ const CheckoutPage = () => {
   const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(null)
 
   // If "Buy now" from course detail, fetch that single course
-  const { data: directCourse } = useGetCourseBySlugQuery(courseSlug || '', { skip: !courseSlug })
+  const { data: directCourse, isLoading: isCourseLoading, error: courseError, refetch } = useGetCourseBySlugQuery(courseSlug || '', { skip: !courseSlug })
 
   const items = useMemo(() => {
     if (courseSlug && directCourse?.data) {
@@ -90,6 +92,9 @@ const CheckoutPage = () => {
     )
   }
 
+  if (courseSlug && isCourseLoading) return <CheckoutSkeleton />;
+  if (courseSlug && courseError) return <ApiError error="Failed to load course details" onRetry={refetch} />;
+
   return (
     <div className="container mx-auto px-4 py-8 max-w-5xl">
       <Button variant="ghost" className="mb-4 -ml-2" onClick={() => navigate(-1)}>
@@ -147,6 +152,23 @@ const CheckoutPage = () => {
               Your payment is processed securely. Your card details are handled by the payment provider.
             </p>
           </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function CheckoutSkeleton() {
+  return (
+    <div className="container mx-auto px-4 py-8 max-w-5xl">
+      <div className="grid gap-8 lg:grid-cols-[1fr_400px]">
+        <div className="space-y-4">
+          <Skeleton className="h-8 w-48" />
+          <Skeleton className="h-32 w-full rounded-xl" />
+          <Skeleton className="h-32 w-full rounded-xl" />
+        </div>
+        <div>
+          <Skeleton className="h-64 w-full rounded-xl" />
         </div>
       </div>
     </div>

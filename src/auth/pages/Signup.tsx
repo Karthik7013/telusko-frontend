@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { GoogleButton } from '@/auth/components/google-button'
 import LearningPana from "@/assets/Learning-pana.svg";
 
-export default function SignupV2() {
+export default function Signup() {
     return (
         <main>
             <div className="grid h-dvh justify-center p-2 lg:grid-cols-2">

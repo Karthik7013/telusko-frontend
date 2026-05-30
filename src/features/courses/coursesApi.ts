@@ -2,7 +2,7 @@
 import { ApiResponse } from '@/lib/api-utils';
 import { CourseCardProps, CourseDetailProps } from '@/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-const BASE_URL = 'http://localhost:3000';
+import { BASE_URL } from '@/lib/constants';
 export const coursesApi = createApi({
   reducerPath: 'coursesApi',
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),

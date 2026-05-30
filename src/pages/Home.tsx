@@ -1,28 +1,28 @@
-import { FinalCTAPresenter } from "@/components/features/CtaPresenter"
-import FaqPresenter from "@/components/features/FaqPresenter"
-import Hero from "@/components/features/HeroContainer"
-import LearningPathPresenter, { TrustBar } from "@/components/features/LearningPathPresenter"
+import { FinalCTA } from "@/components/features/CtaPresenter"
+import Faq from "@/components/features/FaqPresenter"
+import Hero from "@/components/features/Hero"
+import LearningPath, { TrustBar } from "@/components/features/LearningPathPresenter"
 import { ScrollReveal } from "@/components/common/ScrollReview"
-import TestimonialsPresenter from "@/components/features/Testimonial"
+import Testimonials from "@/components/features/Testimonial"
 
 const Home = () => {
     return (
         <div>
             <Hero />
             <ScrollReveal>
-                <LearningPathPresenter />
+                <LearningPath />
             </ScrollReveal>
             <ScrollReveal>
                 <TrustBar />
             </ScrollReveal>
             <ScrollReveal>
-                <TestimonialsPresenter />
+                <Testimonials />
             </ScrollReveal>
             <ScrollReveal>
-                <FaqPresenter />
+                <Faq />
             </ScrollReveal>
             <ScrollReveal>
-                <FinalCTAPresenter />
+                <FinalCTA />
             </ScrollReveal>
         </div>
     )

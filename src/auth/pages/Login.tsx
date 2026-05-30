@@ -22,7 +22,7 @@ export function GoogleButton({ className, ...props }: React.ComponentProps<typeo
 
 
 
-export default function LoginV2() {
+export default function Login() {
     return (
         <main>
             <div className="grid h-dvh justify-center p-2 lg:grid-cols-2">
