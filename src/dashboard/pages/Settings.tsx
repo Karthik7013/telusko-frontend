@@ -18,6 +18,12 @@ import {
     TabsTrigger,
 } from "@/components/ui/tabs";
 import { useMeQuery, useChangePasswordMutation, useUpdateProfileMutation } from "@/features/identity/identityApi";
+import { useGetPreferencesQuery, useUpdatePreferencesMutation } from "@/features/preferences/preferencesApi";
+import type { UserPreferences } from "@/onboarding/types";
+import { StepRole } from "@/onboarding/components/StepRole";
+import { StepInterests } from "@/onboarding/components/StepInterests";
+import { StepGoals } from "@/onboarding/components/StepGoals";
+import { StepLevelTime } from "@/onboarding/components/StepLevelTime";
 import { SwitchTheme } from "@/components/common/ToggleTheme";
 import { ApiError } from "@/components/common/ApiError";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -260,6 +266,106 @@ const PasswordSettings = () => {
     );
 };
 
+function LearningPreferences() {
+    const { data, isLoading, error, refetch } = useGetPreferencesQuery();
+    const [updatePreferences, { isLoading: isSaving }] = useUpdatePreferencesMutation();
+    const [prefs, setPrefs] = useState<UserPreferences>({
+        role: null, interests: [], goal: null, experienceLevel: null, timeCommitment: null
+    });
+    const [loaded, setLoaded] = useState(false);
+
+    useEffect(() => {
+        if (data?.data && !loaded) {
+            setPrefs(data.data);
+            setLoaded(true);
+        }
+    }, [data, loaded]);
+
+    const handleSave = async () => {
+        try {
+            await updatePreferences(prefs).unwrap();
+            localStorage.removeItem("telusko-onboarding-skipped");
+            toast.success("Learning preferences saved");
+        } catch (error: any) {
+            toast.error(error.data?.message || "Failed to save preferences");
+        }
+    };
+
+    if (isLoading) return <PrefSettingsSkeleton />;
+    if (error) return <ApiError error="Failed to load preferences" onRetry={refetch} />;
+
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle>Learning Preferences</CardTitle>
+                <CardDescription>
+                    Tell us about yourself so we can recommend the right courses.
+                </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+                <div className="space-y-4">
+                    <Label>I am a...</Label>
+                    <StepRole
+                        value={prefs.role}
+                        onChange={(role) => setPrefs({ ...prefs, role })}
+                    />
+                </div>
+                <div className="space-y-4">
+                    <Label>Topics I'm interested in</Label>
+                    <StepInterests
+                        value={prefs.interests}
+                        onChange={(interests) => setPrefs({ ...prefs, interests })}
+                    />
+                </div>
+                <div className="space-y-4">
+                    <Label>My goal</Label>
+                    <StepGoals
+                        value={prefs.goal}
+                        onChange={(goal) => setPrefs({ ...prefs, goal })}
+                    />
+                </div>
+                <div className="space-y-4">
+                    <Label>Experience & Time</Label>
+                    <StepLevelTime
+                        experienceLevel={prefs.experienceLevel}
+                        timeCommitment={prefs.timeCommitment}
+                        onExperienceChange={(experienceLevel) => setPrefs({ ...prefs, experienceLevel })}
+                        onTimeChange={(timeCommitment) => setPrefs({ ...prefs, timeCommitment })}
+                    />
+                </div>
+            </CardContent>
+            <CardFooter>
+                <Button onClick={handleSave} disabled={isSaving}>
+                    {isSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    {isSaving ? "Saving..." : "Save Preferences"}
+                </Button>
+            </CardFooter>
+        </Card>
+    );
+}
+
+function PrefSettingsSkeleton() {
+    return (
+        <Card>
+            <CardHeader>
+                <Skeleton className="h-6 w-48" />
+                <Skeleton className="h-4 w-72" />
+            </CardHeader>
+            <CardContent className="space-y-6">
+                {Array.from({ length: 4 }).map((_, i) => (
+                    <div key={i} className="space-y-2">
+                        <Skeleton className="h-4 w-24" />
+                        <Skeleton className="h-20 w-full" />
+                    </div>
+                ))}
+            </CardContent>
+            <CardFooter>
+                <Skeleton className="h-10 w-32" />
+            </CardFooter>
+        </Card>
+    );
+}
+
 export default function Settings() {
     return (
         <div className="space-y-6">
@@ -271,12 +377,15 @@ export default function Settings() {
             <Tabs defaultValue="account" className="space-y-4">
                 <TabsList>
                     <TabsTrigger value="account">Account</TabsTrigger>
+                    <TabsTrigger value="preferences">Preferences</TabsTrigger>
                     <TabsTrigger value="appearance">Appearance</TabsTrigger>
                     <TabsTrigger value="password">Password</TabsTrigger>
-
                 </TabsList>
                 <TabsContent value="account" className="space-y-4">
                     <ProfileSettings />
+                </TabsContent>
+                <TabsContent value="preferences">
+                    <LearningPreferences />
                 </TabsContent>
                 <TabsContent value="appearance" className="space-y-4">
                     <AppearanceSettings />

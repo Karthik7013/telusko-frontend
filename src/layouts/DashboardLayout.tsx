@@ -17,7 +17,10 @@ function OnboardingGuard({ children }: { children: React.ReactNode }) {
 
     const isNotFound = error && 'status' in error && error.status === 404
 
-    if (!isNotFound && data?.data === null) {
+    if (isNotFound || (!isNotFound && data?.data === null)) {
+        if (localStorage.getItem("telusko-onboarding-skipped") === "true") {
+            return <>{children}</>
+        }
         return <Navigate to="/onboarding" replace />
     }
 

@@ -1,7 +1,7 @@
 import { useReducer, useCallback, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
-import { ArrowLeft, ArrowRight, Loader2 } from "lucide-react"
+import { ArrowLeft, ArrowRight, Loader2, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
 import { OnboardingStepper } from "../components/OnboardingStepper"
@@ -117,6 +117,7 @@ export default function OnboardingPage() {
       }).unwrap()
 
       clearStorage()
+      localStorage.removeItem("telusko-onboarding-skipped")
       toast.success("Preferences saved!", {
         description: "We've personalized your recommendations.",
       })
@@ -126,6 +127,12 @@ export default function OnboardingPage() {
         description: error.data?.message || "Could not save preferences. Please try again.",
       })
     }
+  }
+
+  function handleSkip() {
+    localStorage.setItem("telusko-onboarding-skipped", "true")
+    clearStorage()
+    navigate("/dashboard")
   }
 
   const progress = ((step + 1) / TOTAL_STEPS) * 100
@@ -211,23 +218,30 @@ export default function OnboardingPage() {
               Back
             </Button>
 
-            {step < TOTAL_STEPS - 1 ? (
-              <Button onClick={handleNext} disabled={!canProceed()} className="gap-2">
-                Next
-                <ArrowRight className="h-4 w-4" />
+            <div className="flex items-center gap-3">
+              <Button variant="outline" onClick={handleSkip} className="gap-2 text-muted-foreground">
+                <X className="h-4 w-4" />
+                Skip for now
               </Button>
-            ) : (
-              <Button onClick={handleFinish} disabled={!canProceed() || isSaving} className="gap-2">
-                {isSaving ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    Saving...
-                  </>
-                ) : (
-                  "Finish Setup"
-                )}
-              </Button>
-            )}
+
+              {step < TOTAL_STEPS - 1 ? (
+                <Button onClick={handleNext} disabled={!canProceed()} className="gap-2">
+                  Next
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              ) : (
+                <Button onClick={handleFinish} disabled={!canProceed() || isSaving} className="gap-2">
+                  {isSaving ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Saving...
+                    </>
+                  ) : (
+                    "Finish Setup"
+                  )}
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       </div>

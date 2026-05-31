@@ -70,8 +70,7 @@ const AppRouter = () => {
                             <Route path="course-player" element={<CoursePlayer />} />
                             <Route path="*" element={<NotFound />} />
                         </Route>
-                    </Route>
-                    <Route path="onboarding" element={<OnboardingPage />}>
+                        <Route path="onboarding" element={<OnboardingPage />} />
                     </Route>
 
 

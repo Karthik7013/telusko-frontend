@@ -1,6 +1,7 @@
 import { BookOpen, Trophy, Clock, TrendingUp } from "lucide-react";
 import ActivityLog from "@/dashboard/components/ActivityLog";
 import StatsCard from "@/dashboard/components/StatsCard";
+import PreferenceBanner from "@/dashboard/components/PreferenceBanner";
 import { RecommendedCourses } from "@/dashboard/components/RecommendedCourses";
 
 export default function Dashboard() {
@@ -45,6 +46,8 @@ export default function Dashboard() {
                 <h1 className="text-3xl font-bold tracking-tight">Dashboard Overview</h1>
                 <p className="text-muted-foreground">Welcome back! Here's what's happening with your learning journey.</p>
             </div>
+
+            <PreferenceBanner />
 
             <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-12">
                 {stats.map((stat) => (
