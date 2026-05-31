@@ -1,6 +1,6 @@
 
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseQueryWithReauth } from '../auth/authBaseQuery';
+import { baseQueryWithReauth } from '@/features/auth/authBaseQuery';
 import { ApiResponse } from '@/lib/api-utils';
 type ROLES = {
     role: 'student' | 'instructor' | 'admin',
@@ -11,7 +11,8 @@ export type UserProfile = {
     email: string,
     displayName: string,
     avatarUrl: string,
-    roles: ROLES[]
+    roles: ROLES[],
+    bio: string | null
 }
 
 export const identityApi = createApi({

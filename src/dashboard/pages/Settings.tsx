@@ -23,96 +23,125 @@ import { ApiError } from "@/components/common/ApiError";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+
+const profileSchema = z.object({
+    displayName: z.string().min(2, "Full name must be at least 2 characters"),
+    avatarUrl: z.string().url("Invalid image URL").or(z.literal("")).optional(),
+    bio: z.string().max(500, "Bio must be at most 500 characters").optional(),
+});
+
+type ProfileFormValues = z.infer<typeof profileSchema>;
 
 const ProfileSettings = () => {
-    const { data: user, isLoading, error, refetch } = useMeQuery(undefined);
+    const { data: user, isLoading, error, refetch } = useMeQuery();
     const [updateProfile, { isLoading: isSaving }] = useUpdateProfileMutation();
-    const [displayName, setDisplayName] = useState("");
-    const [avatarUrl, setAvatarUrl] = useState("");
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        watch,
+        formState: { errors },
+    } = useForm<ProfileFormValues>({
+        resolver: zodResolver(profileSchema),
+    });
+
+    const watchedAvatarUrl = watch("avatarUrl");
+
 
     useEffect(() => {
         if (user?.data) {
-            setDisplayName(user.data.displayName || "");
-            setAvatarUrl(user.data.avatarUrl || "");
+            reset({
+                displayName: user.data.displayName || "",
+                avatarUrl: user.data.avatarUrl || "",
+                bio: user.data.bio || "",
+            });
         }
-    }, [user]);
+    }, [user, reset]);
 
     if (isLoading) return <ProfileSettingsSkeleton />;
     if (error) return <ApiError error="Failed to load profile" onRetry={refetch} />;
 
-    const handleSave = async () => {
+    const onSubmit = async (values: ProfileFormValues) => {
         try {
-            await updateProfile({ displayName, avatarUrl }).unwrap();
+            await updateProfile(values).unwrap();
             toast.success("Profile updated successfully");
         } catch (error: any) {
             toast.error(error.data?.message || "Failed to update profile");
         }
     };
-
-    return <Card>
-        <CardHeader>
-            <CardTitle>Profile Information</CardTitle>
-            <CardDescription>
-                Update your personal details and professional title.
-            </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-            <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
-                <div className="relative h-24 w-24 rounded-full overflow-hidden border-2 border-muted">
-                    <img
-                        src={avatarUrl}
-                        alt="Profile"
-                        className="h-full w-full object-cover"
-                    />
-                </div>
-                <div className="space-y-2 flex-1">
-                    <Label htmlFor="avatarUrl">Profile Picture URL</Label>
-                    <Input
-                        id="avatarUrl"
-                        placeholder="https://example.com/avatar.jpg"
-                        value={avatarUrl}
-                        onChange={(e) => setAvatarUrl(e.target.value)}
-                    />
-                    <p className="text-[0.8rem] text-muted-foreground">
-                        Paste a URL to your profile image.
-                    </p>
-                </div>
-            </div>
-            <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                    <Label htmlFor="full-name">Full Name</Label>
-                    <Input
-                        id="full-name"
-                        placeholder="Your full name"
-                        value={displayName}
-                        onChange={(e) => setDisplayName(e.target.value)}
-                    />
-                </div>
-                <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input id="email" defaultValue={user?.data?.email} disabled className="bg-muted" />
-                </div>
-            </div>
-            <div className="space-y-2">
-                <Label htmlFor="bio">Bio</Label>
-                <Textarea
-                    id="bio"
-                    placeholder="Tell us a little bit about yourself"
-                    className="resize-none min-h-25"
-                    defaultValue={user?.data?.displayName}
-                />
-                <p className="text-[0.8rem] text-muted-foreground">
-                    Brief description for your profile. URLs are hyperlinked.
-                </p>
-            </div>
-        </CardContent>
-        <CardFooter>
-            <Button onClick={handleSave} disabled={isSaving}>
-                {isSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {isSaving ? "Saving..." : "Save Changes"}
-            </Button>
-        </CardFooter>
-    </Card>
+    return (
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <Card>
+                <CardHeader>
+                    <CardTitle>Profile Information</CardTitle>
+                    <CardDescription>
+                        Update your personal details and professional title.
+                    </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                    <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
+                        <div className="relative h-24 w-24 rounded-full overflow-hidden border-2 border-muted">
+                            <img
+                                src={watchedAvatarUrl || ""}
+                                alt="Profile"
+                                className="h-full w-full object-cover"
+                            />
+                        </div>
+                        <div className="space-y-2 flex-1">
+                            <Label htmlFor="avatarUrl">Profile Picture URL</Label>
+                            <Input
+                                id="avatarUrl"
+                                placeholder="https://example.com/avatar.jpg"
+                                {...register("avatarUrl")}
+                            />
+                            {errors.avatarUrl && <p className="text-sm text-destructive">{errors.avatarUrl.message}</p>}
+                            <p className="text-[0.8rem] text-muted-foreground">
+                                Paste a URL to your profile image.
+                            </p>
+                        </div>
+                    </div>
+                    <div className="grid gap-4 md:grid-cols-2">
+                        <div className="space-y-2">
+                            <Label htmlFor="displayName">Full Name</Label>
+                            <Input
+                                id="displayName"
+                                placeholder="Your full name"
+                                {...register("displayName")}
+                            />
+                            {errors.displayName && <p className="text-sm text-destructive">{errors.displayName.message}</p>}
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="email">Email</Label>
+                            <Input id="email" defaultValue={user?.data?.email} disabled className="bg-muted" />
+                        </div>
+                    </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="bio">Bio</Label>
+                        <Textarea
+                            id="bio"
+                            placeholder="Tell us a little bit about yourself"
+                            className="resize-none min-h-25 focus-visible:ring-primary"
+                            {...register("bio")}
+                        />
+                        {errors.bio && <p className="text-sm text-destructive">{errors.bio.message}</p>}
+                        <p className="text-[0.8rem] text-muted-foreground">
+                            Brief description for your profile. URLs are hyperlinked.
+                        </p>
+                    </div>
+                </CardContent>
+                <CardFooter>
+                    <Button type="submit" disabled={isSaving}>
+                        {isSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                        {isSaving ? "Saving..." : "Save Changes"}
+                    </Button>
+                </CardFooter>
+            </Card>
+        </form>
+    );
 };
 
 function ProfileSettingsSkeleton() {

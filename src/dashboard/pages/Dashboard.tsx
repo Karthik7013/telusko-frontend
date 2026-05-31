@@ -1,8 +1,7 @@
 import { BookOpen, Trophy, Clock, TrendingUp } from "lucide-react";
-import ActivityLog from "../components/ActivityLog";
-import AchievementsLog from "../components/AchievementsLog";
-import StatsCard from "../components/StatsCard";
-import { RecommendedCourses } from "../components/RecommendedCourses";
+import ActivityLog from "@/dashboard/components/ActivityLog";
+import StatsCard from "@/dashboard/components/StatsCard";
+import { RecommendedCourses } from "@/dashboard/components/RecommendedCourses";
 
 export default function Dashboard() {
     const stats = [
@@ -55,10 +54,8 @@ export default function Dashboard() {
                 ))}
             </div>
 
-
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
                 <ActivityLog />
-                <AchievementsLog />
             </div>
 
             <RecommendedCourses />

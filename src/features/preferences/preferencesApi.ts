@@ -21,7 +21,7 @@ export const preferencesApi = createApi({
       query: () => '/preferences',
       providesTags: ['Preferences'],
     }),
-    savePreferences: builder.mutation<ApiResponse<UserPreferences>, UserPreferences>({
+    savePreferences: builder.mutation<ApiResponse<UserPreferences>, void>({
       query: (body) => ({
         url: '/preferences',
         method: 'POST',
