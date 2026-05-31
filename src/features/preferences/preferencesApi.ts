@@ -1,27 +1,18 @@
 import { ApiResponse } from '@/lib/api-utils';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
 import type { UserPreferences } from '@/onboarding/types';
-import { BASE_URL } from '@/lib/constants';
+import { baseQueryWithReauth } from '../auth/authBaseQuery';
 
 export const preferencesApi = createApi({
   reducerPath: 'preferencesApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: BASE_URL,
-    prepareHeaders: (headers) => {
-      const token = localStorage.getItem('accessToken');
-      if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
+  baseQuery: baseQueryWithReauth,
   tagTypes: ['Preferences'],
   endpoints: (builder) => ({
     getPreferences: builder.query<ApiResponse<UserPreferences>, void>({
       query: () => '/preferences',
       providesTags: ['Preferences'],
     }),
-    savePreferences: builder.mutation<ApiResponse<UserPreferences>, void>({
+    savePreferences: builder.mutation<ApiResponse<UserPreferences>, UserPreferences>({
       query: (body) => ({
         url: '/preferences',
         method: 'POST',

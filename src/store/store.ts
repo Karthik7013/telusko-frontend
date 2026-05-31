@@ -8,6 +8,7 @@ import { preferencesApi } from '@/features/preferences/preferencesApi';
 import cartReducer, { type CartState } from '@/features/cart/cartSlice';
 import authReducer from '@/features/auth/authSlice';
 import { identityApi } from '@/features/identity/identityApi';
+import { dashboardApi } from '@/features/dashboard/dashboardApi';
 import { transactionsApi } from '@/features/transactions/transactionsApi';
 import { wishlistApi } from '@/features/wishlist/wishlistApi';
 
@@ -17,6 +18,7 @@ export const store = configureStore({
     auth: authReducer,
     [authApi.reducerPath]: authApi.reducer,
     [identityApi.reducerPath]: identityApi.reducer,
+    [dashboardApi.reducerPath]: dashboardApi.reducer,
     [coursesApi.reducerPath]: coursesApi.reducer,
     [ordersApi.reducerPath]: ordersApi.reducer,
     [couponsApi.reducerPath]: couponsApi.reducer,
@@ -34,6 +36,7 @@ export const store = configureStore({
       .concat(enrollmentsApi.middleware)
       .concat(preferencesApi.middleware)
       .concat(identityApi.middleware)
+      .concat(dashboardApi.middleware)
       .concat(transactionsApi.middleware)
       .concat(wishlistApi.middleware),
   devTools: true,
