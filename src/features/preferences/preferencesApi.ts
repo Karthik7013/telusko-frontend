@@ -9,12 +9,12 @@ export const preferencesApi = createApi({
   tagTypes: ['Preferences'],
   endpoints: (builder) => ({
     getPreferences: builder.query<ApiResponse<UserPreferences>, void>({
-      query: () => '/preferences',
+      query: () => '/identity/preferences',
       providesTags: ['Preferences'],
     }),
     savePreferences: builder.mutation<ApiResponse<UserPreferences>, UserPreferences>({
       query: (body) => ({
-        url: '/preferences',
+        url: '/identity/preferences',
         method: 'POST',
         body,
       }),
@@ -22,8 +22,8 @@ export const preferencesApi = createApi({
     }),
     updatePreferences: builder.mutation<ApiResponse<UserPreferences>, UserPreferences>({
       query: (body) => ({
-        url: '/preferences',
-        method: 'PUT',
+        url: '/identity/preferences',
+        method: 'PATCH',
         body,
       }),
       invalidatesTags: ['Preferences'],

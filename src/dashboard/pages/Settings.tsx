@@ -91,11 +91,17 @@ const ProfileSettings = () => {
                 <CardContent className="space-y-6">
                     <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
                         <div className="relative h-24 w-24 rounded-full overflow-hidden border-2 border-muted">
-                            <img
-                                src={watchedAvatarUrl || ""}
-                                alt="Profile"
-                                className="h-full w-full object-cover"
-                            />
+                            {watchedAvatarUrl ? (
+                                <img
+                                    src={watchedAvatarUrl}
+                                    alt="Profile"
+                                    className="h-full w-full object-cover"
+                                />
+                            ) : (
+                                <div className="h-full w-full bg-muted flex items-center justify-center text-muted-foreground text-[10px] text-center p-2">
+                                    No Image
+                                </div>
+                            )}
                         </div>
                         <div className="space-y-2 flex-1">
                             <Label htmlFor="avatarUrl">Profile Picture URL</Label>
@@ -276,7 +282,9 @@ function LearningPreferences() {
 
     useEffect(() => {
         if (data?.data && !loaded) {
-            setPrefs(data.data);
+            // Strip the id and other metadata before setting the preferences state to ensure it matches UserPreferences
+            const { id, userId, createdAt, updatedAt, ...rest } = data.data as any;
+            setPrefs(rest);
             setLoaded(true);
         }
     }, [data, loaded]);
