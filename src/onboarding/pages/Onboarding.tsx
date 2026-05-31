@@ -70,7 +70,7 @@ function clearStorage() {
   } catch { }
 }
 
-export default function OnboardingPage() {
+export default function Onboarding() {
   const navigate = useNavigate()
   const [savePreferences, { isLoading: isSaving }] = useSavePreferencesMutation()
 

@@ -4,7 +4,7 @@ import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom"
 // Auth guard components
 import { ProtectedRoute } from "@/auth/components/ProtectedRoute"
 import PageLoader from "@/components/common/PageLoader"
-import OnboardingPage from "@/onboarding/pages/OnboardingPage"
+import Onboarding from "@/onboarding/pages/Onboarding"
 // import { useSelector } from "react-redux"
 // import { RootState } from "@/store/store"
 
@@ -37,7 +37,7 @@ const WishlistPage = lazy(() => import("@/dashboard/pages/Wishlist"))
 const CoursePlayer = lazy(() => import("@/dashboard/pages/CoursePlayer"))
 
 // Onboarding
-// const OnboardingPage = lazy(() => import("@/onboarding/pages/OnboardingPage"))
+// const Onboarding = lazy(() => import("@/onboarding/pages/Onboarding"))
 
 
 
@@ -70,7 +70,7 @@ const AppRouter = () => {
                             <Route path="course-player" element={<CoursePlayer />} />
                             <Route path="*" element={<NotFound />} />
                         </Route>
-                        <Route path="onboarding" element={<OnboardingPage />} />
+                        <Route path="onboarding" element={<Onboarding />} />
                     </Route>
 
 

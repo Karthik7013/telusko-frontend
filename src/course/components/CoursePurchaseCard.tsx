@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { VideoPlayer } from "@/components/ui/video-player";
 import { toast } from 'sonner';
 import { addToCart } from '@/features/cart/cartSlice';
-import { useAppDispatch } from '@/hooks/useRedux';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
 
 interface CourseData {
     id: string;
