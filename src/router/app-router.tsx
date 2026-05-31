@@ -31,6 +31,8 @@ const OrderFailurePage = lazy(() => import("@/checkout/pages/OrderFailure"))
 // Dashboard pages
 const AnalyticsPage = lazy(() => import("@/dashboard/pages/Dashboard"))
 const MyLearningsPage = lazy(() => import("@/dashboard/pages/MyLearnings"))
+const TransactionsPage = lazy(() => import("@/dashboard/pages/Transactions"))
+const WishlistPage = lazy(() => import("@/dashboard/pages/Wishlist"))
 const CoursePlayer = lazy(() => import("@/dashboard/pages/CoursePlayer"))
 
 // Onboarding
@@ -61,6 +63,8 @@ const AppRouter = () => {
                         <Route path="dashboard" element={<DashboardLayout />}>
                             <Route index element={<AnalyticsPage />} />
                             <Route path="my-learnings" element={<MyLearningsPage />} />
+                            <Route path="transactions" element={<TransactionsPage />} />
+                            <Route path="whishlist" element={<WishlistPage />} />
                             <Route path="settings" element={<Settings />} />
                             <Route path="course-player" element={<CoursePlayer />} />
                             <Route path="*" element={<NotFound />} />

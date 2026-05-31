@@ -8,6 +8,8 @@ import { preferencesApi } from '@/features/preferences/preferencesApi';
 import cartReducer, { type CartState } from '@/features/cart/cartSlice';
 import authReducer from '@/features/auth/authSlice';
 import { identityApi } from '@/features/identity/identityApi';
+import { transactionsApi } from '@/features/transactions/transactionsApi';
+import { wishlistApi } from '@/features/wishlist/wishlistApi';
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +22,8 @@ export const store = configureStore({
     [couponsApi.reducerPath]: couponsApi.reducer,
     [enrollmentsApi.reducerPath]: enrollmentsApi.reducer,
     [preferencesApi.reducerPath]: preferencesApi.reducer,
+    [transactionsApi.reducerPath]: transactionsApi.reducer,
+    [wishlistApi.reducerPath]: wishlistApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
@@ -29,7 +33,9 @@ export const store = configureStore({
       .concat(couponsApi.middleware)
       .concat(enrollmentsApi.middleware)
       .concat(preferencesApi.middleware)
-      .concat(identityApi.middleware),
+      .concat(identityApi.middleware)
+      .concat(transactionsApi.middleware)
+      .concat(wishlistApi.middleware),
   devTools: true,
 })
 
