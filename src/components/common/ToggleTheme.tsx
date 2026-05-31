@@ -1,11 +1,12 @@
 import { LaptopMinimal, Moon, Sun } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useTheme } from "@/providers/ThemeProvider"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useStateSafe } from "@/hooks/useStateSafe"
 
 export function SwitchTheme() {
     const { setTheme, theme } = useTheme()
-    const [mounted, setMounted] = useState(false)
+    const [mounted, setMounted] = useStateSafe(false)
 
     // Prevent hydration mismatch in SSR
     useEffect(() => setMounted(true), [])

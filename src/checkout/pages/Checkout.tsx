@@ -13,6 +13,7 @@ import { useGetCourseBySlugQuery } from '@/features/courses/coursesApi'
 import type { Coupon } from '@/features/coupons/couponsApi'
 import { ApiError } from '@/components/common/ApiError';
 import { Skeleton } from '@/components/ui/skeleton';
+import { EmptyCheckout } from '@/checkout/components/EmptyCheckout';
 
 const Checkout = () => {
   const navigate = useNavigate()
@@ -82,15 +83,7 @@ const Checkout = () => {
     }
   }
 
-  if (items.length === 0) {
-    return (
-      <div className="container mx-auto px-4 py-20 text-center">
-        <h1 className="text-2xl font-bold mb-2">Nothing to checkout</h1>
-        <p className="text-muted-foreground mb-6">Your cart is empty.</p>
-        <Button asChild><a href="/search">Browse courses</a></Button>
-      </div>
-    )
-  }
+  if (items.length === 0) return <EmptyCheckout />;
 
   if (courseSlug && isCourseLoading) return <CheckoutSkeleton />;
   if (courseSlug && courseError) return <ApiError error="Failed to load course details" onRetry={refetch} />;

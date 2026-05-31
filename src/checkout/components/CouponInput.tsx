@@ -4,6 +4,9 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useLazyValidateCouponQuery } from '@/features/coupons/couponsApi'
 import type { Coupon } from '@/features/coupons/couponsApi'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 interface CouponInputProps {
   subtotal: number
@@ -11,17 +14,24 @@ interface CouponInputProps {
   onCouponRemoved: () => void
 }
 
+const couponSchema = z.object({
+  code: z.string().min(1, "Enter a coupon code"),
+})
+
+type CouponFormValues = z.infer<typeof couponSchema>
+
 const CouponInput = ({ subtotal, onCouponApplied, onCouponRemoved }: CouponInputProps) => {
-  const [code, setCode] = useState('')
   const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(null)
   const [error, setError] = useState('')
   const [validate, { isLoading }] = useLazyValidateCouponQuery()
+  const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm<CouponFormValues>({
+    resolver: zodResolver(couponSchema),
+  })
 
-  const handleApply = async () => {
-    if (!code.trim()) return
+  const handleApply = async (values: CouponFormValues) => {
     setError('')
     try {
-      const result = await validate(code.trim())
+      const result = await validate(values.code.trim())
       if (result.data?.success && result.data.data) {
         setAppliedCoupon(result.data.data)
         onCouponApplied(result.data.data)
@@ -35,7 +45,7 @@ const CouponInput = ({ subtotal, onCouponApplied, onCouponRemoved }: CouponInput
 
   const handleRemove = () => {
     setAppliedCoupon(null)
-    setCode('')
+    reset()
     onCouponRemoved()
   }
 
@@ -62,29 +72,28 @@ const CouponInput = ({ subtotal, onCouponApplied, onCouponRemoved }: CouponInput
   }
 
   return (
-    <div>
+    <form onSubmit={handleSubmit(handleApply)}>
       <label className="text-sm font-medium mb-1.5 block">Coupon Code</label>
       <div className="flex gap-2">
         <div className="relative flex-1">
           <Percent className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
           <Input
-            value={code}
-            onChange={(e) => setCode(e.target.value.toUpperCase())}
+            {...register("code")}
             placeholder="Enter code"
             className="pl-9"
-            onKeyDown={(e) => e.key === 'Enter' && handleApply()}
+            onChange={(e) => setValue("code", e.target.value.toUpperCase(), { shouldValidate: true })}
           />
         </div>
-        <Button variant="outline" onClick={handleApply} disabled={isLoading || !code.trim()}>
+        <Button type="submit" variant="outline" disabled={isLoading}>
           {isLoading ? 'Validating...' : 'Apply'}
         </Button>
       </div>
-      {error && (
+      {(errors.code || error) && (
         <p className="flex items-center gap-1 text-sm text-destructive mt-1.5">
-          <XCircle className="size-4" /> {error}
+          <XCircle className="size-4" /> {errors.code?.message || error}
         </p>
       )}
-    </div>
+    </form>
   )
 }
 

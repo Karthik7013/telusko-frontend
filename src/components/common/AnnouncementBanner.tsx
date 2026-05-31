@@ -1,13 +1,14 @@
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 import Cookies from "js-cookie";
 import { AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight,X } from "lucide-react";
 
 import { motion } from "framer-motion"
+import { useStateSafe } from "@/hooks/useStateSafe";
 const BANNER_COOKIE_KEY = "OFFER_BANNER_DISMISSED";
 export function AnnouncementBanner() {
-    const [isVisible, setIsVisible] = useState(false);
+    const [isVisible, setIsVisible] = useStateSafe(false);
 
     useEffect(() => {
         const isBannerDismissed = Cookies.get(BANNER_COOKIE_KEY);

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -18,12 +18,7 @@ import {
     TabsTrigger,
 } from "@/components/ui/tabs";
 import { useMeQuery, useChangePasswordMutation, useUpdateProfileMutation } from "@/features/identity/identityApi";
-import { useGetPreferencesQuery, useUpdatePreferencesMutation } from "@/features/preferences/preferencesApi";
-import type { UserPreferences } from "@/onboarding/types";
-import { StepRole } from "@/onboarding/components/StepRole";
-import { StepInterests } from "@/onboarding/components/StepInterests";
-import { StepGoals } from "@/onboarding/components/StepGoals";
-import { StepLevelTime } from "@/onboarding/components/StepLevelTime";
+import LearningPreferences from "@/dashboard/components/LearningPreferences";
 import { SwitchTheme } from "@/components/common/ToggleTheme";
 import { ApiError } from "@/components/common/ApiError";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -40,6 +35,13 @@ const profileSchema = z.object({
 });
 
 type ProfileFormValues = z.infer<typeof profileSchema>;
+
+const passwordSchema = z.object({
+    currentPassword: z.string().min(1, "Current password is required"),
+    newPassword: z.string().min(8, "New password must be at least 8 characters"),
+});
+
+type PasswordFormValues = z.infer<typeof passwordSchema>;
 
 const ProfileSettings = () => {
     const { data: user, isLoading, error, refetch } = useMeQuery();
@@ -211,168 +213,65 @@ const AppearanceSettings = () => {
 }
 
 const PasswordSettings = () => {
-    const [currentPassword, setCurrentPassword] = useState("");
-    const [newPassword, setNewPassword] = useState("");
     const [changePassword, { isLoading: isPending }] = useChangePasswordMutation();
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm<PasswordFormValues>({
+        resolver: zodResolver(passwordSchema),
+    });
 
-    const handleSubmit = async () => {
-        if (!currentPassword || !newPassword) {
-            toast.error("Both fields are required");
-            return;
-        }
-        if (newPassword.length < 8) {
-            toast.error("New password must be at least 8 characters");
-            return;
-        }
+    const onSubmit = async (values: PasswordFormValues) => {
         try {
-            await changePassword({ currentPassword, newPassword }).unwrap();
+            await changePassword(values).unwrap();
             toast.success("Password changed successfully");
-            setCurrentPassword("");
-            setNewPassword("");
+            reset();
         } catch (error: any) {
             toast.error(error.data?.message || "Failed to change password");
         }
     };
 
     return (
-        <Card>
-            <CardHeader>
-                <CardTitle>Password</CardTitle>
-                <CardDescription>
-                    Change your password here. After saving, you'll be logged out.
-                </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-2">
-                <div className="space-y-1">
-                    <Label htmlFor="current">Current password</Label>
-                    <Input
-                        id="current"
-                        type="password"
-                        value={currentPassword}
-                        onChange={(e) => setCurrentPassword(e.target.value)}
-                    />
-                </div>
-                <div className="space-y-1">
-                    <Label htmlFor="new">New password</Label>
-                    <Input
-                        id="new"
-                        type="password"
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
-                    />
-                </div>
-            </CardContent>
-            <CardFooter>
-                <Button onClick={handleSubmit} disabled={isPending}>
-                    {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    {isPending ? "Updating..." : "Update Password"}
-                </Button>
-            </CardFooter>
-        </Card>
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <Card>
+                <CardHeader>
+                    <CardTitle>Password</CardTitle>
+                    <CardDescription>
+                        Change your password here. After saving, you'll be logged out.
+                    </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                    <div className="space-y-1">
+                        <Label htmlFor="currentPassword">Current password</Label>
+                        <Input
+                            id="currentPassword"
+                            type="password"
+                            {...register("currentPassword")}
+                        />
+                        {errors.currentPassword && <p className="text-sm text-destructive">{errors.currentPassword.message}</p>}
+                    </div>
+                    <div className="space-y-1">
+                        <Label htmlFor="newPassword">New password</Label>
+                        <Input
+                            id="newPassword"
+                            type="password"
+                            {...register("newPassword")}
+                        />
+                        {errors.newPassword && <p className="text-sm text-destructive">{errors.newPassword.message}</p>}
+                    </div>
+                </CardContent>
+                <CardFooter>
+                    <Button type="submit" disabled={isPending}>
+                        {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                        {isPending ? "Updating..." : "Update Password"}
+                    </Button>
+                </CardFooter>
+            </Card>
+        </form>
     );
 };
-
-function LearningPreferences() {
-    const { data, isLoading, error, refetch } = useGetPreferencesQuery();
-    const [updatePreferences, { isLoading: isSaving }] = useUpdatePreferencesMutation();
-    const [prefs, setPrefs] = useState<UserPreferences>({
-        role: null, interests: [], goal: null, experienceLevel: null, timeCommitment: null
-    });
-    const [loaded, setLoaded] = useState(false);
-
-    useEffect(() => {
-        if (data?.data && !loaded) {
-            // Strip the id and other metadata before setting the preferences state to ensure it matches UserPreferences
-            const { id, userId, createdAt, updatedAt, ...rest } = data.data as any;
-            setPrefs(rest);
-            setLoaded(true);
-        }
-    }, [data, loaded]);
-
-    const handleSave = async () => {
-        try {
-            await updatePreferences(prefs).unwrap();
-            localStorage.removeItem("telusko-onboarding-skipped");
-            toast.success("Learning preferences saved");
-        } catch (error: any) {
-            toast.error(error.data?.message || "Failed to save preferences");
-        }
-    };
-
-    if (isLoading) return <PrefSettingsSkeleton />;
-    if (error) return <ApiError error="Failed to load preferences" onRetry={refetch} />;
-
-    return (
-        <Card>
-            <CardHeader>
-                <CardTitle>Learning Preferences</CardTitle>
-                <CardDescription>
-                    Tell us about yourself so we can recommend the right courses.
-                </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-                <div className="space-y-4">
-                    <Label>I am a...</Label>
-                    <StepRole
-                        value={prefs.role}
-                        onChange={(role) => setPrefs({ ...prefs, role })}
-                    />
-                </div>
-                <div className="space-y-4">
-                    <Label>Topics I'm interested in</Label>
-                    <StepInterests
-                        value={prefs.interests}
-                        onChange={(interests) => setPrefs({ ...prefs, interests })}
-                    />
-                </div>
-                <div className="space-y-4">
-                    <Label>My goal</Label>
-                    <StepGoals
-                        value={prefs.goal}
-                        onChange={(goal) => setPrefs({ ...prefs, goal })}
-                    />
-                </div>
-                <div className="space-y-4">
-                    <Label>Experience & Time</Label>
-                    <StepLevelTime
-                        experienceLevel={prefs.experienceLevel}
-                        timeCommitment={prefs.timeCommitment}
-                        onExperienceChange={(experienceLevel) => setPrefs({ ...prefs, experienceLevel })}
-                        onTimeChange={(timeCommitment) => setPrefs({ ...prefs, timeCommitment })}
-                    />
-                </div>
-            </CardContent>
-            <CardFooter>
-                <Button onClick={handleSave} disabled={isSaving}>
-                    {isSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    {isSaving ? "Saving..." : "Save Preferences"}
-                </Button>
-            </CardFooter>
-        </Card>
-    );
-}
-
-function PrefSettingsSkeleton() {
-    return (
-        <Card>
-            <CardHeader>
-                <Skeleton className="h-6 w-48" />
-                <Skeleton className="h-4 w-72" />
-            </CardHeader>
-            <CardContent className="space-y-6">
-                {Array.from({ length: 4 }).map((_, i) => (
-                    <div key={i} className="space-y-2">
-                        <Skeleton className="h-4 w-24" />
-                        <Skeleton className="h-20 w-full" />
-                    </div>
-                ))}
-            </CardContent>
-            <CardFooter>
-                <Skeleton className="h-10 w-32" />
-            </CardFooter>
-        </Card>
-    );
-}
 
 export default function Settings() {
     return (

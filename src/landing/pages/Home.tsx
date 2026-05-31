@@ -1,7 +1,8 @@
 import { FinalCTA } from "@/landing/components/FinalCTA"
 import Faq from "@/landing/components/Faq"
 import Hero from "@/landing/components/Hero"
-import LearningPath, { TrustBar } from "@/landing/components/LearningPath"
+import LearningPath from "@/landing/components/LearningPath"
+import { TrustBar } from "@/landing/components/TrustBar"
 import { ScrollReveal } from "@/components/common/ScrollReveal"
 import Testimonials from "@/landing/components/Testimonials"
 

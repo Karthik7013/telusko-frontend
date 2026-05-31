@@ -2,11 +2,6 @@ import { ChevronsUpDown, CreditCard, LogOut, Settings, User } from "lucide-react
 import { Link } from "react-router-dom"
 
 import {
-    Avatar,
-    AvatarFallback,
-    AvatarImage,
-} from "@/components/ui/avatar"
-import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuGroup,
@@ -22,6 +17,7 @@ import {
     useSidebar,
 } from "@/components/ui/sidebar"
 import { Skeleton } from "@/components/ui/skeleton"
+import { UserAvatar } from "@/dashboard/components/UserAvatar"
 
 import { useMeQuery } from "@/features/identity/identityApi"
 import { useLogoutMutation } from "@/features/auth/authApi"
@@ -58,12 +54,11 @@ export function NavUser() {
                             size="lg"
                             className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                         >
-                            <Avatar className="h-8 w-8 rounded-lg">
-                                <AvatarImage src={user.data.avatarUrl} alt={user.data.displayName} />
-                                <AvatarFallback className="rounded-lg">
-                                    {user.data.displayName?.substring(0, 2).toUpperCase() || "US"}
-                                </AvatarFallback>
-                            </Avatar>
+                            <UserAvatar
+                                avatarUrl={user.data.avatarUrl}
+                                displayName={user.data.displayName}
+                                className="h-8 w-8 rounded-lg"
+                            />
                             <div className="grid flex-1 text-left text-sm leading-tight">
                                 <span className="truncate font-medium">{user.data.displayName}</span>
                                 <span className="truncate text-xs">{user.data.email}</span>

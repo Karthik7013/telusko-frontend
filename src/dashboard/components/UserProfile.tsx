@@ -7,7 +7,7 @@ import {
 } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { AvatarFallback, AvatarImage, Avatar } from "@/components/ui/avatar";
+import { UserAvatar } from "@/dashboard/components/UserAvatar";
 import { Link } from "react-router-dom";
 import { useLogoutMutation } from "@/features/auth/authApi";
 import { Spinner } from "@/components/ui/spinner";
@@ -32,10 +32,12 @@ const UserProfileMenu = ({
         <DropdownMenuTrigger asChild>
             <Button size='icon-lg'
                 variant="ghost" className="relative rounded-full">
-                <Avatar className="h-8 w-8 border">
-                    <AvatarImage src={user.avatarUrl} alt={user.displayName.split('')[0]} />
-                    <AvatarFallback className="bg-primary text-accent-foreground">{user.displayName.split('')[0]}</AvatarFallback>
-                </Avatar>
+                <UserAvatar
+                    avatarUrl={user.avatarUrl}
+                    displayName={user.displayName}
+                    className="h-8 w-8 border"
+                    fallbackClassName="bg-primary text-accent-foreground"
+                />
             </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="end" forceMount>

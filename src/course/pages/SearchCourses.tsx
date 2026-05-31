@@ -3,8 +3,6 @@ import { useSearchParams } from "react-router-dom";
 import { Search, Filter, SlidersHorizontal, PackageOpen } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 import {
     Sheet,
     SheetContent,
@@ -13,9 +11,9 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet";
 import CourseCard, { CourseCardSkeleton } from "@/course/components/CourseCard";
+import { FilterSidebar } from "@/course/components/FilterSidebar";
 import { useGetCoursesQuery } from "@/features/courses/coursesApi";
 import { ApiError } from "@/components/common/ApiError";
-import { CATEGORIES, LEVELS } from "@/data/courses-data";
 import { CourseCardProps } from "@/types";
 
 export default function SearchCourses() {
@@ -82,110 +80,15 @@ export default function SearchCourses() {
         setSearchParams({});
     };
 
-    const FilterSidebar = () => (
-        <div className="space-y-8">
-            {/* Category Filter */}
-            <div className="space-y-4">
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Category</h3>
-                <div className="grid gap-2">
-                    {CATEGORIES.map(category => (
-                        <div key={category} className="flex items-center space-x-2">
-                            <Checkbox
-                                id={`cat-${category}`}
-                                checked={selectedCategories.includes(category)}
-                                onCheckedChange={() => toggleCategory(category)}
-                            />
-                            <Label htmlFor={`cat-${category}`} className="text-sm font-medium leading-none cursor-pointer">
-                                {category}
-                            </Label>
-                        </div>
-                    ))}
-                </div>
-            </div>
+    const filterProps = {
+        selectedCategories, selectedLevels, selectedInstructor, minPrice, maxPrice,
+        isFeatured, isPublished,
+        onToggleCategory: toggleCategory, onToggleLevel: toggleLevel,
+        onInstructorChange: setSelectedInstructor,
+        onMinPriceChange: setMinPrice, onMaxPriceChange: setMaxPrice,
+        onFeaturedChange: setIsFeatured, onPublishedChange: setIsPublished,
+    };
 
-            {/* Level Filter */}
-            <div className="space-y-4">
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Level</h3>
-                <div className="grid gap-2">
-                    {LEVELS.map(level => (
-                        <div key={level} className="flex items-center space-x-2">
-                            <Checkbox
-                                id={`level-${level}`}
-                                checked={selectedLevels.includes(level)}
-                                onCheckedChange={() => toggleLevel(level)}
-                            />
-                            <Label htmlFor={`level-${level}`} className="text-sm font-medium leading-none cursor-pointer">
-                                {level}
-                            </Label>
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-            {/* Instructor Filter */}
-            <div className="space-y-4">
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Instructor</h3>
-                <Input
-                    placeholder="Instructor name..."
-                    value={selectedInstructor}
-                    onChange={(e) => setSelectedInstructor(e.target.value)}
-                />
-            </div>
-
-            {/* Price Range Filter */}
-            <div className="space-y-4">
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Price Range</h3>
-                <div className="flex items-center gap-2">
-                    <Input
-                        type="number"
-                        placeholder="Min"
-                        min="0"
-                        value={minPrice}
-                        onChange={(e) => setMinPrice(e.target.value)}
-                        className="w-full"
-                    />
-                    <span className="text-muted-foreground">-</span>
-                    <Input
-                        type="number"
-                        placeholder="Max"
-                        min="0"
-                        value={maxPrice}
-                        onChange={(e) => setMaxPrice(e.target.value)}
-                        className="w-full"
-                    />
-                </div>
-            </div>
-
-            {/* Status Filters */}
-            <div className="space-y-4">
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Status</h3>
-                <div className="grid gap-2">
-                    <div className="flex items-center space-x-2">
-                        <Checkbox
-                            id="featured"
-                            checked={isFeatured}
-                            onCheckedChange={(checked) => setIsFeatured(checked as boolean)}
-                        />
-                        <Label htmlFor="featured" className="text-sm font-medium leading-none cursor-pointer">
-                            Featured
-                        </Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                        <Checkbox
-                            id="published"
-                            checked={isPublished}
-                            onCheckedChange={(checked) => setIsPublished(checked as boolean)}
-                        />
-                        <Label htmlFor="published" className="text-sm font-medium leading-none cursor-pointer">
-                            Published
-                        </Label>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-
-    // console.log(courses?.data?.courses, "courses")
     return (
         <div className="py-16">
             <div className="container mx-auto px-4">
@@ -223,7 +126,7 @@ export default function SearchCourses() {
                                         <SheetTitle>Filters</SheetTitle>
                                     </SheetHeader>
                                     <div className="p-4 pt-0">
-                                        {FilterSidebar()}
+                                        <FilterSidebar {...filterProps} />
                                     </div>
                                 </SheetContent>
                             </Sheet>
@@ -239,7 +142,7 @@ export default function SearchCourses() {
                                 <SlidersHorizontal className="h-4 w-4" />
                                 <h2 className="font-semibold text-lg">Filters</h2>
                             </div>
-                            {FilterSidebar()}
+                            <FilterSidebar {...filterProps} />
                         </div>
                     </aside>
 

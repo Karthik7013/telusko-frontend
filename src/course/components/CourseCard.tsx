@@ -1,10 +1,11 @@
 import { Card, CardContent, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Clock, Star, BookOpen, BadgeCheck, PersonStanding } from "lucide-react"
+import { Clock, BookOpen, BadgeCheck, PersonStanding } from "lucide-react"
 import type { CourseCardProps } from "@/types"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Link } from "react-router-dom"
 import { Separator } from "@/components/ui/separator"
+import { CourseRating } from "@/course/components/CourseRating"
 
 export default function CourseCard({
     course
@@ -52,19 +53,7 @@ export default function CourseCard({
                     </div>
 
                     <div className="flex items-center gap-1.5">
-                        <span className="text-sm font-bold text-amber-600 dark:text-amber-400">{course.rating}</span>
-                        <div className="flex items-center">
-                            {[0, 1, 2, 3, 4].map((i) => (
-                                <Star
-                                    key={i}
-                                    className={`h-3.5 w-3.5 ${i < Math.round(course.rating)
-                                        ? "fill-[#e59819] text-[#e59819] dark:fill-amber-400 dark:text-amber-400"
-                                        : "fill-muted text-muted"
-                                        }`}
-                                />
-                            ))}
-                        </div>
-                        <span className="text-xs text-muted-foreground">({course.totalReviews || 0} reviews)</span>
+                        <CourseRating rating={course.rating} reviewCount={course.totalReviews} size="sm" />
                     </div>
 
                     <div className="mt-1.5 justify-between flex flex-wrap items-center gap-x-2 text-[11px] text-muted-foreground">

@@ -2,7 +2,6 @@ import { useState } from "react";
 import {
     Globe,
     Info,
-    Star,
     PanelRightClose,
     PanelRightOpen
 } from 'lucide-react';
@@ -10,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import SectionList from '@/course/components/SectionList';
 import { VideoPlayer } from "@/components/ui/video-player";
 import { cn } from "@/lib/utils";
+import { CourseRating } from "@/course/components/CourseRating";
 
 export default function CoursePlayer({
 
@@ -55,13 +55,7 @@ export default function CoursePlayer({
                             <div className="flex flex-wrap items-center justify-between gap-4">
                                 <div className="flex items-center gap-4 text-sm text-muted-foreground">
                                     <div className="flex items-center gap-1">
-                                        <div className="flex text-orange-400">
-                                            <Star className="size-4 fill-current" />
-                                            <Star className="size-4 fill-current" />
-                                            <Star className="size-4 fill-current" />
-                                            <Star className="size-4 fill-current" />
-                                            <Star className="size-4 fill-current" />
-                                        </div>
+                                        <CourseRating rating={4.5} alwaysFull showValue={false} />
                                         <span className="font-medium text-foreground">4.5</span>
                                         <span>(123 ratings)</span>
                                     </div>

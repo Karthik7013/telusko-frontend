@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 import { Link } from "react-router-dom"
 import { Settings, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useStateSafe } from "@/hooks/useStateSafe"
 
 export default function PreferenceBanner() {
-    const [visible, setVisible] = useState(false)
+    const [visible, setVisible] = useStateSafe(false)
 
     useEffect(() => {
         if (localStorage.getItem("telusko-onboarding-skipped") === "true") {

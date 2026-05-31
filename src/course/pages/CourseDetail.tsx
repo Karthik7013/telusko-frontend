@@ -1,32 +1,24 @@
 import { Link, useParams, useNavigate } from "react-router-dom";
 import {
-    Check,
     Globe,
     Info,
-    Star,
     AlertCircle,
-    Target,
-    ClipboardList,
-    Clock,
-    Award,
-    ShieldCheck,
-    Infinity as InfinityIcon,
 } from 'lucide-react';
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { CourseRating } from "@/course/components/CourseRating";
 import SectionList from '@/course/components/SectionList';
+import { WhatYouLearn } from '@/course/components/WhatYouLearn';
+import { CourseRequirements } from '@/course/components/CourseRequirements';
+import { CoursePurchaseCard } from '@/course/components/CoursePurchaseCard';
 import { useGetCourseBySlugQuery } from "@/features/courses/coursesApi";
 import { VideoPlayer } from "@/components/ui/video-player";
 import DescriptionCollapse from '@/components/common/DescriptionCollapse';
-import { toast } from 'sonner'
-import { addToCart } from '@/features/cart/cartSlice'
-import { useAppDispatch } from '@/hooks/useRedux'
 import { ApiError, NotFoundError } from '@/components/common/ApiError'
 
 export default function CourseDetail() {
     const navigate = useNavigate()
-    const dispatch = useAppDispatch()
     const { courseSlug } = useParams<{ courseSlug: string }>();
     const { data: course, isLoading, error, refetch } = useGetCourseBySlugQuery(courseSlug || '', { skip: !courseSlug });
 
@@ -94,13 +86,7 @@ export default function CourseDetail() {
 
                             <div className="flex flex-wrap items-center gap-6 text-sm">
                                 <div className="flex items-center gap-1.5">
-                                    <div className="flex text-yellow-500">
-                                        <Star className="size-4 fill-current" />
-                                        <Star className="size-4 fill-current" />
-                                        <Star className="size-4 fill-current" />
-                                        <Star className="size-4 fill-current" />
-                                        <Star className="size-4 fill-current" />
-                                    </div>
+                                    <CourseRating rating={course.data.rating} showValue={false} alwaysFull />
                                     <span className="font-bold text-base">{course.data.rating}</span>
                                     <span className="underline text-primary/80">({course.data.rating} ratings)</span>
                                     <span className="font-medium">{course.data.totalStudents} students</span>
@@ -123,113 +109,15 @@ export default function CourseDetail() {
 
                         {/* MAIN CONTENT AREA */}
                         <div className="space-y-16">
-                            {/* WHAT YOU'LL LEARN */}
-                            <section id="what-you-learn" className="border p-4 rounded-xl bg-muted/30">
-                                <h2 className="text-2xl font-bold mb-8 flex items-center gap-2">
-                                    <Target className="size-6" />What you'll learn
-                                </h2>
-                                <div className="grid sm:grid-cols-2 gap-x-12 gap-y-6">
-                                    {course.data.whatYouLearn?.map((item: string, i: number) => (
-                                        <div key={i} className="flex gap-4 text-sm leading-relaxed">
-                                            <Check className="size-5 mt-0.5 shrink-0 text-primary" />
-                                            <span className="font-medium">{item}</span>
-                                        </div>
-                                    ))}
-                                </div>
-                            </section>
-
-                            {/* COURSE CONTENT */}
+                            <WhatYouLearn items={course.data.whatYouLearn} />
                             <SectionList sections={course.data.sections} />
-
-                            {/* REQUIREMENTS */}
-                            <section className="border p-4 rounded-xl bg-muted/30">
-                                <h2 className="text-2xl font-bold mb-8 flex items-center gap-2">
-                                    <ClipboardList className="size-6" />Requirements
-                                </h2>
-                                <ul className="grid gap-3">
-                                    {course.data.requirements?.map((req: string, i: number) => (
-                                        <li key={i} className="flex gap-4 items-center font-medium">
-                                            <div className="size-2 rounded-full bg-primary shrink-0" />
-                                            {req}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </section>
+                            <CourseRequirements items={course.data.requirements} />
                         </div>
                     </div>
 
                     {/* SIDEBAR - Desktop */}
                     <div className='relative hidden lg:block lg:col-span-1'>
-                        <aside className="sticky top-24">
-                            <div className="border bg-card text-card-foreground shadow-xl rounded-xl overflow-hidden">
-                                <div className="relative">
-                                    <VideoPlayer
-                                        poster={course.data.thumbnailUrl}
-                                        src={course.data.previewVideoUrl} />
-                                </div>
-                                <div className="p-6 pt-4 space-y-4">
-                                    <div className="flex items-end gap-3 flex-wrap">
-                                        <span className="text-3xl font-bold text-primary">${course.data.basePrice}</span>
-                                        <span className="text-lg text-muted-foreground line-through">${course.data.basePrice}</span>
-                                    </div>
-
-                                    <div className="grid gap-3">
-                                        <Button
-                                            className="w-full h-12 text-base font-bold"
-                                            onClick={() => {
-                                                dispatch(addToCart({
-                                                    courseId: course.data.id,
-                                                    slug: course.data.slug,
-                                                    title: course.data.title,
-                                                    thumbnailUrl: course.data.thumbnailUrl,
-                                                    instructorName: course.data.instructor.fullName,
-                                                    basePrice: course.data.basePrice,
-                                                    discountPercentage: course.data.discountPercentage,
-                                                    discountedPrice: course.data.discountedPrice,
-                                                }))
-                                                toast.success('Added to cart')
-                                            }}
-                                        >
-                                            Add to cart
-                                        </Button>
-                                        <Button
-                                            variant="outline"
-                                            className="w-full h-12 text-base font-bold"
-                                            onClick={() => navigate(`/checkout?course=${course.data.slug}`)}
-                                        >
-                                            Buy now
-                                        </Button>
-
-
-                                    </div>
-
-                                    <p className="text-center text-xs text-muted-foreground font-medium uppercase tracking-wide">30-Day Money-Back Guarantee</p>
-
-                                    <div className="space-y-4 pt-2 border-t">
-                                        <h3 className="font-bold text-sm tracking-wide uppercase">This course includes:</h3>
-                                        <div className="space-y-2">
-                                            <div className="flex items-center gap-3">
-                                                <Clock className="size-5 text-muted-foreground" />
-                                                <span>20 hours on-demand video</span>
-                                            </div>
-
-                                            <div className="flex items-center gap-3">
-                                                <InfinityIcon className="size-5 text-muted-foreground" />
-                                                <span>Full lifetime access</span>
-                                            </div>
-                                            <div className="flex items-center gap-3">
-                                                <Award className="size-5 text-muted-foreground" />
-                                                <span>Certificate of completion</span>
-                                            </div>
-                                            <div className="flex items-center gap-3">
-                                                <ShieldCheck className="size-5 text-muted-foreground" />
-                                                <span>Access on mobile and TV</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </aside>
+                        <CoursePurchaseCard course={course.data} />
                     </div>
                 </div>
             </div>

@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Cookie, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Cookies from "js-cookie";
+import { useStateSafe } from "@/hooks/useStateSafe";
 const ACCEPT_ACCEPT_BANNER_DISMISSED = 'ACCEPT_ACCEPT_BANNER_DISMISSED'
 export default function CookieBanner() {
-    const [isVisible, setIsVisible] = useState(false);
+    const [isVisible, setIsVisible] = useStateSafe(false);
 
     useEffect(() => {
         const isBannerDismissed = Cookies.get(ACCEPT_ACCEPT_BANNER_DISMISSED);
