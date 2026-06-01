@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { BookOpen, Clock, Flame, TrendingUp, Trophy } from "lucide-react";
 import { ElementType } from "react";
 
 interface StatsCardProps {
@@ -9,48 +10,35 @@ interface StatsCardProps {
     color: string;
     bg: string;
 }
-
-export default function StatsCard({ title, value, icon: Icon, description, color, bg }: StatsCardProps) {
+const stats = [
+    { label: "Courses in progress", value: "4", sub: "2 nearing completion", icon: BookOpen, accent: "from-amber-400/30 to-orange-500/10", iconBg: "bg-amber-500/15 text-amber-400", trend: "+1 this month" },
+    { label: "Hours learnt", value: "128h", sub: "+12h this week", icon: Clock, accent: "from-sky-400/25 to-blue-500/10", iconBg: "bg-sky-500/15 text-sky-400", trend: "+9%" },
+    { label: "Certificates", value: "7", sub: "View credentials", icon: Trophy, accent: "from-violet-400/25 to-fuchsia-500/10", iconBg: "bg-violet-500/15 text-violet-400", trend: "Top 8%" },
+    { label: "Learning streak", value: "12", suffix: "days", sub: "Personal best: 15", icon: Flame, accent: "from-rose-400/25 to-orange-500/10", iconBg: "bg-rose-500/15 text-rose-400", trend: "On fire" },
+];
+export function StatsCards() {
     return (
-        <Card className="relative overflow-hidden transition-all duration-500 hover:shadow-2xl group border-muted/40 bg-card/60 backdrop-blur-md">
-            {/* Background Pattern: Modern Grid Layer */}
-            <div className={`absolute inset-0 opacity-[0.02] group-hover:opacity-[0.04] transition-opacity duration-500 pointer-events-none ${color}`}
-                style={{
-                    backgroundImage: `linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)`,
-                    backgroundSize: '24px 24px'
-                }}
-            />
-
-            {/* Geometric Accent: Large Skewed Square Frame (Replacement for circle) */}
-            <div className={`absolute -right-10 -top-10 h-32 w-32 rounded-3xl border border-current opacity-[0.03] group-hover:opacity-[0.08] group-hover:rotate-45 group-hover:scale-150 transition-all duration-700 ${color}`} />
-
-            <CardHeader className="flex flex-row items-start justify-between space-y-0 relative z-10 pb-2">
-                <CardTitle className="text-[10px] font-bold text-muted-foreground/80 group-hover:text-foreground transition-colors tracking-[0.15em] uppercase pt-1">
-                    {title}
-                </CardTitle>
-                <div className={`${bg} ${color} p-2.5 rounded-xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 shadow-lg shadow-black/5 ring-1 ring-white/10`}>
-                    <Icon className="h-4 w-4" />
-                </div>
-            </CardHeader>
-
-            <CardContent className="relative z-10 pt-0">
-                <div className="text-4xl font-black tracking-tighter mb-1">
-                    {value}
-                </div>
-                <div className="flex items-center gap-1.5">
-                    {/* Status pulse dot indicating activity/trend */}
-                    <div className={`h-1.5 w-1.5 rounded-full bg-current ${color} animate-pulse shadow-sm`} />
-                    <p className="text-xs font-bold text-muted-foreground/60">
-                        {description}
+        <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+            {stats.map((s) => (
+                <div key={s.label} className="group relative overflow-hidden rounded-2xl border border-border/60 bg-card p-5 transition hover:border-primary/40 hover:-translate-y-0.5 hover:shadow-elegant">
+                    <div className={`absolute -right-10 -top-10 h-32 w-32 rounded-full bg-linear-to-br ${s.accent} blur-2xl opacity-70`} />
+                    <div className="relative flex items-start justify-between">
+                        <p className="text-[10px] uppercase tracking-[0.18em] font-semibold text-muted-foreground">{s.label}</p>
+                        <span className={`grid h-9 w-9 place-items-center rounded-xl ${s.iconBg}`}>
+                            <s.icon className="h-4 w-4" />
+                        </span>
+                    </div>
+                    <p className="relative mt-4 font-display text-4xl font-bold tracking-tight">
+                        {s.value}{s.suffix && <span className="ml-1 text-lg text-muted-foreground font-medium">{s.suffix}</span>}
                     </p>
+                    <div className="relative mt-2 flex items-center justify-between">
+                        <p className="text-xs text-muted-foreground">{s.sub}</p>
+                        <span className="inline-flex items-center gap-1 text-[10px] font-medium text-emerald-500">
+                            <TrendingUp className="h-3 w-3" /> {s.trend}
+                        </span>
+                    </div>
                 </div>
-            </CardContent>
-
-            {/* Mesh Glow Blob (Replacing original glow shape) */}
-            <div className={`absolute -right-20 -bottom-20 h-64 w-64 ${bg} opacity-30 group-hover:opacity-50 blur-[100px] rounded-full transition-all duration-1000 -z-0`} />
-
-            {/* Surface Highlight for depth */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent pointer-events-none" />
-        </Card>
-    );
+            ))}
+        </section>
+    )
 }
