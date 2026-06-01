@@ -1,22 +1,23 @@
 import { lazy, Suspense } from "react"
-import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom"
+import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom"
 
 // Auth guard components
 import { ProtectedRoute } from "@/auth/components/ProtectedRoute"
 import PageLoader from "@/components/common/PageLoader"
 import Onboarding from "@/onboarding/pages/Onboarding"
-// import { useSelector } from "react-redux"
-// import { RootState } from "@/store/store"
+
+// Sync load critical components to avoid "chunky" navigation UI
+import MainLayout from "@/layouts/MainLayout"
+import Home from "@/landing/pages/Home"
+import Login from "@/auth/pages/Login"
+import Signup from "@/auth/pages/Signup"
+import NotFound from "@/components/common/NoRouteMatch"
+
+import { useAuthStatus } from "@/hooks/useAuthStatus";
 
 // Lazy load layouts
-const MainLayout = lazy(() => import("@/layouts/MainLayout"))
 const DashboardLayout = lazy(() => import("@/layouts/DashboardLayout"))
 
-// Lazy load pages
-const Home = lazy(() => import("@/landing/pages/Home"))
-const Login = lazy(() => import("@/auth/pages/Login"))
-const Signup = lazy(() => import("@/auth/pages/Signup"))
-const NotFound = lazy(() => import("@/components/common/NoRouteMatch"))
 const Settings = lazy(() => import("@/dashboard/pages/Settings"))
 
 // Lazy load course-related pages
@@ -39,10 +40,13 @@ const CoursePlayer = lazy(() => import("@/dashboard/pages/CoursePlayer"))
 // Onboarding
 // const Onboarding = lazy(() => import("@/onboarding/pages/Onboarding"))
 
-
+// Redirects authenticated users away from auth pages (login/signup)
+const PublicRoute = () => {
+    const isLogin = useAuthStatus(); // Use the custom hook
+    return isLogin ? <Navigate to="/dashboard" replace /> : <Outlet />;
+};
 
 const AppRouter = () => {
-    // const isLogin = !!useSelector((state: RootState) => state.auth.accessToken); // get access token from store
     return (
         <BrowserRouter>
             <Suspense fallback={<PageLoader />}>
@@ -75,7 +79,7 @@ const AppRouter = () => {
 
 
                     {/* Public Auth Routes */}
-                    <Route path="auth" element={<Outlet />}>
+                    <Route path="auth" element={<PublicRoute />}>
                         <Route path="login" element={<Login />} />
                         <Route path="signup" element={<Signup />} />
                         <Route path="" element={<NotFound />} />

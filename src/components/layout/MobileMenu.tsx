@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/accordion";
 import { NAV_CATEGORIES as courseCategories } from "@/data/courses-data";
 import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible";
+import { useAuthStatus } from "@/hooks/useAuthStatus";
 
 export function MobileMenu({
     open,
@@ -17,6 +18,7 @@ export function MobileMenu({
     open: boolean;
     onClose: (open: boolean) => void
 }) {
+    const isLogin = useAuthStatus();
     return (
         <Collapsible
             open={open}
@@ -57,15 +59,17 @@ export function MobileMenu({
                             </AccordionItem>
                         </Accordion>
                     </div>
-                    <div className="flex flex-col gap-3 pt-6 mt-auto border-t bg-background">
-                        <Button variant="outline" className="w-full p-6" asChild>
-                            <Link to="/auth/login" onClick={() => onClose(false)}>Log in</Link>
-                        </Button>
-                        <Button className="w-full bg-primary p-6" asChild>
-                            <Link to="/auth/signup" onClick={() => onClose(false)}>Join for Free <ArrowRight className="ml-2 size-4" />
-                            </Link>
-                        </Button>
-                    </div>
+                    {!isLogin && (
+                        <div className="flex flex-col gap-3 pt-6 mt-auto border-t bg-background">
+                            <Button variant="outline" className="w-full p-6" asChild>
+                                <Link to="/auth/login" onClick={() => onClose(false)}>Log in</Link>
+                            </Button>
+                            <Button className="w-full bg-primary p-6" asChild>
+                                <Link to="/auth/signup" onClick={() => onClose(false)}>Join for Free <ArrowRight className="ml-2 size-4" />
+                                </Link>
+                            </Button>
+                        </div>
+                    )}
                 </div>
             </CollapsibleContent>
         </Collapsible>

@@ -10,13 +10,12 @@ import { MobileMenu } from "@/components/layout/MobileMenu";
 import { DesktopNav } from "@/components/layout/DesktopNav";
 import { useState } from "react";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
+import { useAuthStatus } from "@/hooks/useAuthStatus";
 
 
 export function AppNavbar() {
     const isMobile = useIsMobile();
-    const isLogin = !!useSelector((state: RootState) => state.auth.accessToken);
+    const isLogin = useAuthStatus();
     const [openMobileMenu, setOpenMobileMenu] = useState(false)
     return (
         <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-md border-b">

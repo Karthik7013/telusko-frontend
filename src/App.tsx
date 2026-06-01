@@ -15,8 +15,20 @@ import ContextProvider from "@/providers/ContextProvider";
 import AuthProvider from "@/providers/AuthProvider";
 import logo from "@/assets/logo.svg";
 
+const BRAND_COLOR = "#d87757";
+
+const TOASTER_ICONS = {
+    success: <CheckCircle2 className="size-4" />,
+    error: <AlertCircle className="size-4" />,
+    info: <Info className="size-4" />,
+    warning: <AlertTriangle className="size-4" />,
+    loading: <Loader2 className="size-4 animate-spin" />,
+    close: <X className="size-4" />,
+};
+
 export function App() {
     useEffect(() => {
+        // Update Favicon
         let link = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
         if (!link) {
             link = document.createElement('link');
@@ -25,23 +37,26 @@ export function App() {
         }
         link.href = logo;
         link.type = 'image/svg+xml';
+
+        // Update Theme Color
         const meta = document.querySelector("meta[name='theme-color']");
         if (meta) {
             const oldColor = meta.getAttribute("content");
-            meta.setAttribute("content", "#d87757");
+            meta.setAttribute("content", BRAND_COLOR);
             return () => {
                 if (oldColor) meta.setAttribute("content", oldColor);
             };
         } else {
             const newMeta = document.createElement('meta');
             newMeta.name = 'theme-color';
-            newMeta.content = '#d87757';
+            newMeta.content = BRAND_COLOR;
             document.head.appendChild(newMeta);
             return () => {
                 document.head.removeChild(newMeta);
             };
         }
     }, []);
+
     return (
         <ContextProvider>
             <ThemeProvider defaultTheme="light" storageKey="app-theme">
@@ -49,17 +64,7 @@ export function App() {
                     <ErrorBoundary>
                         <AppRouter />
                     </ErrorBoundary>
-                    <Toaster
-                        icons={{
-                            success: <CheckCircle2 className="size-4" />,
-                            error: <AlertCircle className="size-4" />,
-                            info: <Info className="size-4" />,
-                            warning: <AlertTriangle className="size-4" />,
-                            loading: <Loader2 className="size-4 animate-spin" />,
-                            close: <X className="size-4" />,
-                        }}
-                        richColors
-                    />
+                    <Toaster icons={TOASTER_ICONS} richColors />
                 </AuthProvider>
             </ThemeProvider>
         </ContextProvider>
