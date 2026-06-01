@@ -16,7 +16,7 @@ export function TrustBar() {
     return (
         <section id="mastry-path" className="py-12 bg-muted/10">
             <div className="container mx-auto px-4">
-                <p className="text-center text-sm font-medium text-muted-foreground mb-8 uppercase tracking-widest">
+                <p className="text-center text-sm font-medium text-muted-foreground mb-8 uppercase tracking-widest font-body">
                     Our Alumni Work At
                 </p>
 

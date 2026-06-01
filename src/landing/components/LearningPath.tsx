@@ -52,10 +52,10 @@ export default function LearningPath() {
                     <Badge variant="secondary" className="mb-4">
                         The Roadmap
                     </Badge>
-                    <h2 className="text-3xl font-bold tracking-tight sm:text-5xl mb-4">
+                    <h2 className="text-3xl font-bold tracking-tight sm:text-5xl mb-4 font-display">
                         Your Path to Mastery
                     </h2>
-                    <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                    <p className="text-muted-foreground text-lg max-w-2xl mx-auto font-body">
                         We don't just teach code; we build careers. Follow our structured
                         curriculum designed by industry veterans.
                     </p>
@@ -108,8 +108,8 @@ export default function LearningPath() {
                                         whileHover={{ y: -5 }}
                                         className="p-6 rounded-xl border bg-card hover:shadow-xl hover:border-primary/50 transition-all duration-300 cursor-default"
                                     >
-                                        <h3 className="font-bold text-xl mb-2">{step.title}</h3>
-                                        <p className="text-muted-foreground leading-relaxed">
+                                        <h3 className="font-bold text-xl mb-2 font-display">{step.title}</h3>
+                                        <p className="text-muted-foreground leading-relaxed font-body">
                                             {step.description}
                                         </p>
                                         {step.status === 'current' && (

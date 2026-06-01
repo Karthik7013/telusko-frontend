@@ -40,10 +40,10 @@ export default function Faq() {
                         <HelpCircle className="size-3.5 text-primary" />
                         Common Questions
                     </Badge>
-                    <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
+                    <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4 font-display">
                         Everything you need to know
                     </h2>
-                    <p className="text-muted-foreground text-lg">
+                    <p className="text-muted-foreground text-lg font-body">
                         Have more questions? Reach out to our support team anytime.
                     </p>
                 </div>
@@ -55,10 +55,10 @@ export default function Faq() {
                             value={`item-${index}`}
                             className="border rounded-lg px-6 bg-card transition-all"
                         >
-                            <AccordionTrigger className="hover:cursor-pointer text-left font-medium hover:no-underline py-6">
+                            <AccordionTrigger className="hover:cursor-pointer text-left font-medium hover:no-underline py-6 font-display">
                                 {faq.question}
                             </AccordionTrigger>
-                            <AccordionContent className="text-muted-foreground leading-relaxed pb-6">
+                            <AccordionContent className="text-muted-foreground leading-relaxed pb-6 font-body">
                                 {faq.answer}
                             </AccordionContent>
                         </AccordionItem>

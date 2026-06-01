@@ -34,7 +34,7 @@ export function ScrollingSearch({
         <div
             onClick={() => navigate("/search")}
             className={cn(
-                "relative w-full max-w-lg cursor-pointer group transition-all",
+                "relative w-full max-w-lg mx-auto cursor-pointer group transition-all",
                 className
             )}
         >
@@ -64,10 +64,9 @@ export function ScrollingSearch({
 
             {/* Search Button */}
             <Button
-                className="absolute right-1.5 top-1.5 h-11 w-11 sm:w-auto sm:px-6 rounded-full font-bold shadow-md hover:shadow-lg transition-all active:scale-95 z-20 p-0 sm:p-auto flex items-center justify-center"
+                className="absolute right-1.5 top-1.5 h-11 w-11 sm:w-auto sm:p-4 rounded-full font-bold shadow-md hover:shadow-lg transition-all active:scale-95 z-20 sm:p-auto flex items-center justify-center"
             >
-                <span className="hidden sm:inline">Search</span>
-                <ArrowRight className="size-5 sm:size-4 sm:ml-2" />
+                <ArrowRight className="size-5 sm:size-4" />
             </Button>
         </div>
     );

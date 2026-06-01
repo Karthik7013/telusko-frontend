@@ -59,7 +59,7 @@ export function App() {
 
     return (
         <ContextProvider>
-            <ThemeProvider defaultTheme="light" storageKey="app-theme">
+            <ThemeProvider defaultTheme="dark" storageKey="app-theme">
                 <AuthProvider>
                     <ErrorBoundary>
                         <AppRouter />

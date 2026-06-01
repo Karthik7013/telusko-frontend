@@ -1,6 +1,5 @@
-import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Quote } from "lucide-react";
+import { Star } from "lucide-react";
 import {
     Carousel,
     CarouselContent,
@@ -42,10 +41,10 @@ export default function Testimonials() {
         <section id="testimonials" className="py-20 lg:py-32">
             <div className="container mx-auto px-4">
                 <div className="text-center max-w-2xl mx-auto mb-16">
-                    <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
+                    <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4 font-display">
                         Real Stories from Real Learners
                     </h2>
-                    <p className="text-muted-foreground">
+                    <p className="text-muted-foreground font-body">
                         Join thousands of developers who transformed their careers through our structured learning paths.
                     </p>
                 </div>
@@ -65,30 +64,40 @@ export default function Testimonials() {
                     <CarouselContent className="-ml-4">
                         {testimonials.map((t, i) => (
                             <CarouselItem key={i} className="pl-4 py-1 md:basis-1/2 lg:basis-1/3">
-                                <Card className="bg-card border-none shadow-sm h-full">
-                                    <CardContent className="pt-8 flex flex-col justify-between h-full">
-                                        <div>
-                                            <Quote className="size-8 text-primary/20 mb-4" />
-                                            <p className="text-lg mb-6 italic text-muted-foreground">"{t.content}"</p>
-                                        </div>
-                                        <div className="flex items-center gap-4 mt-auto">
-                                            <Avatar>
-                                                <AvatarImage src={`https://i.pravatar.cc/150?img=${i}`} alt={t.name}
-
-                                                />
-                                                <AvatarFallback>
-                                                    {t.avatar}
-                                                </AvatarFallback>
-                                            </Avatar>
+                                <div
+                                    key={"hai"}
+                                    className="rounded-3xl border border-border bg-card p-7 shadow-elegant"
+                                >
+                                    <div className="flex gap-0.5 mb-4">
+                                        {Array.from({ length: 5 }).map((_, i) => (
+                                            <Star key={i} className="size-4 fill-primary text-primary" />
+                                        ))}
+                                    </div>
+                                    <p className="font-display text-lg italic text-foreground mb-6">&ldquo;{t.content}&rdquo;</p>
+                                    <div className="pt-6 border-t border-border">
+                                        <div className="flex gap-2">
                                             <div>
-                                                <p className="font-bold leading-none">{t.name}</p>
-                                                <p className="text-sm text-primary mt-1">{t.role}</p>
+                                                <Avatar>
+                                                    <AvatarImage src={`https://i.pravatar.cc/150?img=${i}`} alt={t.name}
+
+                                                    />
+                                                    <AvatarFallback>
+                                                        {t.avatar}
+                                                    </AvatarFallback>
+                                                </Avatar>
                                             </div>
+                                            <div>
+                                                <div className="font-display font-semibold text-sm text-foreground">{t.name}</div>
+                                                <div className="text-xs text-muted-foreground font-body">{t.role}</div>
+                                            </div>
+
                                         </div>
-                                    </CardContent>
-                                </Card>
+
+                                    </div>
+                                </div>
                             </CarouselItem>
                         ))}
+
                     </CarouselContent>
                     <div className="hidden md:block">
                         <CarouselPrevious />

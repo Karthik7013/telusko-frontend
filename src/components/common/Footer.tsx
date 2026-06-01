@@ -16,7 +16,7 @@ export default function Footer() {
                 {/* Top Section: Newsletter */}
                 <div className="py-12 border-b flex flex-col md:flex-row items-center justify-between gap-6">
                     <div className="max-w-md">
-                        <h3 className="text-xl font-bold mb-2">Stay Updated</h3>
+                        <h3 className="text-xl font-display mb-2">Stay Updated</h3>
                         <p className="text-muted-foreground text-sm">
                             Get the latest course updates, tech news, and coding tips delivered directly to your inbox.
                         </p>
@@ -34,7 +34,7 @@ export default function Footer() {
                             <div className="p-0.5 rounded-lg">
                                 <GraduationCap className="size-8 text-primary" />
                             </div>
-                            <span className="text-xl font-bold tracking-tight">Telusko</span>
+                            <span className="text-xl font-display tracking-tight">Telusko</span>
                         </Link>
                         <p className="text-muted-foreground text-sm max-w-xs mb-6">
                             Empowering learners globally with logic-based coding education.

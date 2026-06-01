@@ -18,7 +18,7 @@ export function AppNavbar() {
     const isLogin = useAuthStatus();
     const [openMobileMenu, setOpenMobileMenu] = useState(false)
     return (
-        <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-md border-b">
+        <header className="sticky top-0 z-50 w-full bg-background/70 backdrop-blur-xl border-b border-border">
             <AnnouncementBanner />
             <div className="container flex h-16 items-center mx-auto justify-between px-4 shrink-0">
                 {/* --- LEFT SECTION: LOGO & NAVIGATION --- */}
@@ -27,7 +27,7 @@ export function AppNavbar() {
                         <div className="p-0.5 rounded-lg">
                             <GraduationCap className=" size-8 text-primary" />
                         </div>
-                        <span className="text-xl font-bold tracking-tight">Telusko</span>
+                        <span className="text-xl font-display tracking-tight">Telusko</span>
                     </Link>
                     <DesktopNav />
                 </div>
@@ -66,5 +66,6 @@ export function AppNavbar() {
         </header>
     );
 }
-
 export default AppNavbar;
+
+
