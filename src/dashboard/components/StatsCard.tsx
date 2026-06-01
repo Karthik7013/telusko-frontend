@@ -1,15 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BookOpen, Clock, Flame, TrendingUp, Trophy } from "lucide-react";
-import { ElementType } from "react";
 
-interface StatsCardProps {
-    title: string;
-    value: string;
-    icon: ElementType;
-    description: string;
-    color: string;
-    bg: string;
-}
+import { BookOpen, Clock, Flame, TrendingUp, Trophy } from "lucide-react";
+
+
 const stats = [
     { label: "Courses in progress", value: "4", sub: "2 nearing completion", icon: BookOpen, accent: "from-amber-400/30 to-orange-500/10", iconBg: "bg-amber-500/15 text-amber-400", trend: "+1 this month" },
     { label: "Hours learnt", value: "128h", sub: "+12h this week", icon: Clock, accent: "from-sky-400/25 to-blue-500/10", iconBg: "bg-sky-500/15 text-sky-400", trend: "+9%" },
