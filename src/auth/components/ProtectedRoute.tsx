@@ -1,7 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useMeQuery } from "@/features/identity/identityApi";
 import { Skeleton } from "@/components/ui/skeleton";
-// import { Skeleton } from "@/components/ui/skeleton";
 
 type rolesType = 'admin' | 'instructor' | 'student';
 interface ProtectedRouteProps {

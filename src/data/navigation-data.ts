@@ -1,4 +1,4 @@
-import { NavItem } from "@/dashboard/components/NavMain";
+import type { NavItem } from "@/types/navigation";
 import { LayoutDashboard, BookOpen, Heart, ReceiptText, Settings, Search } from "lucide-react";
 
 export const DASHBOARD_NAV: NavItem[] = [
@@ -23,7 +23,7 @@ export const DASHBOARD_NAV: NavItem[] = [
     },
     {
         title: "Wishlist",
-        url: "/dashboard/whishlist",
+        url: "/dashboard/wishlist",
         icon: Heart,
         visible: ["student"]
     },

@@ -45,7 +45,6 @@ export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, Fetch
 
         if (refreshResult.data) {
             const data = refreshResult.data as RefreshResponse;
-            console.log(data);
             // Update Redux state with the new token
 
             api.dispatch(setCredentials({ accessToken: data.accessToken }));

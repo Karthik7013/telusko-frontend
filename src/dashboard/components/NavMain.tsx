@@ -1,6 +1,5 @@
-
 import { Link, useLocation } from "react-router-dom"
-import { ChevronRight, type LucideIcon } from "lucide-react"
+import { ChevronRight } from "lucide-react"
 
 import {
     Collapsible,
@@ -17,30 +16,12 @@ import {
     SidebarMenuSubButton,
     SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
-
-export type NavItem = {
-    title: string;
-    url: string;
-    icon?: LucideIcon;
-    isActive?: boolean;
-    items?: NavItem[];
-    visible: string[];
-}
-
+import type { NavItem } from "@/types/navigation"
 
 export default function NavMain({
     items,
 }: {
-    items: {
-        title: string
-        url: string
-        icon?: LucideIcon
-        isActive?: boolean
-        items?: {
-            title: string
-            url: string
-        }[]
-    }[]
+    items: NavItem[]
 }) {
     const location = useLocation();
     const isActive = (url: string) => {
@@ -50,7 +31,6 @@ export default function NavMain({
     const isExactMatch = (url: string) => {
         return location.pathname === url;
     };
-  
 
     return (
         <SidebarGroup>

@@ -37,9 +37,6 @@ const TransactionsPage = lazy(() => import("@/dashboard/pages/Transactions"))
 const WishlistPage = lazy(() => import("@/dashboard/pages/Wishlist"))
 const CoursePlayer = lazy(() => import("@/dashboard/pages/CoursePlayer"))
 
-// Onboarding
-// const Onboarding = lazy(() => import("@/onboarding/pages/Onboarding"))
-
 // Redirects authenticated users away from auth pages (login/signup)
 const PublicRoute = () => {
     const isLogin = useAuthStatus(); // Use the custom hook
@@ -69,7 +66,7 @@ const AppRouter = () => {
                             <Route index element={<AnalyticsPage />} />
                             <Route path="my-learnings" element={<MyLearningsPage />} />
                             <Route path="transactions" element={<TransactionsPage />} />
-                            <Route path="whishlist" element={<WishlistPage />} />
+                            <Route path="wishlist" element={<WishlistPage />} />
                             <Route path="settings" element={<Settings />} />
                             <Route path="course-player" element={<CoursePlayer />} />
                             <Route path="*" element={<NotFound />} />

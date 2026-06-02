@@ -33,7 +33,7 @@ export function AnnouncementBanner() {
                 >
                     <div className="container mx-auto px-4 py-3 flex items-center justify-center gap-x-6">
                         <div className="flex items-center gap-x-3 text-sm font-medium">
-                            🎉
+                            <span aria-hidden="true">🎉</span>
                             <p>
                                 <span className="font-bold">Limited Time Offer!</span>{" "}
                                 Get 50% off on all Premium Masterclasses.

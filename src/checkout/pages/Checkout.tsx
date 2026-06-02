@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks/useAppDispatch'
 import { clearCart } from '@/features/cart/cartSlice'
 import { useCreateOrderMutation } from '@/features/orders/ordersApi'
 import { useGetCourseBySlugQuery } from '@/features/courses/coursesApi'
+import { useMeQuery } from '@/features/identity/identityApi'
 import type { Coupon } from '@/features/coupons/couponsApi'
 import { ApiError } from '@/components/common/ApiError';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -21,6 +22,7 @@ const Checkout = () => {
   const [searchParams] = useSearchParams()
   const courseSlug = searchParams.get('course')
   const cartItems = useAppSelector(state => state.cart.items)
+  const { data: userData } = useMeQuery()
 
   const [createOrder, { isLoading: isPlacing }] = useCreateOrderMutation()
   const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(null)
@@ -58,7 +60,7 @@ const Checkout = () => {
 
   const handlePlaceOrder = async () => {
     try {
-      const userId = JSON.parse(localStorage.getItem('user') || '{}').id
+      const userId = userData?.data?.id
       if (!userId) {
         toast.error('Please log in to place an order')
         navigate('/auth/login')

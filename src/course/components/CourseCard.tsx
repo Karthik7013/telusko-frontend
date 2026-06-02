@@ -48,7 +48,6 @@ export default function CourseCard({
                         </div>
                         <div className="flex flex-col leading-tight">
                             <span className="text-xs font-medium text-foreground">{course.instructor.fullName}</span>
-                            <span className="text-[10px] text-muted-foreground">{course.instructor.email}</span>
                         </div>
                     </div>
 

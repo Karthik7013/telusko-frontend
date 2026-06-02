@@ -1,4 +1,3 @@
-// import { Course } from '@/types/course';
 import { ApiResponse } from '@/lib/api-utils';
 import { CourseCardProps, CourseDetailProps } from '@/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';

@@ -1,6 +1,6 @@
 import { ApiResponse } from '@/lib/api-utils';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { BASE_URL } from '@/lib/constants';
+import { createApi } from '@reduxjs/toolkit/query/react';
+import { baseQueryWithReauth } from '@/features/auth/authBaseQuery';
 
 export interface Coupon {
   id: string
@@ -20,7 +20,7 @@ export interface Coupon {
 
 export const couponsApi = createApi({
   reducerPath: 'couponsApi',
-  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
     validateCoupon: builder.query<ApiResponse<Coupon>, string>({
       query: (code) => `/coupons/code/${code}`,

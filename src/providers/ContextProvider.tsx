@@ -1,15 +1,16 @@
 import { Provider } from "react-redux";
 import { store } from "@/store/store";
 
-type contextprops = {
+type ContextProviderProps = {
     children: React.ReactNode;
 }
 
-const ContextProvider = (props: contextprops) => {
+const ContextProvider = (props: ContextProviderProps) => {
     return (
         <Provider store={store}>
             {props.children}
         </Provider>
     )
 }
+
 export default ContextProvider;

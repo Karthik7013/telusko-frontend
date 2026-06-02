@@ -7,7 +7,7 @@ const CartIcon = () => {
   const count = useAppSelector(state => state.cart.items.length)
 
   return (
-    <Button variant="ghost" size="icon" asChild className="relative">
+    <Button variant="ghost" size="icon" asChild className="relative" aria-label={`Cart with ${count} items`}>
       <Link to="/cart">
         <ShoppingCart className="size-5" />
         {count > 0 && (

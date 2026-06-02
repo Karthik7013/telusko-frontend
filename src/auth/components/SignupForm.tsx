@@ -29,10 +29,10 @@ const formSchema = z.object({
         .min(8, "Password must be at least 8 characters")
         .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
         .regex(/[0-9]/, "Password must contain at least one number"),
-    confirm_password: z.string().min(1, "Please confirm your password")
-}).refine((data) => data.password === data.confirm_password, {
+    confirmPassword: z.string().min(1, "Please confirm your password")
+}).refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
-    path: ["confirm_password"],
+    path: ["confirmPassword"],
 });
 
 
@@ -46,7 +46,7 @@ export function SignupForm() {
             displayName: "",
             email: "",
             password: "",
-            confirm_password: ""
+            confirmPassword: ""
         },
     })
 
@@ -116,10 +116,10 @@ export function SignupForm() {
                         <FieldLabel>Confirm Password</FieldLabel>
                         <Input
                             type="password"
-                            {...register("confirm_password")}
-                            aria-invalid={!!errors.confirm_password}
+                            {...register("confirmPassword")}
+                            aria-invalid={!!errors.confirmPassword}
                         />
-                        {errors.confirm_password && <FieldError>{errors.confirm_password.message}</FieldError>}
+                        {errors.confirmPassword && <FieldError>{errors.confirmPassword.message}</FieldError>}
                     </Field>
 
                     {/* Actions */}

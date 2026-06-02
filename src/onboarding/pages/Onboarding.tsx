@@ -1,4 +1,5 @@
 import { useReducer, useCallback, useEffect } from "react"
+import { useStateSafe } from "@/hooks/useStateSafe"
 import { useNavigate } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import { ArrowLeft, ArrowRight, Loader2, X } from "lucide-react"
@@ -249,7 +250,4 @@ export default function Onboarding() {
   )
 }
 
-function useStateSafe<T>(initial: T): [T, (value: T) => void] {
-  const [state, setState] = useReducer((_: T, next: T) => next, initial)
-  return [state, setState]
-}
+
