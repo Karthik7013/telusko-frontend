@@ -40,8 +40,7 @@ function SkeletonRow() {
 }
 
 export default function ActivityLog() {
-    const { data, isLoading, error, refetch } = useLogsQuery();
-    const activities = data?.data;
+    const { data: activities, isLoading, error, refetch } = useLogsQuery();
 
     return (
         <Card className="col-span-4 lg:col-span-4">

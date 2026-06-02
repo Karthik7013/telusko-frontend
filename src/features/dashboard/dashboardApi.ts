@@ -4,7 +4,6 @@ import { ApiResponse } from '@/lib/api-utils';
 
 export interface ActivityLogItem {
     id: string;
-    userId: string;
     activityType: 'login' | 'course_enrolled' | 'certificate_earned';
     resourceId: string | null;
     resourceType: string | null;
@@ -18,8 +17,10 @@ export const dashboardApi = createApi({
     baseQuery: baseQueryWithReauth,
     tagTypes: ['ActivityLogs'],
     endpoints: (builder) => ({
-        logs: builder.query<ApiResponse<ActivityLogItem[]>, void>({
+        logs: builder.query<ActivityLogItem[], void>({
             query: () => '/identity/logs',
+            transformResponse: (response: ApiResponse<{ logs: ActivityLogItem[] }>) =>
+                response.data?.logs ?? [],
             providesTags: ['ActivityLogs'],
         }),
     }),
