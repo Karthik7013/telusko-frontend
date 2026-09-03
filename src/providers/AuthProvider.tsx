@@ -1,27 +1,33 @@
 import { useEffect, useRef } from "react";
-import { useRefreshTokenMutation } from "@/features/auth/authApi"
-import { useSelector } from "react-redux";
+import { useRefreshSessionMutation } from "@/features/auth/authApi";
 import PageLoader from "@/components/common/PageLoader";
-import { RootState } from "@/store/store";
+import { supabase } from "@/lib/supabase";
 
 export default function SessionInitializer(props: {
     children: React.ReactNode
 }) {
-    const token = useSelector((state: RootState) => state.auth.accessToken);
-    const hasSessionHint = localStorage.getItem('auth_active') === 'true';
-    const [refreshToken, { isLoading }] = useRefreshTokenMutation();
+    const [refreshSession, { isLoading }] = useRefreshSessionMutation();
     const initialized = useRef(false);
 
     useEffect(() => {
-        if (hasSessionHint && !token && !initialized.current) {
+        if (!initialized.current) {
             initialized.current = true;
-            refreshToken();
+            refreshSession();
         }
-    }, [hasSessionHint, token, refreshToken]);
+    }, [refreshSession]);
+
+    useEffect(() => {
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+            if (session) {
+                refreshSession();
+            }
+        });
+        return () => { subscription.unsubscribe(); };
+    }, []);
 
     if (isLoading) {
-        return <PageLoader />
+        return <PageLoader />;
     }
 
-    return <>{props.children}</>
+    return <>{props.children}</>;
 }

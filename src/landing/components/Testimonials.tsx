@@ -65,7 +65,6 @@ export default function Testimonials() {
                         {testimonials.map((t, i) => (
                             <CarouselItem key={i} className="pl-4 py-1 md:basis-1/2 lg:basis-1/3">
                                 <div
-                                    key={"hai"}
                                     className="rounded-3xl border border-border bg-card p-7 shadow-elegant"
                                 >
                                     <div className="flex gap-0.5 mb-4">

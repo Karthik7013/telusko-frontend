@@ -1,3 +1,4 @@
+import React from "react"
 import { Card, CardContent, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Clock, BookOpen, BadgeCheck, PersonStanding } from "lucide-react"
@@ -7,11 +8,11 @@ import { Link } from "react-router-dom"
 import { Separator } from "@/components/ui/separator"
 import { CourseRating } from "@/course/components/CourseRating"
 
-export default function CourseCard({
+const CourseCard = React.memo(({
     course
 }: {
     course: CourseCardProps
-}) {
+}) => {
     return (
         <Link to={`/course/${course.slug}`} className="block h-full">
             <Card className='group flex flex-col h-full overflow-hidden rounded-2xl gap-0 border border-border/60 bg-card transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/10 hover:border-border py-0'>
@@ -80,7 +81,9 @@ export default function CourseCard({
             </Card>
         </Link>
     )
-}
+})
+
+export default CourseCard
 
 export function CourseCardSkeleton() {
     return (

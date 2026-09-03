@@ -43,11 +43,10 @@ export function LoginForm({
         try {
             const res = await login(userData).unwrap();
 
-            if (res.data?.accessToken) {
+            if (res.session?.accessToken) {
                 toast.success("Welcome back!", {
                     description: "You have successfully logged in."
                 })
-
                 navigate('/dashboard');
             } else {
                 toast.error("Login Failed", {

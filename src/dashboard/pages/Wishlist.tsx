@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Heart, AlertCircle, Search, Trash2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -7,7 +8,8 @@ import { useGetWishlistQuery, useRemoveFromWishlistMutation } from "@/features/w
 
 export default function Wishlist() {
   const { data, isLoading, error, refetch } = useGetWishlistQuery();
-  const [removeItem, { isLoading: isRemoving }] = useRemoveFromWishlistMutation();
+  const [removeItem] = useRemoveFromWishlistMutation();
+  const [removingId, setRemovingId] = useState<string | null>(null);
 
   return (
     <div className="space-y-6">
@@ -67,10 +69,17 @@ export default function Wishlist() {
                   variant="outline"
                   size="sm"
                   className="w-full"
-                  disabled={isRemoving}
-                  onClick={() => removeItem(item.id)}
+                  disabled={removingId === item.id}
+                  onClick={async () => {
+                    setRemovingId(item.id);
+                    try {
+                      await removeItem(item.id).unwrap();
+                    } finally {
+                      setRemovingId(null);
+                    }
+                  }}
                 >
-                  {isRemoving ? (
+                  {removingId === item.id ? (
                     <Loader2 className="size-4 mr-2 animate-spin" />
                   ) : (
                     <Trash2 className="size-4 mr-2" />

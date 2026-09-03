@@ -1,3 +1,4 @@
+import React from "react"
 import { Star } from "lucide-react"
 
 type CourseRatingProps = {
@@ -8,7 +9,7 @@ type CourseRatingProps = {
     alwaysFull?: boolean
 }
 
-export function CourseRating({ rating, reviewCount, showValue = true, size = "md", alwaysFull }: CourseRatingProps) {
+export const CourseRating = React.memo(({ rating, reviewCount, showValue = true, size = "md", alwaysFull }: CourseRatingProps) => {
     return (
         <div className="flex items-center gap-1.5">
             {showValue && (
@@ -35,4 +36,4 @@ export function CourseRating({ rating, reviewCount, showValue = true, size = "md
             )}
         </div>
     )
-}
+})

@@ -11,9 +11,8 @@ import { VideoPlayer } from "@/components/ui/video-player";
 import { cn } from "@/lib/utils";
 import { CourseRating } from "@/course/components/CourseRating";
 
-export default function CoursePlayer({
-
-}) {
+// TODO: Wire to real API data. Currently uses hardcoded placeholder data.
+export default function CoursePlayer() {
     const [isPlaylistOpen, setPlaylistOpen] = useState(true);
 
     return (

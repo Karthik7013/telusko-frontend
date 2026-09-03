@@ -1,10 +1,11 @@
+import React from "react"
 import type { CartItem } from '@/features/cart/cartSlice'
 
 interface OrderSummaryCardProps {
   item: CartItem
 }
 
-const OrderSummaryCard = ({ item }: OrderSummaryCardProps) => {
+const OrderSummaryCard = React.memo(({ item }: OrderSummaryCardProps) => {
   const displayPrice = item.discountedPrice ?? item.basePrice
 
   return (
@@ -20,6 +21,6 @@ const OrderSummaryCard = ({ item }: OrderSummaryCardProps) => {
       </div>
     </div>
   )
-}
+})
 
 export default OrderSummaryCard

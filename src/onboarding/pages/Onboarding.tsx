@@ -1,4 +1,4 @@
-import { useReducer, useCallback, useEffect } from "react"
+import { useReducer, useEffect } from "react"
 import { useStateSafe } from "@/hooks/useStateSafe"
 import { useNavigate } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
@@ -83,7 +83,7 @@ export default function Onboarding() {
     saveToStorage(step, formData)
   }, [step, formData])
 
-  const canProceed = useCallback(() => {
+  const canProceed = () => {
     switch (step) {
       case 0: return formData.role !== null
       case 1: return true
@@ -91,7 +91,7 @@ export default function Onboarding() {
       case 3: return formData.experienceLevel !== null && formData.timeCommitment !== null
       default: return false
     }
-  }, [step, formData])
+  }
 
   async function handleNext() {
     if (step < TOTAL_STEPS - 1) {

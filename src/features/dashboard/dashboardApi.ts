@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseQueryWithReauth } from '@/features/auth/authBaseQuery';
+import { supabaseBaseQuery } from '@/lib/supabaseBaseQuery';
 import { ApiResponse } from '@/lib/api-utils';
 
 export interface ActivityLogItem {
@@ -12,15 +12,27 @@ export interface ActivityLogItem {
     createdAt: string;
 }
 
+const mapLog = (l: any): ActivityLogItem => ({
+    id: l.id,
+    activityType: l.activity_type,
+    resourceId: l.resource_id,
+    resourceType: l.resource_type,
+    metadata: l.metadata ?? {},
+    durationMinutes: l.duration_minutes ?? 0,
+    createdAt: l.created_at,
+});
+
 export const dashboardApi = createApi({
     reducerPath: 'dashboardApi',
-    baseQuery: baseQueryWithReauth,
+    baseQuery: supabaseBaseQuery,
     tagTypes: ['ActivityLogs'],
     endpoints: (builder) => ({
         logs: builder.query<ActivityLogItem[], void>({
-            query: () => '/identity/logs',
-            transformResponse: (response: ApiResponse<{ logs: ActivityLogItem[] }>) =>
-                response.data?.logs ?? [],
+            query: () => '/identity/activity_logs?select=*&order=created_at.desc&limit=50',
+            transformResponse: (response: ApiResponse<any[]> | any[]) => {
+                const raw = Array.isArray(response) ? response : (response as ApiResponse<any[]>)?.data ?? [];
+                return (raw ?? []).map(mapLog);
+            },
             providesTags: ['ActivityLogs'],
         }),
     }),

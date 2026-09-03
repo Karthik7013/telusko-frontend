@@ -1,3 +1,4 @@
+import React from "react"
 import {
     Avatar,
     AvatarFallback,
@@ -11,7 +12,7 @@ type UserAvatarProps = {
     fallbackClassName?: string
 }
 
-export function UserAvatar({ avatarUrl, displayName, className = "h-8 w-8", fallbackClassName }: UserAvatarProps) {
+export const UserAvatar = React.memo(({ avatarUrl, displayName, className = "h-8 w-8", fallbackClassName }: UserAvatarProps) => {
     return (
         <Avatar className={className}>
             <AvatarImage src={avatarUrl} alt={displayName} />
@@ -20,4 +21,4 @@ export function UserAvatar({ avatarUrl, displayName, className = "h-8 w-8", fall
             </AvatarFallback>
         </Avatar>
     )
-}
+})

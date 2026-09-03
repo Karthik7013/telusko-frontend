@@ -1,3 +1,4 @@
+import { useMemo } from "react"
 import { useGetCoursesQuery } from "@/features/courses/coursesApi"
 import { useGetPreferencesQuery } from "@/features/preferences/preferencesApi"
 import CourseCard from "@/course/components/CourseCard"
@@ -7,6 +8,36 @@ import { ApiError } from "@/components/common/ApiError"
 export function RecommendedCourses() {
   const { data: coursesData, isLoading: coursesLoading, error: coursesError, refetch: refetchCourses } = useGetCoursesQuery(undefined as any)
   const { data: prefsData, isLoading: prefsLoading } = useGetPreferencesQuery()
+
+  const recommended = useMemo(() => {
+    if (!coursesData?.data?.courses) return []
+    const courses: CourseCardProps[] = coursesData.data.courses
+    const prefs = prefsData?.data
+
+    if (!prefs) return courses
+
+    const interestCategories = prefs.interests.map((i) =>
+      i === "web_development" ? "Web Development" : i.charAt(0).toUpperCase() + i.slice(1)
+    )
+
+    let filtered = courses.filter((course) => {
+      const matchesInterest =
+        prefs.interests.length === 0 ||
+        interestCategories.some(
+          (cat) =>
+            course.category.toLowerCase().includes(cat.toLowerCase()) ||
+            (course as any).tags?.some((t: string) => t.toLowerCase().includes(cat.toLowerCase()))
+        )
+
+      const matchesLevel =
+        !prefs.experienceLevel || course.level === prefs.experienceLevel
+
+      return matchesInterest && matchesLevel
+    })
+
+    filtered.sort((a, b) => b.rating - a.rating)
+    return filtered.slice(0, 8)
+  }, [coursesData, prefsData])
 
   if (coursesLoading || prefsLoading) {
     return (
@@ -22,39 +53,8 @@ export function RecommendedCourses() {
   }
 
   if (coursesError) return <ApiError error="Failed to load recommendations" onRetry={refetchCourses} />;
-
-  if (!coursesData?.data?.courses) return null
-
-  const courses: CourseCardProps[] = coursesData.data.courses
-  const prefs = prefsData?.data
-
-  let recommended = courses
-
-  if (prefs) {
-    const interestCategories = prefs.interests.map((i) =>
-      i === "web_development" ? "Web Development" : i.charAt(0).toUpperCase() + i.slice(1)
-    )
-
-    recommended = courses.filter((course) => {
-      const matchesInterest =
-        prefs.interests.length === 0 ||
-        interestCategories.some(
-          (cat) =>
-            course.category.toLowerCase().includes(cat.toLowerCase()) ||
-            (course as any).tags?.some((t: string) => t.toLowerCase().includes(cat.toLowerCase()))
-        )
-
-      const matchesLevel =
-        !prefs.experienceLevel || course.level === prefs.experienceLevel
-
-      return matchesInterest && matchesLevel
-    })
-
-    recommended.sort((a, b) => b.rating - a.rating)
-    recommended = recommended.slice(0, 8)
-  }
-
   if (recommended.length === 0) return null
+
   return <section className="flex items-center py-16 lg:py-28">
     <div className="container mx-auto px-4">
       <div className="space-y-4">

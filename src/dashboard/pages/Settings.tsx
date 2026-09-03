@@ -18,6 +18,7 @@ import {
     TabsTrigger,
 } from "@/components/ui/tabs";
 import { useMeQuery, useChangePasswordMutation, useUpdateProfileMutation } from "@/features/identity/identityApi";
+import { BASE_URL } from "@/lib/constants";
 import LearningPreferences from "@/dashboard/components/LearningPreferences";
 import { SwitchTheme } from "@/components/common/ToggleTheme";
 import { ApiError } from "@/components/common/ApiError";
@@ -78,7 +79,7 @@ const ProfileSettings = () => {
         try {
             const formData = new FormData();
             formData.append("image", file);
-            const res = await fetch("http://localhost:3000/upload", {
+            const res = await fetch(`${BASE_URL}/upload`, {
                 method: "POST",
                 headers: { Authorization: `Bearer ${accessToken}` },
                 body: formData,

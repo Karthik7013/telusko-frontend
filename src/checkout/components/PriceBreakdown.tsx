@@ -1,10 +1,12 @@
+import React from "react"
+
 interface PriceBreakdownProps {
   subtotal: number
   discountAmount: number
   total: number
 }
 
-const PriceBreakdown = ({ subtotal, discountAmount, total }: PriceBreakdownProps) => {
+const PriceBreakdown = React.memo(({ subtotal, discountAmount, total }: PriceBreakdownProps) => {
   return (
     <div className="space-y-2 text-sm">
       <div className="flex justify-between">
@@ -23,6 +25,6 @@ const PriceBreakdown = ({ subtotal, discountAmount, total }: PriceBreakdownProps
       </div>
     </div>
   )
-}
+})
 
 export default PriceBreakdown

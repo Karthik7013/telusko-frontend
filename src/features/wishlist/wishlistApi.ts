@@ -1,6 +1,6 @@
 import { ApiResponse } from '@/lib/api-utils';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { BASE_URL } from '@/lib/constants';
+import { createApi } from '@reduxjs/toolkit/query/react';
+import { supabaseBaseQuery } from '@/lib/supabaseBaseQuery';
 
 export interface WishlistItem {
   id: string
@@ -9,18 +9,28 @@ export interface WishlistItem {
   addedAt: string
 }
 
+const wrap = <T>(data: T): ApiResponse<T> => ({ success: true, data, error: null });
+
 export const wishlistApi = createApi({
   reducerPath: 'wishlistApi',
-  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  baseQuery: supabaseBaseQuery,
   tagTypes: ['Wishlist'],
   endpoints: (builder) => ({
     getWishlist: builder.query<ApiResponse<WishlistItem[]>, void>({
-      query: () => '/wishlist',
+      query: () => '/sales/wishlist?select=*,catalog/courses(title)&order=added_at.desc',
+      transformResponse: (raw: any) => wrap(
+        (raw ?? []).map((w: any) => ({
+          id: w.id,
+          courseId: w.course_id,
+          title: w.courses?.title ?? w.course_id,
+          addedAt: w.added_at,
+        }))
+      ),
       providesTags: ['Wishlist'],
     }),
     removeFromWishlist: builder.mutation<ApiResponse<void>, string>({
       query: (id) => ({
-        url: `/wishlist/${id}`,
+        url: `/sales/wishlist?id=eq.${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Wishlist'],

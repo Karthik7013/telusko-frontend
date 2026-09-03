@@ -1,6 +1,6 @@
 import { ApiResponse } from '@/lib/api-utils';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { BASE_URL } from '@/lib/constants';
+import { createApi } from '@reduxjs/toolkit/query/react';
+import { supabaseBaseQuery } from '@/lib/supabaseBaseQuery';
 
 export interface Transaction {
   id: string
@@ -14,13 +14,28 @@ export interface Transaction {
   createdAt: string
 }
 
+const wrap = <T>(data: T): ApiResponse<T> => ({ success: true, data, error: null });
+
 export const transactionsApi = createApi({
   reducerPath: 'transactionsApi',
-  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  baseQuery: supabaseBaseQuery,
   tagTypes: ['Transactions'],
   endpoints: (builder) => ({
     getMyTransactions: builder.query<ApiResponse<Transaction[]>, void>({
-      query: () => '/transactions',
+      query: () => '/sales/transactions?select=*,catalog/courses(title)&order=created_at.desc',
+      transformResponse: (raw: any) => wrap(
+        (raw ?? []).map((t: any) => ({
+          id: t.id,
+          orderNumber: t.gateway_txn_id ?? t.id,
+          courseId: t.course_id,
+          courseName: t.courses?.title ?? t.course_id,
+          amount: Number(t.amount ?? 0),
+          currency: 'USD',
+          status: t.payment_status === 'completed' ? 'completed' : t.payment_status,
+          paymentMethod: null,
+          createdAt: t.created_at,
+        }))
+      ),
       providesTags: ['Transactions'],
     }),
   }),

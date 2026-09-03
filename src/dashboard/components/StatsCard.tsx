@@ -1,6 +1,6 @@
 
+import { memo } from "react"
 import { BookOpen, Clock, Flame, TrendingUp, Trophy } from "lucide-react";
-
 
 const stats = [
     { label: "Courses in progress", value: "4", sub: "2 nearing completion", icon: BookOpen, accent: "from-amber-400/30 to-orange-500/10", iconBg: "bg-amber-500/15 text-amber-400", trend: "+1 this month" },
@@ -8,7 +8,7 @@ const stats = [
     { label: "Certificates", value: "7", sub: "View credentials", icon: Trophy, accent: "from-violet-400/25 to-fuchsia-500/10", iconBg: "bg-violet-500/15 text-violet-400", trend: "Top 8%" },
     { label: "Learning streak", value: "12", suffix: "days", sub: "Personal best: 15", icon: Flame, accent: "from-rose-400/25 to-orange-500/10", iconBg: "bg-rose-500/15 text-rose-400", trend: "On fire" },
 ];
-export function StatsCards() {
+export const StatsCards = memo(function StatsCards() {
     return (
         <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
             {stats.map((s) => (
@@ -33,4 +33,4 @@ export function StatsCards() {
             ))}
         </section>
     )
-}
+})

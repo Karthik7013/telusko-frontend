@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Search, Filter, SlidersHorizontal, PackageOpen } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -56,17 +56,17 @@ export default function SearchCourses() {
         isPublished: isPublished || undefined,
     });
 
-    const toggleCategory = (category: string) => {
+    const toggleCategory = useCallback((category: string) => {
         setSelectedCategories(prev =>
             prev.includes(category) ? prev.filter(c => c !== category) : [...prev, category]
         );
-    };
+    }, []);
 
-    const toggleLevel = (level: string) => {
+    const toggleLevel = useCallback((level: string) => {
         setSelectedLevels(prev =>
             prev.includes(level) ? prev.filter(l => l !== level) : [...prev, level]
         );
-    };
+    }, []);
 
     const handleClearFilters = () => {
         setSearchQuery("");
@@ -80,14 +80,15 @@ export default function SearchCourses() {
         setSearchParams({});
     };
 
-    const filterProps = {
+    const filterProps = useMemo(() => ({
         selectedCategories, selectedLevels, selectedInstructor, minPrice, maxPrice,
         isFeatured, isPublished,
         onToggleCategory: toggleCategory, onToggleLevel: toggleLevel,
         onInstructorChange: setSelectedInstructor,
         onMinPriceChange: setMinPrice, onMaxPriceChange: setMaxPrice,
         onFeaturedChange: setIsFeatured, onPublishedChange: setIsPublished,
-    };
+    }), [selectedCategories, selectedLevels, selectedInstructor, minPrice, maxPrice,
+        isFeatured, isPublished, toggleCategory, toggleLevel]);
 
     return (
         <div className="py-16">

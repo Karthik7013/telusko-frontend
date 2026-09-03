@@ -1,0 +1,16 @@
+[projects]
+
+[functions]
+
+[db]
+migrations_path = "supabase/migrations"
+
+[auth]
+
+[storage]
+
+[edge_functions]
+
+[analytics]
+
+[logging]
