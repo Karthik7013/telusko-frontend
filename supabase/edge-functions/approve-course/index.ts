@@ -25,16 +25,22 @@ serve(async (req) => {
       });
     }
 
-    const isAdmin = await supabase
+    const { data: myRoles, error: rolesError } = await supabase
       .schema("identity").from("user_roles")
       .select("role_id")
       .eq("user_id", user.id)
-      .eq("status", "active")
-      .single();
+      .eq("status", "active");
+
+    if (rolesError) {
+      return new Response(JSON.stringify({ error: { code: "INTERNAL_ERROR", message: rolesError.message } }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
 
     const { data: roles } = await supabase.schema("identity").from("roles").select("id, name");
     const adminRole = roles?.find((r) => r.name === "admin");
-    const isAdminUser = isAdmin.data && adminRole && isAdmin.data.role_id === adminRole.id;
+    const isAdminUser = !!adminRole && (myRoles || []).some((r) => r.role_id === adminRole.id);
 
     if (!isAdminUser) {
       return new Response(JSON.stringify({ error: { code: "FORBIDDEN", message: "Admin access required" } }), {

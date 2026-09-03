@@ -1,6 +1,6 @@
 import { ApiResponse } from '@/lib/api-utils';
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { supabaseBaseQuery } from '@/lib/supabaseBaseQuery';
+import { salesBaseQuery } from '@/lib/supabaseBaseQuery';
 
 export interface CreateOrderRequest {
   userId: string
@@ -80,12 +80,12 @@ const mapOrder = (o: any): Order => ({
 
 export const ordersApi = createApi({
   reducerPath: 'ordersApi',
-  baseQuery: supabaseBaseQuery,
+  baseQuery: salesBaseQuery,
   tagTypes: ['Orders'],
   endpoints: (builder) => ({
     createOrder: builder.mutation<ApiResponse<Order>, CreateOrderRequest>({
       query: (body) => ({
-        url: '/sales/orders',
+        url: '/orders',
         method: 'POST',
         body: {
           order_number: `ORD-${Date.now()}`,
@@ -104,7 +104,7 @@ export const ordersApi = createApi({
       invalidatesTags: ['Orders'],
     }),
     getOrderByNumber: builder.query<ApiResponse<Order>, string>({
-      query: (orderNumber) => `/sales/orders?select=*,order_items(*)&order_number=eq.${encodeURIComponent(orderNumber)}&limit=1`,
+      query: (orderNumber) => `/orders?select=*,order_items(*)&order_number=eq.${encodeURIComponent(orderNumber)}&limit=1`,
       transformResponse: (raw: any) => wrap(mapOrder((raw ?? [])[0])),
       providesTags: ['Orders'],
     }),

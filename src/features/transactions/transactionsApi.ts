@@ -1,6 +1,6 @@
 import { ApiResponse } from '@/lib/api-utils';
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { supabaseBaseQuery } from '@/lib/supabaseBaseQuery';
+import { salesBaseQuery } from '@/lib/supabaseBaseQuery';
 
 export interface Transaction {
   id: string
@@ -18,11 +18,11 @@ const wrap = <T>(data: T): ApiResponse<T> => ({ success: true, data, error: null
 
 export const transactionsApi = createApi({
   reducerPath: 'transactionsApi',
-  baseQuery: supabaseBaseQuery,
+  baseQuery: salesBaseQuery,
   tagTypes: ['Transactions'],
   endpoints: (builder) => ({
     getMyTransactions: builder.query<ApiResponse<Transaction[]>, void>({
-      query: () => '/sales/transactions?select=*,catalog/courses(title)&order=created_at.desc',
+      query: () => '/transactions?select=*,courses(title)&order=created_at.desc',
       transformResponse: (raw: any) => wrap(
         (raw ?? []).map((t: any) => ({
           id: t.id,

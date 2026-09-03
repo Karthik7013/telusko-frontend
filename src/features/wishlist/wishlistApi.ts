@@ -1,6 +1,6 @@
 import { ApiResponse } from '@/lib/api-utils';
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { supabaseBaseQuery } from '@/lib/supabaseBaseQuery';
+import { salesBaseQuery } from '@/lib/supabaseBaseQuery';
 
 export interface WishlistItem {
   id: string
@@ -13,11 +13,11 @@ const wrap = <T>(data: T): ApiResponse<T> => ({ success: true, data, error: null
 
 export const wishlistApi = createApi({
   reducerPath: 'wishlistApi',
-  baseQuery: supabaseBaseQuery,
+  baseQuery: salesBaseQuery,
   tagTypes: ['Wishlist'],
   endpoints: (builder) => ({
     getWishlist: builder.query<ApiResponse<WishlistItem[]>, void>({
-      query: () => '/sales/wishlist?select=*,catalog/courses(title)&order=added_at.desc',
+      query: () => '/wishlist?select=*,courses(title)&order=added_at.desc',
       transformResponse: (raw: any) => wrap(
         (raw ?? []).map((w: any) => ({
           id: w.id,
@@ -30,7 +30,7 @@ export const wishlistApi = createApi({
     }),
     removeFromWishlist: builder.mutation<ApiResponse<void>, string>({
       query: (id) => ({
-        url: `/sales/wishlist?id=eq.${id}`,
+        url: `/wishlist?id=eq.${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Wishlist'],

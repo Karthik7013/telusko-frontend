@@ -54,6 +54,8 @@ export function LoginForm({
                 })
             }
         } catch (error: any) {
+            // eslint-disable-next-line no-console
+            console.error("Login failed:", error);
             toast.error("Login Failed", {
                 description: error.data?.message || "Please check your credentials and try again.",
             })

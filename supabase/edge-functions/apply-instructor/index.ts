@@ -25,9 +25,9 @@ serve(async (req) => {
       });
     }
 
-    const { data: studentRole } = await supabase.schema("identity").from("roles").select("id").eq("name", "student").single();
-    if (!studentRole) {
-      return new Response(JSON.stringify({ error: { code: "NOT_FOUND", message: "Student role not found" } }), {
+    const { data: instructorRole, error: roleError } = await supabase.schema("identity").from("roles").select("id").eq("name", "instructor").single();
+    if (roleError || !instructorRole) {
+      return new Response(JSON.stringify({ error: { code: "NOT_FOUND", message: "Instructor role not found" } }), {
         status: 404,
         headers: { "Content-Type": "application/json" },
       });
@@ -35,12 +35,12 @@ serve(async (req) => {
 
     const { data: existingRole, error: checkError } = await supabase
       .schema("identity").from("user_roles")
-      .select("role_id, status")
+      .select("status")
       .eq("user_id", user.id)
-      .eq("role_id", studentRole.id)
-      .single();
+      .eq("role_id", instructorRole.id)
+      .maybeSingle();
 
-    if (checkError && checkError.code !== "PGRST116") {
+    if (checkError) {
       return new Response(JSON.stringify({ error: { code: "INTERNAL_ERROR", message: checkError.message } }), {
         status: 500,
         headers: { "Content-Type": "application/json" },
@@ -48,16 +48,15 @@ serve(async (req) => {
     }
 
     if (existingRole?.status === "active") {
-      return new Response(JSON.stringify({ data: { roleStatus: "active", message: "Already an active instructor" } }), {
+      return new Response(JSON.stringify({ data: { roleStatus: "active", message: "Already an instructor" } }), {
         status: 200,
         headers: { "Content-Type": "application/json" },
       });
     }
 
-    const { data: instructorRole, error: roleError } = await supabase.schema("identity").from("roles").select("id").eq("name", "instructor").single();
-    if (roleError || !instructorRole) {
-      return new Response(JSON.stringify({ error: { code: "NOT_FOUND", message: "Instructor role not found" } }), {
-        status: 404,
+    if (existingRole?.status === "pending") {
+      return new Response(JSON.stringify({ data: { roleStatus: "pending", message: "Application already submitted" } }), {
+        status: 200,
         headers: { "Content-Type": "application/json" },
       });
     }

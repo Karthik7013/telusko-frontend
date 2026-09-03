@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { supabaseBaseQuery } from '@/lib/supabaseBaseQuery';
+import { identityBaseQuery } from '@/lib/supabaseBaseQuery';
 import { ApiResponse } from '@/lib/api-utils';
 
 export interface ActivityLogItem {
@@ -24,11 +24,11 @@ const mapLog = (l: any): ActivityLogItem => ({
 
 export const dashboardApi = createApi({
     reducerPath: 'dashboardApi',
-    baseQuery: supabaseBaseQuery,
+    baseQuery: identityBaseQuery,
     tagTypes: ['ActivityLogs'],
     endpoints: (builder) => ({
         logs: builder.query<ActivityLogItem[], void>({
-            query: () => '/identity/activity_logs?select=*&order=created_at.desc&limit=50',
+            query: () => '/activity_logs?select=*&order=created_at.desc&limit=50',
             transformResponse: (response: ApiResponse<any[]> | any[]) => {
                 const raw = Array.isArray(response) ? response : (response as ApiResponse<any[]>)?.data ?? [];
                 return (raw ?? []).map(mapLog);

@@ -1,8 +1,7 @@
 import { ApiResponse } from '@/lib/api-utils';
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { supabase } from '@/lib/supabase';
-import { supabaseBaseQuery } from '@/lib/supabaseBaseQuery';
-
+import { salesBaseQuery } from '@/lib/supabaseBaseQuery';
 export interface CreateEnrollmentRequest {
   userId: string
   courseId: string
@@ -27,11 +26,11 @@ const wrap = <T>(data: T): ApiResponse<T> => ({ success: true, data, error: null
 
 export const enrollmentsApi = createApi({
   reducerPath: 'enrollmentsApi',
-  baseQuery: supabaseBaseQuery,
+  baseQuery: salesBaseQuery,
   tagTypes: ['Enrollments'],
   endpoints: (builder) => ({
     getMyEnrollments: builder.query<ApiResponse<Enrollment[]>, void>({
-      query: () => '/sales/enrollments?select=*,catalog/courses(id,title,slug)&order=enrolled_at.desc',
+      query: () => '/enrollments?select=*,courses(id,title,slug)&order=enrolled_at.desc',
       transformResponse: (raw: any) => wrap(raw ?? []),
       providesTags: ['Enrollments'],
     }),

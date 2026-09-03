@@ -210,8 +210,23 @@ create policy "profiles_update_own" on identity.profiles for update
     using (auth.uid() = id);
 
 -- user_roles: own/admin read, own insert/update
+-- NOTE: admin check uses identity.is_admin() (SECURITY DEFINER) to avoid
+-- infinite recursion from a policy on user_roles querying user_roles.
+create or replace function identity.is_admin()
+returns boolean
+language sql
+security definer
+set search_path = identity, auth, public
+stable as $$
+  select exists (
+    select 1 from identity.user_roles ur
+    join identity.roles r on r.id = ur.role_id
+    where ur.user_id = auth.uid() and r.name = 'admin' and ur.status = 'active'
+  );
+$$;
+
 create policy "user_roles_select_own" on identity.user_roles for select
-    using (auth.uid() = user_id or exists (select 1 from identity.user_roles ur2 join identity.roles r2 on ur2.role_id = r2.id where ur2.user_id = auth.uid() and r2.name = 'admin' and ur2.status = 'active'));
+    using (auth.uid() = user_id or identity.is_admin());
 
 create policy "user_roles_insert_own" on identity.user_roles for insert
     with check (auth.uid() = user_id);

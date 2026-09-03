@@ -34,60 +34,66 @@ export const authApi = createApi({
     }),
     endpoints: (builder) => ({
         initializeSession: builder.mutation<{ session: any; user: AppUser | null }, void>({
-            async queryFn() {
-                setLoading(true);
+            async queryFn(_arg, api) {
+                api.dispatch(setLoading(true));
                 const { data: { session }, error: sessionError } = await supabase.auth.getSession();
                 if (sessionError || !session) {
-                    setLoading(false);
+                    api.dispatch(setLoading(false));
                     return { data: { session: null, user: null } };
                 }
                 const user = await fetchUserProfile(session.user.id);
-                setSession(session);
-                setUser(user);
-                setLoading(false);
+                api.dispatch(setSession(session));
+                api.dispatch(setUser(user));
+                api.dispatch(setLoading(false));
                 return { data: { session, user } };
             },
         }),
         login: builder.mutation<{ session: any; user: AppUser | null }, LoginRequest>({
-            async queryFn({ email, password }) {
+            async queryFn({ email, password }, api) {
                 const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-                if (error) throw error;
+                if (error) {
+                    return { error: { status: 400, data: { message: error.message } } };
+                }
                 const user = await fetchUserProfile(data.user.id);
-                setSession(data.session);
-                setUser(user);
+                api.dispatch(setSession(data.session));
+                api.dispatch(setUser(user));
                 return { data: { session: data.session, user } };
             },
         }),
         signUp: builder.mutation<{ session: any; user: AppUser | null }, SignUpRequest>({
-            async queryFn({ displayName, email, password }) {
+            async queryFn({ displayName, email, password }, api) {
                 const { data, error } = await supabase.auth.signUp({
                     email,
                     password,
                     options: { data: { display_name: displayName } },
                 });
-                if (error) throw error;
+                if (error) {
+                    return { error: { status: 400, data: { message: error.message } } };
+                }
                 const user = data.user ? await fetchUserProfile(data.user.id) : null;
-                setSession(data.session);
-                setUser(user);
+                api.dispatch(setSession(data.session));
+                api.dispatch(setUser(user));
                 return { data: { session: data.session, user } };
             },
         }),
         logout: builder.mutation<{ success: boolean }, void>({
-            async queryFn() {
+            async queryFn(_arg, api) {
                 await supabase.auth.signOut();
-                setUser(null);
-                setSession(null);
-                setCredentials({ accessToken: '' });
+                api.dispatch(setUser(null));
+                api.dispatch(setSession(null));
+                api.dispatch(setCredentials({ accessToken: '' }));
                 return { data: { success: true } };
             },
         }),
         refreshSession: builder.mutation<{ session: any; user: AppUser | null }, void>({
-            async queryFn() {
+            async queryFn(_arg, api) {
                 const { data: { session }, error } = await supabase.auth.refreshSession();
-                if (error) throw error;
+                if (error) {
+                    return { error: { status: 401, data: { message: error.message } } };
+                }
                 const user = session?.user ? await fetchUserProfile(session.user.id) : null;
-                setSession(session);
-                setUser(user);
+                api.dispatch(setSession(session));
+                api.dispatch(setUser(user));
                 return { data: { session, user } };
             },
         }),

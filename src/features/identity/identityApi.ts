@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { supabase } from '@/lib/supabase';
-import { supabaseBaseQuery } from '@/lib/supabaseBaseQuery';
+import { identityBaseQuery } from '@/lib/supabaseBaseQuery';
 import { ApiResponse } from '@/lib/api-utils';
 import { setUser, setSession, AppUser } from '../auth/authSlice';
 
@@ -28,7 +28,7 @@ const toUserProfile = (profile: any, email: string, roles: string[]): UserProfil
 
 export const identityApi = createApi({
     reducerPath: 'identityApi',
-    baseQuery: supabaseBaseQuery,
+    baseQuery: identityBaseQuery,
     tagTypes: ['UserProfile'],
     endpoints: (builder) => ({
         me: builder.query<ApiResponse<UserProfile>, void>({

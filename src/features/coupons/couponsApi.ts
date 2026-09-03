@@ -1,6 +1,6 @@
 import { ApiResponse } from '@/lib/api-utils';
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { supabaseBaseQuery } from '@/lib/supabaseBaseQuery';
+import { salesBaseQuery } from '@/lib/supabaseBaseQuery';
 
 export interface Coupon {
   id: string
@@ -38,10 +38,10 @@ const mapCoupon = (c: any): Coupon => ({
 
 export const couponsApi = createApi({
   reducerPath: 'couponsApi',
-  baseQuery: supabaseBaseQuery,
+  baseQuery: salesBaseQuery,
   endpoints: (builder) => ({
     validateCoupon: builder.query<ApiResponse<Coupon>, string>({
-      query: (code) => `/sales/coupons?select=*&code=eq.${encodeURIComponent(code)}&is_active=eq.true&limit=1`,
+      query: (code) => `/coupons?select=*&code=eq.${encodeURIComponent(code)}&is_active=eq.true&limit=1`,
       transformResponse: (raw: any) => wrap(mapCoupon((raw ?? [])[0])),
     }),
   }),
