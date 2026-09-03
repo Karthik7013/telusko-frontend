@@ -43,7 +43,7 @@ export function LoginForm({
         try {
             const res = await login(userData).unwrap();
 
-            if (res.session?.accessToken) {
+            if (res.session?.access_token) {
                 toast.success("Welcome back!", {
                     description: "You have successfully logged in."
                 })

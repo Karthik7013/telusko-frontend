@@ -18,7 +18,7 @@ import {
     TabsTrigger,
 } from "@/components/ui/tabs";
 import { useMeQuery, useChangePasswordMutation, useUpdateProfileMutation } from "@/features/identity/identityApi";
-import { BASE_URL } from "@/lib/constants";
+import { supabase } from "@/lib/supabase";
 import LearningPreferences from "@/dashboard/components/LearningPreferences";
 import { SwitchTheme } from "@/components/common/ToggleTheme";
 import { ApiError } from "@/components/common/ApiError";
@@ -26,7 +26,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 import { Camera, Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { useAppSelector } from "@/hooks/useAppDispatch";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
@@ -50,7 +49,6 @@ const ProfileSettings = () => {
     const [avatarUrl, setAvatarUrl] = useState("");
     const [uploading, setUploading] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const accessToken = useAppSelector((state) => state.auth.accessToken);
 
     const {
         register,
@@ -77,18 +75,18 @@ const ProfileSettings = () => {
 
         setUploading(true);
         try {
-            const formData = new FormData();
-            formData.append("image", file);
-            const res = await fetch(`${BASE_URL}/upload`, {
-                method: "POST",
-                headers: { Authorization: `Bearer ${accessToken}` },
-                body: formData,
-            });
-            if (!res.ok) throw new Error("Upload failed");
-            const data = await res.json();
-            const url = data.url || data.imageUrl || data.data?.url || data.data?.imageUrl || "";
-            if (url) setAvatarUrl(url);
-            else throw new Error("No URL returned from upload");
+            const userId = user?.data?.id;
+            if (!userId) throw new Error("User not loaded");
+            const fileName = `${userId}/${Date.now()}-${file.name}`;
+            const { error: uploadError } = await supabase.storage
+                .from("lms-assets")
+                .upload(fileName, file, { upsert: true });
+            if (uploadError) throw uploadError;
+            const { data, error: urlError } = await supabase.storage
+                .from("lms-assets")
+                .createSignedUrl(fileName, 31536000);
+            if (urlError || !data?.signedUrl) throw urlError || new Error("No URL returned from upload");
+            setAvatarUrl(data.signedUrl);
             toast.success("Image uploaded");
         } catch (err: any) {
             toast.error(err.message || "Failed to upload image");

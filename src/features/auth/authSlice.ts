@@ -38,8 +38,9 @@ const authSlice = createSlice({
         },
         setSession: (state, action: PayloadAction<any>) => {
             state.session = action.payload;
-            if (action.payload?.accessToken) {
-                state.accessToken = action.payload.accessToken;
+            const token = action.payload?.access_token ?? action.payload?.accessToken ?? null;
+            if (token) {
+                state.accessToken = token;
             }
         },
         setLoading: (state, action: PayloadAction<boolean>) => {
