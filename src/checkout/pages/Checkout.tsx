@@ -38,7 +38,7 @@ const Checkout = () => {
         slug: c.slug,
         title: c.title,
         thumbnailUrl: c.thumbnailUrl,
-        instructorName: c.instructor.fullName,
+        instructorName: c.instructor?.fullName || 'Instructor',
         basePrice: c.basePrice,
         discountPercentage: c.discountPercentage,
         discountedPrice: c.discountedPrice,

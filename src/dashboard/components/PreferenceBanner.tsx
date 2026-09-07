@@ -11,7 +11,7 @@ export default function PreferenceBanner() {
         if (localStorage.getItem("telusko-onboarding-skipped") === "true") {
             setVisible(true)
         }
-    }, [])
+    }, [setVisible])
 
     if (!visible) return null
 

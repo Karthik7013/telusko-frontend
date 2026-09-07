@@ -47,35 +47,39 @@ export interface Order {
 
 const wrap = <T>(data: T): ApiResponse<T> => ({ success: true, data, error: null });
 
-const mapOrder = (o: any): Order => ({
-  id: o.id,
-  orderNumber: o.order_number,
-  userId: o.user_id,
-  subtotalAmount: Number(o.subtotal_amount ?? 0),
-  taxAmount: Number(o.tax_amount ?? 0),
-  discountAmount: Number(o.discount_amount ?? 0),
-  totalAmount: Number(o.total_amount ?? 0),
-  status: o.status,
-  currency: o.currency ?? 'USD',
-  paymentMethod: o.payment_method,
-  paymentTransactionId: o.payment_transaction_id,
-  paymentCompletedAt: o.payment_completed_at,
-  notes: o.notes,
-  createdAt: o.created_at,
-  updatedAt: o.updated_at,
-  orderItems: (o.order_items ?? []).map((i: any) => ({
-    id: i.id,
-    orderId: i.order_id,
-    courseId: i.course_id,
-    title: i.title,
-    slug: i.slug,
-    unitPrice: Number(i.unit_price ?? 0),
-    quantity: i.quantity ?? 1,
-    totalAmount: Number(i.total_amount ?? 0),
-    status: i.status,
-    createdAt: i.created_at,
-    updatedAt: i.updated_at,
-  })),
+type SupabaseRow = Record<string, unknown>;
+
+const mapOrderItem = (i: SupabaseRow): OrderItem => ({
+    id: String(i['id'] ?? ''),
+    orderId: String(i['order_id'] ?? ''),
+    courseId: String(i['course_id'] ?? ''),
+    title: String(i['title'] ?? ''),
+    slug: i['slug'] == null ? null : String(i['slug']),
+    unitPrice: Number(i['unit_price'] ?? 0),
+    quantity: Number(i['quantity'] ?? 1),
+    totalAmount: Number(i['total_amount'] ?? 0),
+    status: i['status'] as OrderItem['status'],
+    createdAt: String(i['created_at'] ?? ''),
+    updatedAt: String(i['updated_at'] ?? ''),
+});
+
+const mapOrder = (o: SupabaseRow): Order => ({
+  id: String(o['id'] ?? ''),
+  orderNumber: String(o['order_number'] ?? ''),
+  userId: String(o['user_id'] ?? ''),
+  subtotalAmount: Number(o['subtotal_amount'] ?? 0),
+  taxAmount: Number(o['tax_amount'] ?? 0),
+  discountAmount: Number(o['discount_amount'] ?? 0),
+  totalAmount: Number(o['total_amount'] ?? 0),
+  status: o['status'] as Order['status'],
+  currency: String(o['currency'] ?? 'USD'),
+  paymentMethod: o['payment_method'] == null ? null : String(o['payment_method']),
+  paymentTransactionId: o['payment_transaction_id'] == null ? null : String(o['payment_transaction_id']),
+  paymentCompletedAt: o['payment_completed_at'] == null ? null : String(o['payment_completed_at']),
+  notes: o['notes'] == null ? null : String(o['notes']),
+  createdAt: String(o['created_at'] ?? ''),
+  updatedAt: String(o['updated_at'] ?? ''),
+  orderItems: ((o['order_items'] as SupabaseRow[] | null) ?? []).map(mapOrderItem),
 });
 
 export const ordersApi = createApi({
@@ -100,12 +104,12 @@ export const ordersApi = createApi({
         },
         headers: { Prefer: 'return=representation' },
       }),
-      transformResponse: (raw: any) => wrap(mapOrder(Array.isArray(raw) ? raw[0] : raw)),
+      transformResponse: (raw: unknown) => wrap(mapOrder((Array.isArray(raw) ? raw[0] : raw) as SupabaseRow)),
       invalidatesTags: ['Orders'],
     }),
     getOrderByNumber: builder.query<ApiResponse<Order>, string>({
       query: (orderNumber) => `/orders?select=*,order_items(*)&order_number=eq.${encodeURIComponent(orderNumber)}&limit=1`,
-      transformResponse: (raw: any) => wrap(mapOrder((raw ?? [])[0])),
+      transformResponse: (raw: unknown) => wrap(mapOrder(((raw ?? []) as SupabaseRow[])[0] ?? {})),
       providesTags: ['Orders'],
     }),
   }),

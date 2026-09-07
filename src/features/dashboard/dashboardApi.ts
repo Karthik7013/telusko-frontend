@@ -7,19 +7,21 @@ export interface ActivityLogItem {
     activityType: 'login' | 'course_enrolled' | 'certificate_earned';
     resourceId: string | null;
     resourceType: string | null;
-    metadata: Record<string, any>;
+    metadata: Record<string, unknown>;
     durationMinutes: number;
     createdAt: string;
 }
 
-const mapLog = (l: any): ActivityLogItem => ({
-    id: l.id,
-    activityType: l.activity_type,
-    resourceId: l.resource_id,
-    resourceType: l.resource_type,
-    metadata: l.metadata ?? {},
-    durationMinutes: l.duration_minutes ?? 0,
-    createdAt: l.created_at,
+type SupabaseRow = Record<string, unknown>;
+
+const mapLog = (l: SupabaseRow): ActivityLogItem => ({
+    id: String(l['id'] ?? ''),
+    activityType: l['activity_type'] as ActivityLogItem['activityType'],
+    resourceId: l['resource_id'] == null ? null : String(l['resource_id']),
+    resourceType: l['resource_type'] == null ? null : String(l['resource_type']),
+    metadata: (l['metadata'] as Record<string, unknown> | null) ?? {},
+    durationMinutes: Number(l['duration_minutes'] ?? 0),
+    createdAt: String(l['created_at'] ?? ''),
 });
 
 export const dashboardApi = createApi({
@@ -29,8 +31,10 @@ export const dashboardApi = createApi({
     endpoints: (builder) => ({
         logs: builder.query<ActivityLogItem[], void>({
             query: () => '/activity_logs?select=*&order=created_at.desc&limit=50',
-            transformResponse: (response: ApiResponse<any[]> | any[]) => {
-                const raw = Array.isArray(response) ? response : (response as ApiResponse<any[]>)?.data ?? [];
+            transformResponse: (response: unknown) => {
+                const raw = Array.isArray(response)
+                  ? (response as SupabaseRow[])
+                  : ((response as ApiResponse<SupabaseRow[]> | null)?.data ?? []);
                 return (raw ?? []).map(mapLog);
             },
             providesTags: ['ActivityLogs'],

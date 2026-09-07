@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import type { Session } from '@supabase/supabase-js';
 
 export interface AppUser {
     id: string;
@@ -11,7 +12,7 @@ export interface AppUser {
 interface AuthState {
     accessToken: string | null;
     user: AppUser | null;
-    session: any;
+    session: Session | null;
     isLoading: boolean;
 }
 
@@ -36,9 +37,10 @@ const authSlice = createSlice({
             state.user = action.payload;
             state.isLoading = false;
         },
-        setSession: (state, action: PayloadAction<any>) => {
+        setSession: (state, action: PayloadAction<Session | null>) => {
             state.session = action.payload;
-            const token = action.payload?.access_token ?? action.payload?.accessToken ?? null;
+            const legacyToken = (action.payload as (Session & { accessToken?: string }) | null)?.accessToken ?? null;
+            const token = action.payload?.access_token ?? legacyToken;
             if (token) {
                 state.accessToken = token;
             }

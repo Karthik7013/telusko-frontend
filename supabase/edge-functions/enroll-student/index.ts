@@ -54,7 +54,7 @@ serve(async (req) => {
       });
     }
 
-    const { data: existingEnrollment, error: enrollmentCheckError } = await supabase
+    const { data: existingEnrollment } = await supabase
       .schema("sales").from("enrollments")
       .select("id")
       .eq("user_id", user.id)
@@ -73,7 +73,7 @@ serve(async (req) => {
     const amount = courseData.price;
     const gatewayTxnId = amount > 0 ? `mock_tx_${crypto.randomUUID()}` : null;
 
-    const { data: enrollmentData, error: enrollmentError } = await supabase
+    const { error: enrollmentError } = await supabase
       .schema("sales").from("enrollments")
       .insert({ id: enrollmentId, user_id: user.id, course_id: courseId, status: "enrolled" })
       .select()
@@ -86,7 +86,7 @@ serve(async (req) => {
       });
     }
 
-    const { data: txnData, error: txnError } = await supabase
+    const { error: txnError } = await supabase
       .schema("sales").from("transactions")
       .insert({
         id: transactionId,

@@ -12,7 +12,7 @@ export default function CookieBanner() {
         if (!isBannerDismissed) {
             setIsVisible(true);
         }
-    }, []);
+    }, [setIsVisible]);
 
     const declineCookies = () => {
         Cookies.set('ACCEPT_ACCEPT_BANNER_DISMISSED', 'ACCEPT_ACCEPT_BANNER_DISMISSED')

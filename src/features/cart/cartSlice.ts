@@ -19,10 +19,12 @@ function loadCart(): CartState {
   try {
     const raw = localStorage.getItem('telusko-cart')
     if (raw) {
-      const parsed = JSON.parse(raw)
-      if (Array.isArray(parsed?.items)) return parsed
+      const parsed = JSON.parse(raw) as Partial<CartState>
+      if (Array.isArray(parsed?.items)) return { items: parsed.items }
     }
-  } catch {}
+  } catch {
+    // Corrupt or unavailable storage: fall through to empty cart
+  }
   return { items: [] }
 }
 

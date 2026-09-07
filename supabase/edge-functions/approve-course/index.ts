@@ -85,7 +85,7 @@ serve(async (req) => {
       .eq("id", user.id)
       .single();
 
-    const { data: courseApprData, error: upsertError } = await supabase
+    const { error: upsertError } = await supabase
       .schema("sales").from("course_approvals")
       .upsert({
         course_id: courseId,

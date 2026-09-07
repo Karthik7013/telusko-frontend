@@ -8,6 +8,22 @@ type ROLES = {
     role: 'student' | 'instructor' | 'admin',
     status: 'active' | 'inactive'
 }
+
+interface SupabaseProfileRow {
+    id: string;
+    display_name?: string | null;
+    avatar_url?: string | null;
+}
+
+interface SupabaseRoleRow {
+    roles?: { name?: string } | null;
+    role_id?: string;
+}
+
+interface FunctionResult {
+    error?: { message?: string };
+    data?: { roleStatus?: string };
+}
 export type UserProfile = {
     id: string,
     email: string,
@@ -17,7 +33,7 @@ export type UserProfile = {
     bio: string | null
 }
 
-const toUserProfile = (profile: any, email: string, roles: string[]): UserProfile => ({
+const toUserProfile = (profile: SupabaseProfileRow, email: string, roles: string[]): UserProfile => ({
     id: profile.id,
     email,
     displayName: profile.display_name || '',
@@ -46,18 +62,18 @@ export const identityApi = createApi({
                 if (profileError) {
                     return { error: { status: 404, data: profileError.message } };
                 }
-                const { data: roleRows } = await supabase
+                const roleRows = (await supabase
                     .schema('identity')
                     .from('user_roles')
                     .select('role_id, roles(name)')
                     .eq('user_id', session.user.id)
-                    .eq('status', 'active');
-                const roles = (roleRows || []).map((r: any) => r.roles?.name).filter(Boolean);
+                    .eq('status', 'active')).data as unknown as SupabaseRoleRow[] | null;
+                const roles = (roleRows || []).map((r: SupabaseRoleRow) => r.roles?.name).filter((name): name is string => Boolean(name));
                 const user: AppUser = {
                     id: session.user.id,
                     email: session.user.email || '',
-                    fullName: (profile as any)?.display_name || '',
-                    avatarUrl: (profile as any)?.avatar_url || null,
+                    fullName: (profile as SupabaseProfileRow)?.display_name || '',
+                    avatarUrl: (profile as SupabaseProfileRow)?.avatar_url || null,
                     roles,
                 };
                 api.dispatch(setUser(user));
@@ -113,10 +129,11 @@ export const identityApi = createApi({
                 if (error) {
                     return { error: { status: 400, data: error.message } };
                 }
-                if ((data as any)?.error) {
-                    return { error: { status: 400, data: (data as any).error.message } };
+                const result = data as FunctionResult | null;
+                if (result?.error) {
+                    return { error: { status: 400, data: result.error.message } };
                 }
-                const payload = (data as any)?.data ?? {};
+                const payload = result?.data ?? {};
                 return { data: { success: true, data: { roleStatus: payload.roleStatus ?? 'pending' }, error: null } };
             },
             invalidatesTags: ['UserProfile'],

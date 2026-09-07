@@ -11,6 +11,7 @@ import { StepInterests } from "../components/StepInterests"
 import { StepGoals } from "../components/StepGoals"
 import { StepLevelTime } from "../components/StepLevelTime"
 import { useSavePreferencesMutation } from "@/features/preferences/preferencesApi"
+import { getApiErrorMessage } from "@/lib/api-utils"
 import type { OnboardingData, UserRole, InterestTopic, Goal, ExperienceLevel, TimeCommitment } from "../types"
 
 const TOTAL_STEPS = 4
@@ -54,21 +55,27 @@ function reducer(state: OnboardingData, action: Action): OnboardingData {
 function loadFromStorage(): { step: number; data: OnboardingData } | null {
   try {
     const saved = sessionStorage.getItem(STORAGE_KEY)
-    if (saved) return JSON.parse(saved)
-  } catch { }
+    if (saved) return JSON.parse(saved) as { step: number; data: OnboardingData }
+  } catch {
+    // Corrupt storage: start onboarding from scratch
+  }
   return null
 }
 
 function saveToStorage(step: number, data: OnboardingData) {
   try {
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ step, data }))
-  } catch { }
+  } catch {
+    // Storage unavailable: onboarding progress won't persist
+  }
 }
 
 function clearStorage() {
   try {
     sessionStorage.removeItem(STORAGE_KEY)
-  } catch { }
+  } catch {
+    // Storage unavailable: nothing to clear
+  }
 }
 
 export default function Onboarding() {
@@ -123,9 +130,9 @@ export default function Onboarding() {
         description: "We've personalized your recommendations.",
       })
       navigate("/dashboard")
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast.error("Something went wrong", {
-        description: error.data?.message || "Could not save preferences. Please try again.",
+        description: getApiErrorMessage(error, "Could not save preferences. Please try again."),
       })
     }
   }

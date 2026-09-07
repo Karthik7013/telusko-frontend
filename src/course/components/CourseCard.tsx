@@ -44,11 +44,11 @@ const CourseCard = React.memo(({
                     {/* Author */}
                     <div className="flex items-center gap-2">
                         <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-primary text-[10px] font-bold text-primary-foreground">
-                            <img className="rounded-full" src={course.instructor.profilePictureUrl || "https://github.com/shadcn.png"} alt={course.instructor.fullName.charAt(0)} />
+                            <img className="rounded-full" src={course.instructor?.profilePictureUrl || "https://github.com/shadcn.png"} alt={(course.instructor?.fullName || "T").charAt(0)} />
 
                         </div>
                         <div className="flex flex-col leading-tight">
-                            <span className="text-xs font-medium text-foreground">{course.instructor.fullName}</span>
+                            <span className="text-xs font-medium text-foreground">{course.instructor?.fullName || "Instructor"}</span>
                         </div>
                     </div>
 

@@ -80,6 +80,20 @@ export default function SearchCourses() {
         setSearchParams({});
     };
 
+    // Level / instructor have no database columns, so they are applied
+    // client-side on the mapped server results. `isPublished` is already
+    // enforced server-side; `isFeatured` has no data model yet (no-op).
+    const visibleCourses = useMemo(() => {
+        const all = courses?.data?.courses || [];
+        const levels = selectedLevels.map((l) => l.toLowerCase());
+        const instructorQuery = selectedInstructor.trim().toLowerCase();
+        return all.filter((course) => {
+            if (levels.length > 0 && !levels.includes(course.level.toLowerCase())) return false;
+            if (instructorQuery && !course.instructor?.fullName.toLowerCase().includes(instructorQuery)) return false;
+            return true;
+        });
+    }, [courses, selectedLevels, selectedInstructor]);
+
     const filterProps = useMemo(() => ({
         selectedCategories, selectedLevels, selectedInstructor, minPrice, maxPrice,
         isFeatured, isPublished,
@@ -100,7 +114,7 @@ export default function SearchCourses() {
                             {queryParam ? `Search results for "${queryParam}"` : "Explore Courses"}
                         </h1>
                         <p className="text-muted-foreground">
-                            {isLoading ? "Finding courses..." : `${courses?.data?.courses?.length || 0} courses found`}
+                            {isLoading ? "Finding courses..." : `${visibleCourses.length} courses found`}
                         </p>
                     </div>
 
@@ -162,9 +176,9 @@ export default function SearchCourses() {
                                     onRetry={refetch}
                                 />
                             </div>
-                        ) : courses?.data?.courses && courses?.data?.courses?.length > 0 ? (
+                        ) : visibleCourses.length > 0 ? (
                             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-                                {courses.data.courses.map((course: CourseCardProps) => (
+                                {visibleCourses.map((course: CourseCardProps) => (
                                     <CourseCard key={course.id} course={course} />
                                 ))}
                             </div>

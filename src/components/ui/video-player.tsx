@@ -58,8 +58,13 @@ export function VideoPlayer({ src, poster, className }: VideoPlayerProps) {
   }, [])
 
   useEffect(() => {
-    if (playing) startHideTimer()
-    else setShowControls(true)
+    if (playing) {
+      startHideTimer()
+    } else {
+      // Showing controls on pause is an intentional sync with playback state.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setShowControls(true)
+    }
   }, [playing, startHideTimer])
 
    useEffect(() => {

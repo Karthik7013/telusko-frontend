@@ -9,7 +9,7 @@ export function SwitchTheme() {
     const [mounted, setMounted] = useStateSafe(false)
 
     // Prevent hydration mismatch in SSR
-    useEffect(() => setMounted(true), [])
+    useEffect(() => setMounted(true), [setMounted])
     if (!mounted) return null
 
     return (

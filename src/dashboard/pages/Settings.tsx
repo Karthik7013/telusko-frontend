@@ -28,6 +28,7 @@ import { Camera, Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { getApiErrorMessage } from "@/lib/api-utils";
 
 const profileSchema = z.object({
     displayName: z.string().min(2, "Full name must be at least 2 characters"),
@@ -88,8 +89,8 @@ const ProfileSettings = () => {
             if (urlError || !data?.signedUrl) throw urlError || new Error("No URL returned from upload");
             setAvatarUrl(data.signedUrl);
             toast.success("Image uploaded");
-        } catch (err: any) {
-            toast.error(err.message || "Failed to upload image");
+        } catch (err: unknown) {
+            toast.error(err instanceof Error ? err.message : "Failed to upload image");
         } finally {
             setUploading(false);
             if (fileInputRef.current) fileInputRef.current.value = "";
@@ -103,8 +104,8 @@ const ProfileSettings = () => {
         try {
             await updateProfile({ ...values, avatarUrl }).unwrap();
             toast.success("Profile updated successfully");
-        } catch (error: any) {
-            toast.error(error.data?.message || "Failed to update profile");
+        } catch (error: unknown) {
+            toast.error(getApiErrorMessage(error, "Failed to update profile"));
         }
     };
     return (
@@ -286,8 +287,8 @@ const PasswordSettings = () => {
             await changePassword(values).unwrap();
             toast.success("Password changed successfully");
             reset();
-        } catch (error: any) {
-            toast.error(error.data?.message || "Failed to change password");
+        } catch (error: unknown) {
+            toast.error(getApiErrorMessage(error, "Failed to change password"));
         }
     };
 

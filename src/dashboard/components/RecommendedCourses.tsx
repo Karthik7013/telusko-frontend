@@ -6,7 +6,7 @@ import type { CourseCardProps } from "@/types"
 import { ApiError } from "@/components/common/ApiError"
 
 export function RecommendedCourses() {
-  const { data: coursesData, isLoading: coursesLoading, error: coursesError, refetch: refetchCourses } = useGetCoursesQuery(undefined as any)
+  const { data: coursesData, isLoading: coursesLoading, error: coursesError, refetch: refetchCourses } = useGetCoursesQuery()
   const { data: prefsData, isLoading: prefsLoading } = useGetPreferencesQuery()
 
   const recommended = useMemo(() => {
@@ -20,13 +20,13 @@ export function RecommendedCourses() {
       i === "web_development" ? "Web Development" : i.charAt(0).toUpperCase() + i.slice(1)
     )
 
-    let filtered = courses.filter((course) => {
+    const filtered = courses.filter((course) => {
       const matchesInterest =
         prefs.interests.length === 0 ||
         interestCategories.some(
           (cat) =>
             course.category.toLowerCase().includes(cat.toLowerCase()) ||
-            (course as any).tags?.some((t: string) => t.toLowerCase().includes(cat.toLowerCase()))
+            (course as CourseCardProps & { tags?: string[] }).tags?.some((t: string) => t.toLowerCase().includes(cat.toLowerCase()))
         )
 
       const matchesLevel =

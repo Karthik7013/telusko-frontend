@@ -39,10 +39,10 @@ export default function RoleSwitch() {
         const userRoles = data?.data?.roles || [];
         return modes.filter((mode) => {
             if (mode.name === "Learning Mode") {
-                return userRoles.some((r: any) => r.role === "student" && r.status === "active");
+                return userRoles.some((r) => r.role === "student" && r.status === "active");
             }
             if (mode.name === "Instructor Mode") {
-                return userRoles.some((r: any) => r.role === "instructor" && r.status === "active");
+                return userRoles.some((r) => r.role === "instructor" && r.status === "active");
             }
             return false;
         });

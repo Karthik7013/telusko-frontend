@@ -24,6 +24,15 @@ export interface Enrollment {
 
 const wrap = <T>(data: T): ApiResponse<T> => ({ success: true, data, error: null });
 
+interface FunctionResult {
+  error?: { message?: string };
+  data?: {
+    enrollmentId?: string;
+    amount?: number;
+    status?: string;
+  };
+}
+
 export const enrollmentsApi = createApi({
   reducerPath: 'enrollmentsApi',
   baseQuery: salesBaseQuery,
@@ -31,7 +40,7 @@ export const enrollmentsApi = createApi({
   endpoints: (builder) => ({
     getMyEnrollments: builder.query<ApiResponse<Enrollment[]>, void>({
       query: () => '/enrollments?select=*,courses(id,title,slug)&order=enrolled_at.desc',
-      transformResponse: (raw: any) => wrap(raw ?? []),
+      transformResponse: (raw: unknown) => wrap((raw ?? []) as Enrollment[]),
       providesTags: ['Enrollments'],
     }),
     createEnrollment: builder.mutation<ApiResponse<Enrollment>, CreateEnrollmentRequest>({
@@ -42,10 +51,11 @@ export const enrollmentsApi = createApi({
         if (error) {
           return { error: { status: 400, data: error.message } };
         }
-        if ((data as any)?.error) {
-          return { error: { status: 400, data: (data as any).error.message } };
+        const result = data as FunctionResult | null;
+        if (result?.error) {
+          return { error: { status: 400, data: result.error.message } };
         }
-        const payload = (data as any)?.data ?? {};
+        const payload = result?.data ?? {};
         const enrollment: Enrollment = {
           id: payload.enrollmentId ?? '',
           userId: body.userId,

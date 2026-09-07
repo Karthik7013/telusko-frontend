@@ -5,34 +5,43 @@ import { identityBaseQuery } from '@/lib/supabaseBaseQuery';
 
 const wrap = <T>(data: T): ApiResponse<T> => ({ success: true, data, error: null });
 
+type SupabaseRow = Record<string, unknown>;
+
+const extractPreferenceData = (raw: unknown): UserPreferences | null => {
+  if (Array.isArray(raw)) {
+    return ((raw[0] as SupabaseRow | undefined)?.['data'] ?? null) as UserPreferences | null;
+  }
+  return ((raw as SupabaseRow | null)?.['data'] ?? null) as UserPreferences | null;
+};
+
 export const preferencesApi = createApi({
   reducerPath: 'preferencesApi',
   baseQuery: identityBaseQuery,
   tagTypes: ['Preferences'],
   endpoints: (builder) => ({
-    getPreferences: builder.query<ApiResponse<UserPreferences>, void>({
+    getPreferences: builder.query<ApiResponse<UserPreferences | null>, void>({
       query: () => '/preferences?select=data&limit=1',
-      transformResponse: (raw: any) => wrap((Array.isArray(raw) ? raw[0]?.data : raw?.data) ?? null),
+      transformResponse: (raw: unknown) => wrap(extractPreferenceData(raw)),
       providesTags: ['Preferences'],
     }),
-    savePreferences: builder.mutation<ApiResponse<UserPreferences>, UserPreferences>({
+    savePreferences: builder.mutation<ApiResponse<UserPreferences | null>, UserPreferences>({
       query: (body) => ({
         url: '/preferences',
         method: 'POST',
         body: { data: body },
         headers: { Prefer: 'return=representation,resolution=merge-duplicates' },
       }),
-      transformResponse: (raw: any) => wrap((Array.isArray(raw) ? raw[0]?.data : raw?.data) ?? null),
+      transformResponse: (raw: unknown) => wrap(extractPreferenceData(raw)),
       invalidatesTags: ['Preferences'],
     }),
-    updatePreferences: builder.mutation<ApiResponse<UserPreferences>, UserPreferences>({
+    updatePreferences: builder.mutation<ApiResponse<UserPreferences | null>, UserPreferences>({
       query: (body) => ({
         url: '/preferences',
         method: 'PATCH',
         body: { data: body },
         headers: { Prefer: 'return=representation' },
       }),
-      transformResponse: (raw: any) => wrap((Array.isArray(raw) ? raw[0]?.data : raw?.data) ?? null),
+      transformResponse: (raw: unknown) => wrap(extractPreferenceData(raw)),
       invalidatesTags: ['Preferences'],
     }),
   }),

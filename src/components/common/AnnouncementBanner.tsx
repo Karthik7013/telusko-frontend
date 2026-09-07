@@ -15,7 +15,7 @@ export function AnnouncementBanner() {
         if (!isBannerDismissed) {
             setIsVisible(true);
         }
-    }, []);
+    }, [setIsVisible]);
 
     const handleDismiss = () => {
         setIsVisible(false);

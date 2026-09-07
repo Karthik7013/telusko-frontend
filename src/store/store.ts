@@ -49,7 +49,9 @@ store.subscribe(() => {
   if (prev !== currentCart) {
     try {
       localStorage.setItem('telusko-cart', JSON.stringify(currentCart))
-    } catch { }
+    } catch {
+      // Storage quota or availability issue: cart persistence is best-effort
+    }
   }
 })
 

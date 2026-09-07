@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { supabase } from '@/lib/supabase';
 import { setCredentials, setUser, setSession, setLoading, AppUser } from './authSlice';
+import type { Session } from '@supabase/supabase-js';
 
 export interface LoginRequest {
     email: string;
@@ -33,7 +34,7 @@ export const authApi = createApi({
         baseUrl: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000',
     }),
     endpoints: (builder) => ({
-        initializeSession: builder.mutation<{ session: any; user: AppUser | null }, void>({
+        initializeSession: builder.mutation<{ session: Session | null; user: AppUser | null }, void>({
             async queryFn(_arg, api) {
                 api.dispatch(setLoading(true));
                 const { data: { session }, error: sessionError } = await supabase.auth.getSession();
@@ -48,7 +49,7 @@ export const authApi = createApi({
                 return { data: { session, user } };
             },
         }),
-        login: builder.mutation<{ session: any; user: AppUser | null }, LoginRequest>({
+        login: builder.mutation<{ session: Session | null; user: AppUser | null }, LoginRequest>({
             async queryFn({ email, password }, api) {
                 const { data, error } = await supabase.auth.signInWithPassword({ email, password });
                 if (error) {
@@ -60,7 +61,7 @@ export const authApi = createApi({
                 return { data: { session: data.session, user } };
             },
         }),
-        signUp: builder.mutation<{ session: any; user: AppUser | null }, SignUpRequest>({
+        signUp: builder.mutation<{ session: Session | null; user: AppUser | null }, SignUpRequest>({
             async queryFn({ displayName, email, password }, api) {
                 const { data, error } = await supabase.auth.signUp({
                     email,
@@ -85,7 +86,7 @@ export const authApi = createApi({
                 return { data: { success: true } };
             },
         }),
-        refreshSession: builder.mutation<{ session: any; user: AppUser | null }, void>({
+        refreshSession: builder.mutation<{ session: Session | null; user: AppUser | null }, void>({
             async queryFn(_arg, api) {
                 const { data: { session }, error } = await supabase.auth.refreshSession();
                 if (error) {

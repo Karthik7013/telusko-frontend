@@ -63,7 +63,10 @@ export default function ActivityLog() {
                         {activities.map((log) => {
                             const config = activityConfig[log.activityType] || activityConfig.login;
                             const Icon = config.icon;
-                            const title = log.metadata?.title || log.metadata?.course_name || log.metadata?.achievement_name || config.label;
+                            const metadata = log.metadata ?? {};
+                            const title = String(
+                              metadata['title'] ?? metadata['course_name'] ?? metadata['achievement_name'] ?? config.label
+                            );
 
                             return (
                                 <div key={log.id} className="flex items-start gap-4 py-4 first:pt-0 last:pb-0">

@@ -20,4 +20,12 @@ export default defineConfig([
       globals: globals.browser,
     },
   },
+  {
+    // shadcn-style UI primitives intentionally export variants alongside
+    // components; fast-refresh rule doesn't apply to this design-system layer.
+    files: ['src/components/ui/**/*.{ts,tsx}', 'src/providers/ThemeProvider.tsx'],
+    rules: {
+      'react-refresh/only-export-components': 'off',
+    },
+  },
 ])

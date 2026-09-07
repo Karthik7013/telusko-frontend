@@ -16,6 +16,20 @@ export interface Transaction {
 
 const wrap = <T>(data: T): ApiResponse<T> => ({ success: true, data, error: null });
 
+type SupabaseRow = Record<string, unknown>;
+
+const mapTransaction = (t: SupabaseRow): Transaction => ({
+  id: String(t['id'] ?? ''),
+  orderNumber: String(t['gateway_txn_id'] ?? t['id'] ?? ''),
+  courseId: String(t['course_id'] ?? ''),
+  courseName: String((t['courses'] as SupabaseRow | null)?.['title'] ?? t['course_id'] ?? ''),
+  amount: Number(t['amount'] ?? 0),
+  currency: 'USD',
+  status: (t['payment_status'] === 'completed' ? 'completed' : String(t['payment_status'] ?? 'pending')) as Transaction['status'],
+  paymentMethod: null,
+  createdAt: String(t['created_at'] ?? ''),
+});
+
 export const transactionsApi = createApi({
   reducerPath: 'transactionsApi',
   baseQuery: salesBaseQuery,
@@ -23,18 +37,8 @@ export const transactionsApi = createApi({
   endpoints: (builder) => ({
     getMyTransactions: builder.query<ApiResponse<Transaction[]>, void>({
       query: () => '/transactions?select=*,courses(title)&order=created_at.desc',
-      transformResponse: (raw: any) => wrap(
-        (raw ?? []).map((t: any) => ({
-          id: t.id,
-          orderNumber: t.gateway_txn_id ?? t.id,
-          courseId: t.course_id,
-          courseName: t.courses?.title ?? t.course_id,
-          amount: Number(t.amount ?? 0),
-          currency: 'USD',
-          status: t.payment_status === 'completed' ? 'completed' : t.payment_status,
-          paymentMethod: null,
-          createdAt: t.created_at,
-        }))
+      transformResponse: (raw: unknown) => wrap(
+        ((raw ?? []) as SupabaseRow[]).map(mapTransaction)
       ),
       providesTags: ['Transactions'],
     }),

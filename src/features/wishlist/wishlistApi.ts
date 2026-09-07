@@ -11,6 +11,15 @@ export interface WishlistItem {
 
 const wrap = <T>(data: T): ApiResponse<T> => ({ success: true, data, error: null });
 
+type SupabaseRow = Record<string, unknown>;
+
+const mapWishlistItem = (w: SupabaseRow): WishlistItem => ({
+  id: String(w['id'] ?? ''),
+  courseId: String(w['course_id'] ?? ''),
+  title: String((w['courses'] as SupabaseRow | null)?.['title'] ?? w['course_id'] ?? ''),
+  addedAt: String(w['added_at'] ?? ''),
+});
+
 export const wishlistApi = createApi({
   reducerPath: 'wishlistApi',
   baseQuery: salesBaseQuery,
@@ -18,13 +27,8 @@ export const wishlistApi = createApi({
   endpoints: (builder) => ({
     getWishlist: builder.query<ApiResponse<WishlistItem[]>, void>({
       query: () => '/wishlist?select=*,courses(title)&order=added_at.desc',
-      transformResponse: (raw: any) => wrap(
-        (raw ?? []).map((w: any) => ({
-          id: w.id,
-          courseId: w.course_id,
-          title: w.courses?.title ?? w.course_id,
-          addedAt: w.added_at,
-        }))
+      transformResponse: (raw: unknown) => wrap(
+        ((raw ?? []) as SupabaseRow[]).map(mapWishlistItem)
       ),
       providesTags: ['Wishlist'],
     }),

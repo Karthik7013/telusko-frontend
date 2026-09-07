@@ -23,7 +23,7 @@ export default function SessionInitializer(props: {
             }
         });
         return () => { subscription.unsubscribe(); };
-    }, []);
+    }, [refreshSession]);
 
     if (isLoading) {
         return <PageLoader />;

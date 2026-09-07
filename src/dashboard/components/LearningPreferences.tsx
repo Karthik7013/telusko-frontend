@@ -13,6 +13,7 @@ import { StepGoals } from "@/onboarding/components/StepGoals";
 import { StepLevelTime } from "@/onboarding/components/StepLevelTime";
 import { ApiError } from "@/components/common/ApiError";
 import { useForm } from "react-hook-form";
+import { getApiErrorMessage } from "@/lib/api-utils";
 
 const DEFAULT_PREFS: UserPreferences = {
     role: null, interests: [], goal: null, experienceLevel: null, timeCommitment: null
@@ -25,11 +26,19 @@ export default function LearningPreferences() {
         defaultValues: DEFAULT_PREFS,
     });
 
+    // eslint-disable-next-line react-hooks/incompatible-library -- react-hook-form watch() is intentionally unmemoized
     const prefs = watch();
 
     useEffect(() => {
         if (data?.data) {
-            const { id, userId, createdAt, updatedAt, ...rest } = data.data as any;
+            // Omit server-managed fields before resetting the form
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { id, userId, createdAt, updatedAt, ...rest } = data.data as UserPreferences & {
+                id?: unknown;
+                userId?: unknown;
+                createdAt?: unknown;
+                updatedAt?: unknown;
+            };
             reset(rest);
         }
     }, [data, reset]);
@@ -39,8 +48,8 @@ export default function LearningPreferences() {
             await updatePreferences(values).unwrap();
             localStorage.removeItem("telusko-onboarding-skipped");
             toast.success("Learning preferences saved");
-        } catch (error: any) {
-            toast.error(error.data?.message || "Failed to save preferences");
+        } catch (error: unknown) {
+            toast.error(getApiErrorMessage(error, "Failed to save preferences"));
         }
     };
 

@@ -1,4 +1,3 @@
-import * as React from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -6,6 +5,7 @@ import * as z from "zod"
 import { toast } from "sonner"
 import { Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { getApiErrorMessage } from "@/lib/api-utils"
 
 import {
     Field,
@@ -24,8 +24,7 @@ const loginSchema = z.object({
 
 type LoginFormValues = z.infer<typeof loginSchema>
 
-export function LoginForm({
-}: React.ComponentProps<"div">) {
+export function LoginForm() {
     const form = useForm<LoginFormValues>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
@@ -53,11 +52,10 @@ export function LoginForm({
                     description: "Authentication tokens were not provided.",
                 })
             }
-        } catch (error: any) {
-            // eslint-disable-next-line no-console
+        } catch (error: unknown) {
             console.error("Login failed:", error);
             toast.error("Login Failed", {
-                description: error.data?.message || "Please check your credentials and try again.",
+                description: getApiErrorMessage(error, "Please check your credentials and try again."),
             })
         }
     }

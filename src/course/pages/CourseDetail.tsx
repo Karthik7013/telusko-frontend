@@ -63,7 +63,7 @@ export default function CourseDetail() {
                                         <span className="text-lg font-bold text-primary">${course.data.discountedPrice || course.data.basePrice}</span>
                                         <span className="text-sm text-muted-foreground line-through ml-2">${course.data.basePrice}</span>
                                     </div>
-                                    <Button className="flex-1 font-bold" onClick={() => navigate(`/checkout?course=${course.data.slug}`)}>Buy now</Button>
+                                     <Button className="flex-1 font-bold" onClick={() => navigate(`/checkout?course=${course.data?.slug || ''}`)}>Buy now</Button>
                                 </div>
                             </div>
                         </div>

@@ -1,7 +1,11 @@
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { RootState } from '@/store/store';
 
-const prepareSupabaseHeaders = (headers: Headers, { getState }: any) => {
+interface SupabaseHeaderApi {
+  getState: () => unknown;
+}
+
+const prepareSupabaseHeaders = (headers: Headers, { getState }: SupabaseHeaderApi) => {
     const state = getState() as RootState;
     const token = state.auth.session?.access_token ?? state.auth.accessToken ?? null;
     if (token) {

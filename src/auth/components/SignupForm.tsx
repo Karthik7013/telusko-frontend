@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { toast } from "sonner"
+import { getApiErrorMessage } from "@/lib/api-utils"
 
 import { Button } from "@/components/ui/button"
 
@@ -62,11 +63,10 @@ export function SignupForm() {
 
             toast.success("Account created successfully!")
             navigate('/dashboard');
-        } catch (error: any) {
-            // eslint-disable-next-line no-console
+        } catch (error: unknown) {
             console.error("Signup failed:", error);
             toast.error("Signup failed", {
-                description: error.data?.message || "Something went wrong during registration.",
+                description: getApiErrorMessage(error, "Something went wrong during registration."),
             })
         }
     }

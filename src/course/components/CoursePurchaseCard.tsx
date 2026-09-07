@@ -49,7 +49,7 @@ export function CoursePurchaseCard({ course }: CoursePurchaseCardProps) {
                                     slug: course.slug,
                                     title: course.title,
                                     thumbnailUrl: course.thumbnailUrl,
-                                    instructorName: course.instructor.fullName,
+                                    instructorName: course.instructor?.fullName || 'Instructor',
                                     basePrice: course.basePrice,
                                     discountPercentage: course.discountPercentage,
                                     discountedPrice: course.discountedPrice,
